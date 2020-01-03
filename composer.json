@@ -1,0 +1,31 @@
+{
+  "name": "zwo3/subscribe",
+  "type": "typo3-cms-extension",
+  "description": "Subscribe / Unsubscribe Extension (e.g. for Newsletter), depends on tt_address",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "tt_address",
+    "subscribe",
+    "newsletter"
+  ],
+  "homepage": "https://github.com/Gregor-Agnes/subscribe",
+  "license": ["GPL-2.0-or-later"],
+  "require": {
+    "typo3/cms-core": "^9.5",
+    "friendsoftypo3/tt-address": "^4.0.0"
+  },
+  "replace": {
+    "zwo3/subscribe": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "Zwo3\\Subscribe\\": "Classes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Zwo3\\Subscribe\\Tests\\": "Tests/"
+    }
+  }
+}

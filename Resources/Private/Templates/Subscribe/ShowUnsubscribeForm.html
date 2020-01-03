@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Standard"></f:layout>
+
+<f:section name="Default">
+	<f:form object="{subscription}" name="subscription" action="createUnsubscribeMail" pageUid="{settings.subscribeFormPid}">
+		<p>Sie möchten den Newsletter nicht mehr erhalten? Tragen Sie die E-Mail-Adresse ein, mit der Sie sich angemeldet haben, wir senden Ihnen dann eine E-Mail mit weiteren Anweisungen zu.</p>
+		<f:form.textfield name="email" placeholder="Ihre E-Mail-Adresse*"></f:form.textfield>
+		<f:form.validationResults for="subscription.email">
+			<f:if condition="{message}">
+						<p class="help-text">{message}</p>
+			</f:if>
+		</f:form.validationResults>
+
+		<f:form.validationResults for="subscription.dataProtection">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+		<button class="button hollow" type="submit">Mail senden</button>
+	</f:form>
+</f:section>

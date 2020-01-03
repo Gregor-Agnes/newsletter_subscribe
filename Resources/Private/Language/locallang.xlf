@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2013-10-16T13:32:10Z" product-name="store">
+        <header/>
+        <body>
+            <trans-unit id="error.1238108067">
+                <source>Please insert a valid value</source>
+            </trans-unit>
+            <trans-unit id="error.1221560718">
+                <source>Please fill in all fields marked with *</source>
+            </trans-unit>
+            <trans-unit id="error.1221559976">
+                <source></source>
+            </trans-unit>
+            <trans-unit id="error.1361959228">
+                <source>You have to accept our data protection policy</source>
+            </trans-unit>
+            <trans-unit id="error.1396343138">
+                <source>Number too high</source>
+            </trans-unit>
+            <trans-unit id="pleaseCorrectErrors">
+                <source>Please correct the highlighted errors below.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

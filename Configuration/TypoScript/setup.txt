@@ -1,0 +1,42 @@
+plugin {
+	tx_subscribe {
+		view {
+		}
+		mvc {
+			callDefaultActionIfActionCantBeResolved = 0
+		}
+		persistence {
+			#overides the settings in the plugin form, if used
+			storagePid = 11
+			classes {
+				Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
+			}
+		}
+		features {
+			requireCHashArgumentForActionArguments = 0
+		}
+		settings {
+
+			#table where to store subscriber data, either fe_users or tt_address (if installed, not implemented yet),
+			#defaults to fe_users,
+			#TODO implement tt_address
+			table = fe_users
+
+			# uid of folder with subcriber storage
+			#subscriberPid = 11
+
+			#uid of page with subscribe form (for confirmation of subscription and unsubcription)
+			subscribeFormPid = 176
+
+			#uid of page with unsubscribe form (if any)
+			unsubscribeFormPid = 911
+
+			# uid of page with data protection information (if any)
+			dataProtectionPage = 821
+
+			adminEmail = mailer@yourprovider.de
+			adminName = Your Provider
+
+		}
+	}
+}

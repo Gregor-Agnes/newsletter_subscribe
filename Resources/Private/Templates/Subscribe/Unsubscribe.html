@@ -1,0 +1,34 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Standard"></f:layout>
+
+<f:section name="Default">
+
+	<h3>Abmeldung vom Newsletter</h3>
+
+	<f:if condition="{subscription.email} || {subscription.name}">
+
+		<p>Sie haben sich mit folgenden Daten abgemeldet:
+			<br>
+			<f:if condition="{subscription.name}">
+				<f:then>Name: {subscription.name}
+					<br>
+				</f:then>
+			</f:if>
+			<f:if condition="{subscription.email}">
+				E-Mail: {subscription.email}
+			</f:if>
+		</p>
+
+	</f:if>
+	<p>
+		Sie können sich natürlich auch künftig jederzeit wieder für den Newsletter anmelden. Hier kommen Sie zur Anmeldung:
+		<a style="color: black; font-weight: bold;" href="https://www.die-gebaeudedienstleister.de/service-fuer-gebaeudedienstleister/im-blickpunkt/blickpunkt-infodienst" target="_blank">https://www.die-gebaeudedienstleister.de/service-fuer-gebaeudedienstleister/im-blickpunkt/blickpunkt-infodienst</a>
+		.
+	</p>
+</f:section>

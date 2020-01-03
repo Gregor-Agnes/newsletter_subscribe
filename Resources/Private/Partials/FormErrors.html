@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:form.validationResults>
+
+    <f:if condition="{validationResults.flattenedErrors}">
+        <div class="errors">
+            <h3><f:translate key="pleaseCorrectErrors" /></h3>
+            <ul>
+                <f:for each="{validationResults.flattenedErrors}" key="propertyPath" as="errors">
+	                <li>
+		                <f:translate key="error.{propertyPath}"/>
+                            <f:for each="{errors}" as="error">
+                                <f:translate key="error.{error.code}"/>
+                            </f:for>
+	                </li> </f:for>
+	                </ul>
+        </div>
+    </f:if>
+</f:form.validationResults>

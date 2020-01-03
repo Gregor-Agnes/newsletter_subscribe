@@ -1,0 +1,74 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Standard"></f:layout>
+
+<f:section name="Default">
+	<f:form object="{subscription}" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
+		<input type="hidden" name="formToken" value="{formToken}"></input.hidden>
+		<label>Vorname: *
+			<f:form.textfield property="firstName" placeholder="Vorname"></f:form.textfield>
+		</label>
+		<f:form.validationResults for="subscription.firstName">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+		<label>Nachname: *
+			<f:form.textfield property="lastName" placeholder="Nachname"></f:form.textfield>
+		</label>
+		<f:form.validationResults for="subscription.lastName">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+		<label>Titel:
+			<f:form.textfield property="title" placeholder="Titel"></f:form.textfield>
+		</label>
+		<f:form.validationResults for="subscription.title">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+		<label>Organisation: *
+			<f:form.textfield property="company" placeholder="Organisation"></f:form.textfield>
+		</label>
+		<f:form.validationResults for="subscription.company">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+		<label>E-Mail: *
+			<f:form.textfield property="email" placeholder="Ihre E-Mail-Adresse"></f:form.textfield>
+		</label>
+		<f:form.validationResults for="subscription.email">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+
+		<f:form.checkbox property="dataProtection" value="1" checked="{dataProtection} == 1" id="dataProtection"></f:form.checkbox> <label for="dataProtection"><i class="fal fa-square-full fa-lg"></i><i class="fal fa-check fa-2x"></i>Ja, ich möchte den  Newsletter per E-Mail erhalten. Die <f:link.typolink parameter="{dataProtectionPage}" target="_blank">Datenschutzhinweise</f:link.typolink> habe ich zur Kenntnis genommen und akzeptiert.</label>
+		<f:form.validationResults for="subscription.dataProtection">
+			<f:if condition="{validationResults.flattenedErrors}">
+				<f:for each="{validationResults.errors}" as="error">
+					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+				</f:for>
+			</f:if>
+		</f:form.validationResults>
+		<button class="button hollow" type="submit">Abonnieren</button>
+	</f:form>
+</f:section>

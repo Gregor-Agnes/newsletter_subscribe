@@ -1,0 +1,22 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Standard"></f:layout>
+
+<f:section name="Default">
+	<h3>Vielen Dank für Ihre Anmeldung</h3>
+	<p>
+		Wir haben Sie mit folgenden Daten gespeichert:</p>
+	<p>
+		<f:if condition="{subscription.name}">
+			Name:{subscription.name}<br>
+		</f:if>
+		E-Mail: {subscription.email}
+	</p>
+	<p>Ab sofort erhalten Sie den Newsletter.</p>
+	<p>Viel Spaß beim Lesen!</p>
+</f:section>
