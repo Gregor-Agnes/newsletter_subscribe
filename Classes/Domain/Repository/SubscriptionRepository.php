@@ -18,8 +18,8 @@ class SubscriptionRepository extends Repository {
         $query = $this->createQuery();
         $querySettings = $query->getQuerySettings();
         $querySettings->setIgnoreEnableFields(true);
-        $querySettings->setEnableFieldsToBeIgnored(['disabled']); // hidden fields immer mit auslesen!
         $this->setDefaultQuerySettings($querySettings);
     }
+
 
 }

@@ -20,12 +20,15 @@ use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use Zwo3\Subscribe\Domain\Model\Subscription;
+use Zwo3\Subscribe\Domain\Repository\SubscriptionFeUserRepository;
 use Zwo3\Subscribe\Domain\Repository\SubscriptionRepository;
+use Zwo3\Subscribe\Domain\Repository\SubscriptionTtAddressRepository;
 
 /**
  * Class SubscribeController
@@ -34,7 +37,6 @@ use Zwo3\Subscribe\Domain\Repository\SubscriptionRepository;
  */
 class SubscribeController extends ActionController
 {
-
 
     /**
      * @var ObjectManager
@@ -46,19 +48,21 @@ class SubscribeController extends ActionController
      */
     protected $subscriptionRepository;
 
-
-
     public function initializeAction()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
     }
 
     public function showFormAction()
     {
+        $formToken = FormProtectionFactory::get('frontend')
+            ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
+
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
-            'formToken' => $this->formToken
+            'formToken' => $formToken
         ]);
     }
 
@@ -67,10 +71,14 @@ class SubscribeController extends ActionController
      */
     public function showUnsubscribeFormAction(?string $message = null)
     {
-        DebuggerUtility::var_dump($this->subscriptionRepository->findAll());
+        $formToken = FormProtectionFactory::get('frontend')
+            ->generateToken('Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']);
+
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
-            'message' => $message
+            'message' => $message,
+            'formToken' => $formToken
+
         ]);
     }
 
@@ -80,12 +88,6 @@ class SubscribeController extends ActionController
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * zur Verwendung: Fluid Link z.B. in E-Mail platzieren
-     *      * <f:link.action action="createUnsubscribeMail" controller="Subscribe" pluginName="subscribe"  extensionName="subscribe" arguments="{email: 'ga@zwo3.de'}" pageUid="[uid of subscriptionPage]" >testen</f:link.action>
-     * Wenn im Newsletter neben email-Adreesse auch token token aus tt_address zu Verfügung steht kann auch
-     *    <f:link.action absolute="1" pageUid="{settings.subscribeFormPid}" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{email: subscription.email, hash: '{v:format.hash(content: \'{adress.email}{adrdress.token}\', algorithm: \'sha256\')}'}">Abonnement kündigen</f:link.action>
-     * direkt in der Mail verwendet werden. Dann reicht ein Klick im Newsletter zum kündigen
-     * Oder Plugin unsubscribe auf beliebiger Seite platzieren undunsubscribeFormPid in settings setzen!
      */
     public function createUnsubscribeMailAction(?string $email = null)
     {
@@ -100,7 +102,7 @@ class SubscribeController extends ActionController
                     'Mail/CreateUnsubscribe',
                     [
                         'subscription' => $existing,
-                        'hash' => hash('sha256', $existing->getEmail() . $existing->getToken())
+                        'hash' => hash('sha256', $existing->getEmail() . $existing->getCrdate())
                     ]
                 );
                 $this->subscriptionRepository->update($existing);
@@ -123,10 +125,9 @@ class SubscribeController extends ActionController
     {
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
-                (string) GeneralUtility::_POST('formToken'),
-                'Subscribe', 'show', $this->configurationManager->getContentObject()->data['uid']
-            ))
-        {
+                (string)GeneralUtility::_POST('formToken'),
+                'Subscribe', 'showSubscribe', $this->configurationManager->getContentObject()->data['uid']
+            )) {
             $this->redirect('showForm');
         }
 // E-Mail-Adresse bereits registriert?
@@ -140,24 +141,21 @@ class SubscribeController extends ActionController
                 'Mail/AlreadySubscribed',
                 [
                     'subscription' => $existing,
-                    'hash' => hash('sha256', $existing->getEmail() . $existing->getToken())
                 ]
             );
             //$this->subscriptionRepository->update($existing);
 
             $this->view->assignMultiple(['subscription' => $existing]);
         } else {
-            // nächstes Mal statt token einfach das crdate nehmen?!
-            // das könnte dann mit https://fluidtypo3.org/viewhelpers/vhs/master/Format/HashViewHelper.html
-            // auch in beliebigen andern Fluid-Templates funktionieren :)
-            $token = bin2hex(random_bytes(32));
-            $subscription->setToken($token);
             $subscription->setHidden(1);
+            $subscription->setModuleSysDmailNewsletter(true);
             $subscription->setModuleSysDmailHtml(true);
-            $subscription->setSubscriptionConfirmed(0);
+            $subscription->setCrdate(time());
+            $subscription->setSubscriptionHash(hash('sha256', $subscription->getEmail() . $subscription->getCrdate()));
             $subscription->setPid($this->subscriptionRepository->createQuery()
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
+
 
             $this->sendTemplateEmail(
                 [$subscription->getEmail() => $subscription->getName()],
@@ -166,7 +164,6 @@ class SubscribeController extends ActionController
                 'Mail/Confirmation',
                 [
                     'subscription' => $subscription,
-                    'hash' => hash('sha256', $subscription->getEmail() . $token)
                 ]
             );
             $this->subscriptionRepository->add($subscription);
@@ -180,8 +177,12 @@ class SubscribeController extends ActionController
      * @param string $hash
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
-    public function unsubscribeAction(?string $email = null, ?string $hash = null)
+    public function unsubscribeAction(?string $hash = null)
     {
+
+        DebuggerUtility::var_dump($hash);
+
+        //http://www.ke-search.z3/seite-2/5992388222c71849879c6a77a77832a7c26be5b23485f1fbad89e3c5d31ba78b?cHash=c7644096d90b16b390e4a1146a561091
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findOneByEmail($email);
 
@@ -200,28 +201,23 @@ class SubscribeController extends ActionController
     }
 
     /**
-     * @param string $email
      * @param string $hash
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function doConfirmAction(?string $email = null, ?string $hash = null)
+    public function doConfirmAction(?string $subscriptionHash = null)
     {
 
         /** @var Subscription $subscription */
-        $subscription = $this->subscriptionRepository->findOneByEmail($email);
+        $subscription = $this->subscriptionRepository->findOneBySubscriptionHash($subscriptionHash);
+
 
         if ($subscription) {
-            if (hash('sha256', $subscription->getEmail() . $subscription->getToken()) == $hash) {
                 $subscription->setHidden(0);
-                $subscription->setSubscriptionConfirmed(1);
 
                 $this->subscriptionRepository->update($subscription);
 
                 $message = 'Sie haben Ihr Abonnement erfolgreich bestätigt und werden ab sofort den Blickpunkt Infodienst erhalten!';
-            } else {
-                $message = 'Dieser Link ist nicht mehr gültig';
-            }
         } else {
             $message = 'Wir konnten kein entsprechende Abonnement finden. Haben Sie Ihr Abonnement vielleicht schon bestätigt?';
         }

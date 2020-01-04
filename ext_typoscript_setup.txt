@@ -2,20 +2,6 @@ config.tx_extbase {
 	persistence {
 		classes {
 			Zwo3\Subscribe\Domain\Model\Subscription {
-				subclasses {
-					0 = Zwo3\Subscribe\Domain\Model\SubscriptionFeUser
-					1 = Zwo3\Subscribe\Domain\Model\SubscriptionTtAcdress
-				}
-			}
-			Zwo3\Subscribe\Domain\Model\SubscriptionFeUser {
-				mapping {
-					tableName = fe_users
-					columns {
-						disable.mapOnProperty = hidden
-					}
-				}
-			}
-			Zwo3\Subscribe\Domain\Model\SubscriptionTtAddress {
 				mapping {
 					tableName = tt_address
 				}

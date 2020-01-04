@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 $GLOBALS['TCA']['tt_address']['ctrl']['delete'] = null;
 
 $tempColumns = [
-    'data_protection' => array(
+    'data_protection_accepted' => array(
         'exclude' => 0,
         'label' => 'Datenschutzerklärung akzeptiert',
         'config' => array(
@@ -14,26 +14,8 @@ $tempColumns = [
             'default' => 0
         ),
     ),
-    'subscription_confirmed' => array(
-        'exclude' => 0,
-        'label' => 'Abonnement bestätigt',
-        'config' => array(
-            'type' => 'check',
-            'default' => 0
-        ),
-    ),
-    'token' => array(
-        'label' => 'Token',
-        'exclude' => 1,
-        'config' => array(
-            'size' => 30,
-            'type' => 'input',
-            'default' => '',
-            'readOnly' =>1
-        ),
-    ),
-    'token_time' => array(
-        'label' => 'Token',
+    'subscription_hash' => array(
+        'label' => 'Subscription Hash',
         'exclude' => 1,
         'config' => array(
             'size' => 30,
@@ -47,4 +29,4 @@ $tempColumns = [
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address',$tempColumns,1);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tt_address',
-    'data_protection, token, token_time, subscription_confirmed');
+    'data_protection, subscription_hash');

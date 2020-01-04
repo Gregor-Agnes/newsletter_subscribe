@@ -10,46 +10,6 @@
 <f:section name="Default">
 	<f:form object="{subscription}" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
 		<input type="hidden" name="formToken" value="{formToken}"></input.hidden>
-		<label>Vorname: *
-			<f:form.textfield property="firstName" placeholder="Vorname"></f:form.textfield>
-		</label>
-		<f:form.validationResults for="subscription.firstName">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text"><f:translate key="error.{error.code}"/></p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
-		<label>Nachname: *
-			<f:form.textfield property="lastName" placeholder="Nachname"></f:form.textfield>
-		</label>
-		<f:form.validationResults for="subscription.lastName">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text"><f:translate key="error.{error.code}"/></p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
-		<label>Titel:
-			<f:form.textfield property="title" placeholder="Titel"></f:form.textfield>
-		</label>
-		<f:form.validationResults for="subscription.title">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text"><f:translate key="error.{error.code}"/></p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
-		<label>Organisation: *
-			<f:form.textfield property="company" placeholder="Organisation"></f:form.textfield>
-		</label>
-		<f:form.validationResults for="subscription.company">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text"><f:translate key="error.{error.code}"/></p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
 		<label>E-Mail: *
 			<f:form.textfield property="email" placeholder="Ihre E-Mail-Adresse"></f:form.textfield>
 		</label>
@@ -61,8 +21,8 @@
 			</f:if>
 		</f:form.validationResults>
 
-		<f:form.checkbox property="dataProtection" value="1" checked="{dataProtection} == 1" id="dataProtection"></f:form.checkbox> <label for="dataProtection"><i class="fal fa-square-full fa-lg"></i><i class="fal fa-check fa-2x"></i>Ja, ich möchte den  Newsletter per E-Mail erhalten. Die <f:link.typolink parameter="{dataProtectionPage}" target="_blank">Datenschutzhinweise</f:link.typolink> habe ich zur Kenntnis genommen und akzeptiert.</label>
-		<f:form.validationResults for="subscription.dataProtection">
+		<f:form.checkbox property="dataProtectionAccepted" value="1" checked="{dataProtectionAccepted} == 1" id="dataProtectionAccepted"></f:form.checkbox> <label for="dataProtectionAccepted"><i class="fal fa-square-full fa-lg"></i><i class="fal fa-check fa-2x"></i>Ja, ich möchte den  Newsletter per E-Mail erhalten. Die <f:link.typolink parameter="{dataProtectionAcceptedPage}" target="_blank">Datenschutzhinweise</f:link.typolink> habe ich zur Kenntnis genommen und akzeptiert.</label>
+		<f:form.validationResults for="subscription.dataProtectionAccepted">
 			<f:if condition="{validationResults.flattenedErrors}">
 				<f:for each="{validationResults.errors}" as="error">
 					<p class="help-text"><f:translate key="error.{error.code}"/></p>

@@ -8,7 +8,7 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-	<f:form object="{subscription}" name="subscription" action="createUnsubscribeMail" pageUid="{settings.subscribeFormPid}">
+	<f:form object="{subscription}" action="createUnsubscribeMail">
 		<p>Sie möchten den Newsletter nicht mehr erhalten? Tragen Sie die E-Mail-Adresse ein, mit der Sie sich angemeldet haben, wir senden Ihnen dann eine E-Mail mit weiteren Anweisungen zu.</p>
 		<f:form.textfield name="email" placeholder="Ihre E-Mail-Adresse*"></f:form.textfield>
 		<f:form.validationResults for="subscription.email">

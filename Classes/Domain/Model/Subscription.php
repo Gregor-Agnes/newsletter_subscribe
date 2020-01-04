@@ -18,26 +18,22 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $firstName;
 
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $lastName;
 
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("String")
      */
     protected $title;
 
 
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $company;
 
@@ -54,6 +50,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
      */
     protected $dataProtectionAccepted;
 
+
     /**
      * @var bool
      * @TYPO3\CMS\Extbase\Annotation\Validate("Boolean")
@@ -61,11 +58,42 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     protected $moduleSysDmailHtml;
 
     /**
+     * @var string
+     */
+    protected $subscriptionHash;
+
+    /**
+     * @var bool
+     */
+    protected $moduleSysDmailNewsletter;
+
+    /**
      * @var bool
      */
     protected $hidden;   /**
      * @return mixed
      */
+
+    /**
+     * @var int
+     */
+    protected $crdate;
+
+    /**
+     * @return int
+     */
+    public function getCrdate(): ?int
+    {
+        return $this->crdate;
+    }
+
+    /**
+     * @param int $crdate
+     */
+    public function setCrdate(int $crdate): void
+    {
+        $this->crdate = $crdate;
+    }
 
     /**
      * @return bool
@@ -208,5 +236,38 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->name = $name;
     }
+
+    /**
+     * @return string
+     */
+    public function getSubscriptionHash(): ?string
+    {
+        return $this->subscriptionHash;
+    }
+
+    /**
+     * @param string $subscriptionHash
+     */
+    public function setSubscriptionHash(string $subscriptionHash): void
+    {
+        $this->subscriptionHash = $subscriptionHash;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isModuleSysDmailNewsletter(): ?bool
+    {
+        return $this->moduleSysDmailNewsletter;
+    }
+
+    /**
+     * @param bool $moduleSysDmailNewsletter
+     */
+    public function setModuleSysDmailNewsletter(bool $moduleSysDmailNewsletter): void
+    {
+        $this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
+    }
+
 
 }
