@@ -22,7 +22,9 @@ use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Web\Response;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use Zwo3\Subscribe\Domain\Model\Subscription;
@@ -44,6 +46,12 @@ class SubscribeController extends ActionController
     protected $objectManager;
 
     /**
+     * @var PersistenceManager
+     *
+     */
+    protected $persistenceManager;
+
+    /**
      * @var SubscriptionRepository
      */
     protected $subscriptionRepository;
@@ -51,7 +59,7 @@ class SubscribeController extends ActionController
     public function initializeAction()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
+        $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
     }
 
@@ -131,7 +139,7 @@ class SubscribeController extends ActionController
             $this->redirect('showForm');
         }
 // E-Mail-Adresse bereits registriert?
-        if ($existing = $this->subscriptionRepository->findOneByEmail($subscription->getEmail())) {
+        if ($existing = $this->subscriptionRepository->findByUid($subscription->getUid(), false)) {
             // Abmelden Mail versenden
             /** @var Subscription $existing */
             $this->sendTemplateEmail(
@@ -151,11 +159,13 @@ class SubscribeController extends ActionController
             $subscription->setModuleSysDmailNewsletter(true);
             $subscription->setModuleSysDmailHtml(true);
             $subscription->setCrdate(time());
-            $subscription->setSubscriptionHash(hash('sha256', $subscription->getEmail() . $subscription->getCrdate()));
+            $subscription->setSubscriptionHash(hash('sha256', $subscription->getEmail() . $subscription->getCrdate() . random_bytes(32)));
             $subscription->setPid($this->subscriptionRepository->createQuery()
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
 
+            $this->subscriptionRepository->add($subscription);
+            $this->persistenceManager->persistAll();
 
             $this->sendTemplateEmail(
                 [$subscription->getEmail() => $subscription->getName()],
@@ -166,60 +176,95 @@ class SubscribeController extends ActionController
                     'subscription' => $subscription,
                 ]
             );
-            $this->subscriptionRepository->add($subscription);
 
             $this->view->assignMultiple(['subscription' => $subscription]);
         }
     }
 
     /**
-     * @param string $email
-     * @param string $hash
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     */
-    public function unsubscribeAction(?string $hash = null)
-    {
-
-        DebuggerUtility::var_dump($hash);
-
-        //http://www.ke-search.z3/seite-2/5992388222c71849879c6a77a77832a7c26be5b23485f1fbad89e3c5d31ba78b?cHash=c7644096d90b16b390e4a1146a561091
-        /** @var Subscription $subscription */
-        $subscription = $this->subscriptionRepository->findOneByEmail($email);
-
-        if ($subscription) {
-            if (hash('sha256', $subscription->getEmail() . $subscription->getToken()) == $hash) {
-                $this->subscriptionRepository->remove($subscription);
-
-                $message = 'Ihr Abonnement wurde beendet, alle Ihre Daten wurden endgültig aus unserer Datenbank gelöscht.';
-            } else {
-                $message = 'Dieser Link ist nicht mehr gültig';
-            }
-        } else {
-            $message = 'Wir konnten kein entsprechendes Abonnement finden.';
-        }
-        $this->view->assignMultiple(compact('message', 'subscription'));
-    }
-
-    /**
-     * @param string $hash
+     * @param int $uid
+     * @param string $subscriptionHash
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function doConfirmAction(?string $subscriptionHash = null)
+    public function unsubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
     {
+        //http://www.ke-search.z3/seite-1?tx_subscribe_subscribe[action]=unsubscribe&tx_subscribe_subscribe[controller]=Subscribe&tx_subscribe_subscribe[subscriptionHash]=c7aa2f148bf978c837d868c96ef300738e6ccad3c8df165c0a2034a48377adef&tx_subscribe_subscribe[uid]=29&cHash=4768509728410fba3534cd0466a94431
+        //http://www.ke-search.z3/seite-1/confirm/27/b84ab3d17d51a1816f42b7854331fb4fbcd41dd8efb1567b5928156e346c1064
 
         /** @var Subscription $subscription */
-        $subscription = $this->subscriptionRepository->findOneBySubscriptionHash($subscriptionHash);
+        $subscription = $this->subscriptionRepository->findByUid($uid, false);
 
+        $success = false;
+        if ($subscription) {
+            if ($subscriptionHash == $subscription->getSubscriptionHash()) {
+                $this->subscriptionRepository->remove($subscription);
+
+                $message = 'Ihr Abonnement wurde beendet, alle Ihre Daten wurden endgültig aus unserer Datenbank gelöscht.';
+                $success = true;
+            } else {
+                $message = 'Dieser Link ist nicht gültig';
+                // increasing sleeptimer
+                $sleepTime = $subscription->getHitNumber() * 2;
+                if (time() > $subscription->getLastHit() + 300) {
+                    // reset sleep after 5 minutes
+                    $sleepTime = 0;
+                    $subscription->setHitNumber(0);
+                } else {
+                    $subscription->setHitNumber($subscription->getHitNumber() + 1);
+                }
+                sleep($sleepTime);
+
+                $subscription->setLastHit(time());
+                $this->subscriptionRepository->update($subscription);
+                //TODO redirect with 404
+            }
+        } else {
+            $message = 'Wir konnten kein entsprechendes Abonnement finden.';
+            //TODO redirect with 404
+        }
+        $this->view->assignMultiple(compact('message', 'subscription', 'success'));
+    }
+
+    /**
+     * @param int $uid
+     * @param string $subscriptionHash
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    public function doConfirmAction(?int $uid = null, ?string $subscriptionHash = null)
+    {
+        /** @var Subscription $subscription */
+        $subscription = $this->subscriptionRepository->findByUid($uid, false);
 
         if ($subscription) {
+            if ($subscriptionHash == $subscription->getSubscriptionHash()) {
                 $subscription->setHidden(0);
+                $this->subscriptionRepository->update($subscription);
+                $message = 'Sie haben Ihr Abonnement erfolgreich bestätigt und werden ab sofort den Blickpunkt Infodienst erhalten!';
+            } else {
+                $message = 'Dieser Link ist nicht gültig';
+                // increasing sleeptimer
+                $sleepTime = $subscription->getHitNumber() * 2;
+                if (time() > $subscription->getLastHit() + 300) {
+                    // reset sleep after 5 minutes
+                    $sleepTime = 0;
+                    $subscription->setHitNumber(0);
+                } else {
+                    $subscription->setHitNumber($subscription->getHitNumber() + 1);
+                }
+                sleep($sleepTime);
 
+                $subscription->setLastHit(time());
                 $this->subscriptionRepository->update($subscription);
 
-                $message = 'Sie haben Ihr Abonnement erfolgreich bestätigt und werden ab sofort den Blickpunkt Infodienst erhalten!';
+                //TODO redirect with 404
+
+            }
+
         } else {
             $message = 'Wir konnten kein entsprechende Abonnement finden. Haben Sie Ihr Abonnement vielleicht schon bestätigt?';
+            //TODO redirect with 404
         }
 
         $this->view->assignMultiple(compact('message', 'subscription'));

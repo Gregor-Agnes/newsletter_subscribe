@@ -80,6 +80,16 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     protected $crdate;
 
     /**
+     * @var int
+     */
+    protected $lastHit;
+
+    /**
+     * @var int
+     */
+    protected $hitNumber;
+
+    /**
      * @return int
      */
     public function getCrdate(): ?int
@@ -269,5 +279,35 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
         $this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
     }
 
+    /**
+     * @return int
+     */
+    public function getLastHit(): ?int
+    {
+        return $this->lastHit;
+    }
 
+    /**
+     * @param int $lastHit
+     */
+    public function setLastHit(int $lastHit): void
+    {
+        $this->lastHit = $lastHit;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHitNumber(): ?int
+    {
+        return $this->hitNumber;
+    }
+
+    /**
+     * @param int $hitNumber
+     */
+    public function setHitNumber(int $hitNumber): void
+    {
+        $this->hitNumber = $hitNumber;
+    }
 }

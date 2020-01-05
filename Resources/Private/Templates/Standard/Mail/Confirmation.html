@@ -11,12 +11,12 @@
 <p>wir freuen uns, dass Sie den Newsletter abonnieren möchten.<br>
    Die Anmeldung ist fast geschafft:</p>
 <p>Zur Bestätigung der Anmeldung klicken Sie bitte hier:<br><br>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="doConfirm" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{subscriptionHash: subscription.subscriptionHash}">Abonnement bestätigen</f:link.action>
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="doConfirm" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">Abonnement bestätigen</f:link.action>
 </p>
 
 <p>
 	Sie können den Newsletter jederzeit abbestellen, indem Sie auf den<br><br>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action><br><br><br>klicken.
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action><br><br><br>klicken.
 </p>
  
 

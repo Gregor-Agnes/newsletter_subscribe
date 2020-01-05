@@ -23,3 +23,6 @@ defined('TYPO3_MODE') || die('Access denied.');
         'Subscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
     ]
 );
+
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_subscribe_subscribe[subscriptionHash]';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_subscribe_subscribe[uid]';
