@@ -16,6 +16,14 @@
 
 ## Configuration
 <table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Type, Validation</th>
+<th>Default</th>
+</tr>
+</thead>
   <tr>
     <th align="left">dataProtectionPage</th>
     <td align="left">Uid of page with information about the data protection policy</td>
