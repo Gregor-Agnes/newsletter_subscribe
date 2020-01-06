@@ -9,7 +9,7 @@
 * Provides a plugin to double optin unsubscribe
 * Provides field in tt_address to generate unsubscribe link in direct_mail mailings
 
-##site config (for nice link in subscriber mails)##
+##site config (for nicer link in subscriber mails)##
 
 ```yaml
 
