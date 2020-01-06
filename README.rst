@@ -23,31 +23,33 @@ site config (for nice link in subscriber mails)
 -----------------------------------------------
 
 .. code-block:: YAML
-  UnSubscribe:
-    type: Extbase
-    extension: Subscribe
-    plugin: Unsubscribe
-    routes:
-      -
-        routePath: '/unsubscribe/{unsubscribe}/{uid}'
-        _controller: 'Subscribe::unsubscribe'
-        _arguments:
-          unsubscribe: subscriptionHash
-          uid: uid
-  Subscribe:
-    type: Extbase
-    extension: Subscribe
-    plugin: Subscribe
-    routes:
-      -
-        routePath: '/confirm/{confirm}/{uid}'
-        _controller: 'Subscribe::doConfirm'
-        _arguments:
-          confirm: subscriptionHash
-          uid: uid
-      -
-        routePath: '/unsubscribe/{unsubscribe}/{uid}'
-        _controller: 'Subscribe::unsubscribe'
-        _arguments:
-          unsubscribe: subscriptionHash
-          uid: uid
+    :linenos:
+
+	  UnSubscribe:
+	    type: Extbase
+	    extension: Subscribe
+	    plugin: Unsubscribe
+	    routes:
+	      -
+	        routePath: '/unsubscribe/{unsubscribe}/{uid}'
+	        _controller: 'Subscribe::unsubscribe'
+	        _arguments:
+	          unsubscribe: subscriptionHash
+	          uid: uid
+	  Subscribe:
+	    type: Extbase
+	    extension: Subscribe
+	    plugin: Subscribe
+	    routes:
+	      -
+	        routePath: '/confirm/{confirm}/{uid}'
+	        _controller: 'Subscribe::doConfirm'
+	        _arguments:
+	          confirm: subscriptionHash
+	          uid: uid
+	      -
+	        routePath: '/unsubscribe/{unsubscribe}/{uid}'
+	        _controller: 'Subscribe::unsubscribe'
+	        _arguments:
+	          unsubscribe: subscriptionHash
+	          uid: uid
