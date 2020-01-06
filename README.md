@@ -1,29 +1,17 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-
-.. _start:
-
-subscribe
-=========
+#subscribe#
 
 * Subcribe for Newsletters for TYPO3 >= 9.5
 * Depends on tt_address
 
-What does it do?
-----------------
+##What does it do?##
 
 * Provides a plugin to double optin subscribe
 * Provides a plugin to double optin unsubscribe
 * Provides field in tt_address to generate unsubscribe link in direct_mail mailings
 
-site config (for nice link in subscriber mails)
------------------------------------------------
+##site config (for nice link in subscriber mails)##
 
-.. code-block:: YAML
-    :linenos:
+```yaml
 
 	  UnSubscribe:
 	    type: Extbase
@@ -53,3 +41,4 @@ site config (for nice link in subscriber mails)
 	        _arguments:
 	          unsubscribe: subscriptionHash
 	          uid: uid
+```
