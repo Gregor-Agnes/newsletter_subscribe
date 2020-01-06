@@ -18,12 +18,17 @@ use Swift_Attachment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
 use TYPO3\CMS\Extbase\Mvc\Web\Response;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -65,12 +70,16 @@ class SubscribeController extends ActionController
 
     public function showFormAction()
     {
+
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
 
+        $fields = explode(',', $this->settings['showFields']);
+
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
-            'formToken' => $formToken
+            'formToken' => $formToken,
+            'fields' => $fields
         ]);
     }
 
@@ -92,25 +101,37 @@ class SubscribeController extends ActionController
 
     /**
      * @param string $email
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws StopActionException
+     * @throws UnsupportedRequestTypeException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function createUnsubscribeMailAction(?string $email = null)
     {
+        if (!FormProtectionFactory::get('frontend')
+            ->validateToken(
+                (string)GeneralUtility::_POST('formToken'),
+                'Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']
+            )) {
+            $this->redirect('showUnsubscribeFormAction');
+        }
+
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            if ($existing = $this->subscriptionRepository->findOneByEmail($email)) {
-                // Abmelden Mail versenden
+            if ($existing = $this->subscriptionRepository->findOneByEmail($email, false)) {
                 /** @var Subscription $existing */
+                // if no hash (e.g. manually added address), create one!
+                if (!$existing->getSubscriptionHash()) {
+                    $existing->setSubscriptionHash(hash('sha256', $existing->getEmail() . $existing->getCrdate() . random_bytes(32)));
+                }
+                // Abmelden Mail versenden
+
                 $this->sendTemplateEmail(
                     [$existing->getEmail() => $existing->getName()],
                     [$this->settings['adminEmail'] => $this->settings['adminName']],
                     'Ihr Abonnement',
                     'Mail/CreateUnsubscribe',
                     [
-                        'subscription' => $existing,
-                        'hash' => hash('sha256', $existing->getEmail() . $existing->getCrdate())
+                        'subscription' => $existing
                     ]
                 );
                 $this->subscriptionRepository->update($existing);
@@ -126,8 +147,9 @@ class SubscribeController extends ActionController
 
     /**
      * @param Subscription $subscription
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws StopActionException
+     * @throws UnsupportedRequestTypeException
+     * @throws IllegalObjectTypeException
      */
     public function createConfirmationAction(Subscription $subscription)
     {
@@ -138,10 +160,11 @@ class SubscribeController extends ActionController
             )) {
             $this->redirect('showForm');
         }
-// E-Mail-Adresse bereits registriert?
-        if ($existing = $this->subscriptionRepository->findByUid($subscription->getUid(), false)) {
+        // already subscribed
+        if ($existing = $this->subscriptionRepository->findOneByEmail($subscription->getEmail(), false)) {
             // Abmelden Mail versenden
             /** @var Subscription $existing */
+
             $this->sendTemplateEmail(
                 [$existing->getEmail() => $existing->getName()],
                 [$this->settings['adminEmail'] => $this->settings['adminName']],
@@ -184,13 +207,11 @@ class SubscribeController extends ActionController
     /**
      * @param int $uid
      * @param string $subscriptionHash
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function unsubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
     {
-        //http://www.ke-search.z3/seite-1?tx_subscribe_subscribe[action]=unsubscribe&tx_subscribe_subscribe[controller]=Subscribe&tx_subscribe_subscribe[subscriptionHash]=c7aa2f148bf978c837d868c96ef300738e6ccad3c8df165c0a2034a48377adef&tx_subscribe_subscribe[uid]=29&cHash=4768509728410fba3534cd0466a94431
-        //http://www.ke-search.z3/seite-1/confirm/27/b84ab3d17d51a1816f42b7854331fb4fbcd41dd8efb1567b5928156e346c1064
 
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findByUid($uid, false);
@@ -199,23 +220,12 @@ class SubscribeController extends ActionController
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash()) {
                 $this->subscriptionRepository->remove($subscription);
-
                 $message = 'Ihr Abonnement wurde beendet, alle Ihre Daten wurden endgültig aus unserer Datenbank gelöscht.';
                 $success = true;
             } else {
                 $message = 'Dieser Link ist nicht gültig';
                 // increasing sleeptimer
-                $sleepTime = $subscription->getHitNumber() * 2;
-                if (time() > $subscription->getLastHit() + 300) {
-                    // reset sleep after 5 minutes
-                    $sleepTime = 0;
-                    $subscription->setHitNumber(0);
-                } else {
-                    $subscription->setHitNumber($subscription->getHitNumber() + 1);
-                }
-                sleep($sleepTime);
-
-                $subscription->setLastHit(time());
+                $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
                 //TODO redirect with 404
             }
@@ -229,33 +239,25 @@ class SubscribeController extends ActionController
     /**
      * @param int $uid
      * @param string $subscriptionHash
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
     public function doConfirmAction(?int $uid = null, ?string $subscriptionHash = null)
     {
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findByUid($uid, false);
 
+        $success = false;
         if ($subscription) {
-            if ($subscriptionHash == $subscription->getSubscriptionHash()) {
+            if ($subscriptionHash == $subscription->getSubscriptionHash() && $subscription->isHidden()) {
                 $subscription->setHidden(0);
                 $this->subscriptionRepository->update($subscription);
                 $message = 'Sie haben Ihr Abonnement erfolgreich bestätigt und werden ab sofort den Blickpunkt Infodienst erhalten!';
+                $success = true;
             } else {
                 $message = 'Dieser Link ist nicht gültig';
                 // increasing sleeptimer
-                $sleepTime = $subscription->getHitNumber() * 2;
-                if (time() > $subscription->getLastHit() + 300) {
-                    // reset sleep after 5 minutes
-                    $sleepTime = 0;
-                    $subscription->setHitNumber(0);
-                } else {
-                    $subscription->setHitNumber($subscription->getHitNumber() + 1);
-                }
-                sleep($sleepTime);
-
-                $subscription->setLastHit(time());
+                $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
 
                 //TODO redirect with 404
@@ -267,7 +269,7 @@ class SubscribeController extends ActionController
             //TODO redirect with 404
         }
 
-        $this->view->assignMultiple(compact('message', 'subscription'));
+        $this->view->assignMultiple(compact('message', 'subscription', 'success'));
     }
 
     /**
@@ -322,5 +324,29 @@ class SubscribeController extends ActionController
         $message->send();
 
         return $message->isSent();
+    }
+
+    /**
+     * @param Subscription $subscription
+     * @param int $maxSleeptime max time to wait after last hit, if reached, sleep is resetted
+     * @param int $multiplier multipliere * hitnumber = seconds to wait,
+     *
+     * @return Subscription
+     */
+    protected function setSleep(Subscription $subscription, $maxSleeptime = 300, $multiplier = 2):Subscription
+    {
+        $sleepTime = $subscription->getHitNumber() * $multiplier;
+        if (time() > $subscription->getLastHit() + $maxSleeptime) {
+            // reset sleep after 5 minutes
+            $sleepTime = 0;
+            $subscription->setHitNumber(0);
+        } else {
+            $subscription->setHitNumber($subscription->getHitNumber() + 1);
+        }
+        sleep($sleepTime);
+
+        $subscription->setLastHit(time());
+
+        return $subscription;
     }
 }

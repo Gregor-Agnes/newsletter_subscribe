@@ -6,7 +6,9 @@
       data-namespace-typo3-fluid="true">
 
 
-<p>Hallo {subscription.firstName} {subscription.lastName},</p>
+<f:if condition="{subscription.firstName} || {subscription.lastName}">
+	<p><f:translate key="hallo" arguments="{1:subscription.firstName, 2: subscription.lastName}" />,</p>
+</f:if>
 
 <p>wir freuen uns, dass Sie den Newsletter abonnieren möchten.<br>
    Die Anmeldung ist fast geschafft:</p>

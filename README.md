@@ -19,14 +19,20 @@
   <tr>
     <th align="left">dataProtectionPage</th>
     <td align="left">Uid of page with information about the data protection policy</td>
+    <td>integer</td>
+    <td>0</td>
   </tr>
   <tr>
     <th align="left">adminEmail</th>
     <td align="left">Email address in confirmation mails</td>
+    <td>string, email, mandatory</td>
+    <td>null</td>
   </tr>
   <tr>
     <th align="left">adminName</th>
     <td align="left">Name in confirmation mails</td>
+    <td>string</td>
+    <td>null</td>
   </tr>
 </table>
 
@@ -63,9 +69,23 @@ routeEnhancers:
           unsubscribe: subscriptionHash
           uid: uid
 ```
-# Unsubscribe link in direkt mail
+## Unsubscribe link in direkt mail
 1. First add the field subscription_hash to the fields of direct mail in the extension configuration of direct mail: 
 ![direct mail configuration](https://github.com/Gregor-Agnes/subscribe/raw/master/Resources/Public/Gfx/ExtManDirectMail1.png)
 2. Add the link in your mail template:\
 `<a href="http://www.domain.tld/page/unsubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
 where this `unsubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.
+
+***
+
+# To do
+- translation 
+- write a scheduler task to remove unconfirmed addresses (after some time)
+- creating ajax submit
+- maybe version for fe_users\
+(not planned yet because username and password are mandatory for fe_users - and should be)
+- writing information about technical background
+
+***
+
+# Technical background

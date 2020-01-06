@@ -26,7 +26,6 @@
                     </config>
                 </TCEforms>
             </persistence.storagePid>
-
             <persistence.recursive>
                 <TCEforms>
                     <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.recursive</label>
@@ -62,6 +61,31 @@
                     </config>
                 </TCEforms>
             </persistence.recursive>
+            <settings.adminEmail>
+                <TCEforms>
+                    <exclude>1</exclude>
+                    <label>LLL:EXT:subscribe/Resources/Private/Language/locallang.xlf:adminEmail</label>
+                    <config>
+                        <type>input</type>
+                        <size>20</size>
+                        <max>30</max>
+                        <eval>trim,email,required</eval>
+                    </config>
+                </TCEforms>
+            </settings.adminEmail>
+            <settings.adminName>
+                <TCEforms>
+                    <exclude>1</exclude>
+                    <label>LLL:EXT:subscribe/Resources/Private/Language/locallang.xlf:adminName</label>
+                    <config>
+                        <type>input</type>
+                        <size>20</size>
+                        <max>30</max>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </settings.adminName>
+
         </el>
     </ROOT>
 </T3DataStructure>

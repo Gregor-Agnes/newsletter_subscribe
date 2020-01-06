@@ -13,7 +13,6 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 class SubscriptionRepository extends Repository {
 
-
     public function findByUid($uid, $respectEnableFields = true)
     {
         $query = $this->createQuery();
@@ -27,6 +26,21 @@ class SubscriptionRepository extends Repository {
                 $query->equals('deleted', 0)
             ))->execute()->getFirst();
     }
+
+    public function findOneByEmail($email, $respectEnableFields = true)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setIgnoreEnableFields(!$respectEnableFields);
+
+        return $query->matching(
+            $query->logicalAnd(
+                $query->equals('email', $email),
+                $query->equals('deleted', 0)
+            ))->execute()->getFirst();
+    }
+
+
 
 
 }

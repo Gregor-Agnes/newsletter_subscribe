@@ -3,6 +3,12 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2013-10-16T13:32:10Z" product-name="store">
         <header/>
         <body>
+            <trans-unit id="adminEmail">
+                <source>Admin Email Address</source>
+            </trans-unit>
+            <trans-unit id="adminName">
+                <source>Admin Name</source>
+            </trans-unit>
             <trans-unit id="error.1238108067">
                 <source>Please insert a valid value</source>
             </trans-unit>
@@ -20,6 +26,51 @@
             </trans-unit>
             <trans-unit id="pleaseCorrectErrors">
                 <source>Please correct the highlighted errors below.</source>
+            </trans-unit>
+            <trans-unit id="pidSubscribe">
+                <source>uid of page with unsubscribe form, also used for confirmation / unsubscribe links</source>
+            </trans-unit>
+            <trans-unit id="dataProtectionPage">
+                <source>Page withe data protection information</source>
+            </trans-unit>
+            <trans-unit id="email">
+                <source>Email address</source>
+            </trans-unit>
+            <trans-unit id="emailPlaceholder">
+                <source>Your email address</source>
+            </trans-unit>
+            <trans-unit id="dataProtection">
+                <source>data protection</source>
+            </trans-unit>
+            <trans-unit id="dataProtectionHint1">
+                <source>Yes, I want to receive the Newsletter. I have read and understand the </source>
+            </trans-unit>
+            <trans-unit id="dataProtectionHint2">
+                <source>and agree with it.</source>
+            </trans-unit>
+            <trans-unit id="gender">
+                <source>Salutation</source>
+            </trans-unit>
+            <trans-unit id="mrs">
+                <source>Mrs</source>
+            </trans-unit>
+            <trans-unit id="mr">
+                <source>Mr</source>
+            </trans-unit>
+            <trans-unit id="various">
+                <source>various</source>
+            </trans-unit>
+            <trans-unit id="firstName">
+                <source>First name</source>
+            </trans-unit>
+            <trans-unit id="lastName">
+                <source>Last name</source>
+            </trans-unit>
+            <trans-unit id="submit">
+                <source>Submit</source>
+            </trans-unit>
+            <trans-unit id="hallo">
+                <source>Hallo %1$s %2$s</source>
             </trans-unit>
         </body>
     </file>

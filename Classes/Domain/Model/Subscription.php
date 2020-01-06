@@ -28,9 +28,14 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
     /**
      * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("RegularExpression", options={"regularExpression": "/^[mfv ]$/m"})
+     */
+    protected $gender;
+
+    /**
+     * @var string
      */
     protected $title;
-
 
     /**
      * @var string
@@ -310,4 +315,21 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->hitNumber = $hitNumber;
     }
+
+    /**
+     * @return string
+     */
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender(string $gender): void
+    {
+        $this->gender = $gender;
+    }
+
 }

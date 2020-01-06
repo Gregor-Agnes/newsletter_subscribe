@@ -20,8 +20,10 @@ plugin {
 			# uid of page with data protection information (if any)
 			dataProtectionPage = 1
 
-			adminEmail = mailer@yourprovider.de
-			adminName = Your Provider
+			adminEmail = admin.name@domain.tld
+			adminName = Your admin Name
+			# email and data_protection are always shown
+			showFields =  gender,firstName,lastName
 
 		}
 	}

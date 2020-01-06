@@ -17,12 +17,19 @@ if (!defined('TYPO3_MODE')) {
     'EXT:subscribe/Resources/Public/Gfx/Extension.png'
 );
 
-$pluginSignature = 'subscribe_subscribe';
 
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,recursive,select_key';
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['subscribe_subscribe'] = 'layout,recursive,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['subscribe_subscribe'] = 'pi_flexform';
+
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['subscribe_unsubscribe'] = 'layout,recursive,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['subscribe_unsubscribe'] = 'pi_flexform';
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'subscribe_subscribe',
     'FILE:EXT:subscribe/Configuration/FlexForm/flexform_subscribe.xml',
+    '*'
+);\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    'subscribe_unsubscribe',
+    'FILE:EXT:subscribe/Configuration/FlexForm/flexform_unsubscribe.xml',
     '*'
 );
