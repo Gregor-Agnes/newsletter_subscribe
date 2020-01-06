@@ -15,22 +15,22 @@
 * Include static template
 
 ## Configuration
-<table style="text-align: left;">
+<table>
   <tr>
-    <th>dataProtectionPage</th>
-    <td>Uid of page with information about the data protection policy</td>
+    <th align="left">dataProtectionPage</th>
+    <td align="left">Uid of page with information about the data protection policy</td>
   </tr>
   <tr>
-    <th>adminEmail</th>
-    <td>Email address in confirmation mails</td>
+    <th align="left">adminEmail</th>
+    <td align="left">Email address in confirmation mails</td>
   </tr>
   <tr>
-    <th>adminName</th>
-    <td>Name in confirmation mails</td>
+    <th align="left">adminName</th>
+    <td align="left">Name in confirmation mails</td>
   </tr>
 </table>
 
-## site config (for nicer link in subscriber mails)
+## Site config (for nicer link in subscriber mails)
 
 ```yaml
 routeEnhancers:
