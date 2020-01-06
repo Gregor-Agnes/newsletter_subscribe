@@ -63,3 +63,9 @@ routeEnhancers:
           unsubscribe: subscriptionHash
           uid: uid
 ```
+# Unsubscribe link in direkt mail
+1. First add the field subscription_hash to the fields of direct mail in the extension configuration of direct mail: 
+![direct mail configuration](https://github.com/Gregor-Agnes/subscribe/raw/master/Resources/Public/Gfx/ExtManDirectMail1.png)
+2. Add the link in your mail template:\
+`<a href="http://www.domain.tld/page/unsubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
+where this `unsubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.
