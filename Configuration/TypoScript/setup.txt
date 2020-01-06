@@ -17,14 +17,8 @@ plugin {
 		}
 		settings {
 
-			# uid of folder with subcriber storage
-			#subscriberPid = 11
-
-			#uid of page with unsubscribe form or unsubscribe form (for unsubscribe Links)
-			unSubscribeFormPid = 3
-
 			# uid of page with data protection information (if any)
-			dataProtectionPage = 821
+			dataProtectionPage = 1
 
 			adminEmail = mailer@yourprovider.de
 			adminName = Your Provider
