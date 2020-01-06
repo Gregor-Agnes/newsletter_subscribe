@@ -15,9 +15,9 @@
 * Include static template
 
 ## Configuration
-<table>
+<table style="text-align: left;">
   <tr>
-    <th><strong>dataProtectionPage</strong></th>
+    <th>dataProtectionPage</th>
     <td>Uid of page with information about the data protection policy</td>
   </tr>
   <tr>
@@ -29,7 +29,8 @@
     <td>Name in confirmation mails</td>
   </tr>
 </table>
-##site config (for nicer link in subscriber mails)
+
+## site config (for nicer link in subscriber mails)
 
 ```yaml
 routeEnhancers:
