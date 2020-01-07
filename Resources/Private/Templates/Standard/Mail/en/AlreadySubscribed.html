@@ -1,0 +1,27 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<p>Hallo {subscription.firstName} {subscription.lastName},
+
+<p>Sie haben den Newsletter schon abonniert und das Formular wurde erneut mit dieser E-Mail-Adresse versendet.</p>
+
+<p>Sie haben das Formular nicht abgeschickt? Dann können Sie diese E-Mail ignorieren, Ihr Abonnement wird normal weitergeführt.</p>
+
+<p>Sie haben das Formular erneut abgeschickt? Wenn Sie Ihr Abonnement
+	<strong>kündigen</strong>
+   wollen: Wählen Sie folgenden Link oder kopieren Sie ihn in die Adresszeile Ihre Browsers.
+</p>
+
+<p>
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
+</p>
+
+<p>Herzliche Grüße,</p>
+
+<p>Ihr Newsletter-Team</p>
+
+</html>

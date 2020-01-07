@@ -67,6 +67,7 @@ class SubscribeController extends ActionController
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
+
     }
 
     public function showFormAction()
@@ -114,7 +115,7 @@ class SubscribeController extends ActionController
                 (string)GeneralUtility::_POST('formToken'),
                 'Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']
             )) {
-            $this->redirect('showUnsubscribeFormAction');
+            $this->redirect('showUnsubscribeForm');
         }
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -141,7 +142,6 @@ class SubscribeController extends ActionController
             $this->redirect('showUnsubscribeForm', null, null, ['message' => 'E-Mail-Adresse nicht valide']);
         }
 
-        $message = 'Wir haben eine E-Mail zum Kündigen des Abonnements an die Adresse <strong>' . $email . '</strong> gesendet.';
 
         $this->view->assignMultiple(compact('message'));
     }

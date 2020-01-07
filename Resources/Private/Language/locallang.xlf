@@ -70,7 +70,19 @@
                 <source>Submit</source>
             </trans-unit>
             <trans-unit id="subjectUnsubscribe">
-                <source>Unsubscribe your subscription:</source>
+                <source>Unsubscribe your subscription</source>
+            </trans-unit>
+            <trans-unit id="messageUnsubscribe">
+                <source>We've sent an email with further instruction to the following address:</source>
+            </trans-unit>
+            <trans-unit id="didntReceiveMail">
+                <source>If you did not receive the mail</source>
+            </trans-unit>
+            <trans-unit id="didntReceiveMailReason1">
+                <source>Please verify the given email address</source>
+            </trans-unit>
+            <trans-unit id="didntReceiveMailReason2">
+                <source>Please check your spam folder too</source>
             </trans-unit>
             <trans-unit id="hallo">
                 <source>Hallo %1$s %2$s</source>

@@ -8,13 +8,11 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-
-	<h3>Informationen zu Ihrem Abonnement</h3>
 	<p>
-		<f:format.html>{message}</f:format.html></p>
-	<p>Sollten Sie die E-Mail nicht erhalten haben:</p>
+		{f:translate(key: 'messageUnsubscribe')} . <strong>{email}</strong>
+	<p>{f:translate(key: 'didntReceiveMail')}:</p>
 	<ul>
-		<li>Überprüfen Sie, ob die E-Mail-Adresse oben korrekt ist.</li>
-		<li>Überprüfen Sie auch bitte Ihren Spam-Ordner auf falsch zugewiesene Mails.</li>
+		<li>{f:translate(key: 'didntReceiveMailReason1')}</li>
+		<li>{f:translate(key: 'didntReceiveMailReason2')}</li>
 	</ul>
 </f:section>
