@@ -24,6 +24,8 @@ plugin {
 			adminName = Your admin Name
 			# email and data_protection are always shown
 			showFields =  gender,firstName,lastName
+			# used in several places
+			newsletterName = Newsletter
 
 		}
 	}

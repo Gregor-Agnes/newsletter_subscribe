@@ -31,6 +31,7 @@ use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use Zwo3\Subscribe\Domain\Model\Subscription;
 use Zwo3\Subscribe\Domain\Repository\SubscriptionFeUserRepository;
@@ -128,7 +129,7 @@ class SubscribeController extends ActionController
                 $this->sendTemplateEmail(
                     [$existing->getEmail() => $existing->getName()],
                     [$this->settings['adminEmail'] => $this->settings['adminName']],
-                    'Ihr Abonnement',
+                    LocalizationUtility::translate('subjectUnsubscribe') . $this->settings['newsletterName'],
                     'Mail/CreateUnsubscribe',
                     [
                         'subscription' => $existing
@@ -156,7 +157,7 @@ class SubscribeController extends ActionController
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
                 (string)GeneralUtility::_POST('formToken'),
-                'Subscribe', 'showSubscribe', $this->configurationManager->getContentObject()->data['uid']
+                'Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']
             )) {
             $this->redirect('showForm');
         }
