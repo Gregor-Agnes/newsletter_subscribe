@@ -5,7 +5,9 @@
       xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<p>Hallo {subscription.firstName} {subscription.lastName},
+<f:if condition="{subscription.firstName} || {subscription.lastName}">
+	<p>Hallo {subscription.firstName} {subscription.lastName},</p>
+</f:if>
 
 <p>Sie haben den Newsletter schon abonniert und das Formular wurde erneut mit dieser E-Mail-Adresse versendet.</p>
 
@@ -17,7 +19,7 @@
 </p>
 
 <p>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="undosubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
 </p>
 
 <p>Herzliche Grüße,</p>

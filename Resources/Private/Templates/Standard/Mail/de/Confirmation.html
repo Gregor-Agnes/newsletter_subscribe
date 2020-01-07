@@ -7,7 +7,7 @@
 
 
 <f:if condition="{subscription.firstName} || {subscription.lastName}">
-	<p><f:translate key="hallo" arguments="{1:subscription.firstName, 2: subscription.lastName}" />,</p>
+	<p>Hallo {subscription.firstName} {subscription.lastName},</p>
 </f:if>
 
 <p>wir freuen uns, dass Sie den Newsletter abonnieren möchten.<br>
@@ -18,7 +18,7 @@
 
 <p>
 	Sie können den Newsletter jederzeit abbestellen, indem Sie auf den<br><br>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action><br><br><br>klicken.
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="undosubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action><br><br><br>klicken.
 </p>
  
 

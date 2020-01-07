@@ -18,6 +18,7 @@ use Swift_Attachment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,6 +34,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use Zwo3\Subscribe\Domain\Model\Subscription;
 use Zwo3\Subscribe\Domain\Repository\SubscriptionFeUserRepository;
 use Zwo3\Subscribe\Domain\Repository\SubscriptionRepository;
@@ -53,7 +55,6 @@ class SubscribeController extends ActionController
 
     /**
      * @var PersistenceManager
-     *
      */
     protected $persistenceManager;
 
@@ -67,7 +68,6 @@ class SubscribeController extends ActionController
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
-
     }
 
     public function showFormAction()
@@ -127,23 +127,26 @@ class SubscribeController extends ActionController
                 }
                 // Abmelden Mail versenden
 
-                $this->sendTemplateEmail(
-                    [$existing->getEmail() => $existing->getName()],
-                    [$this->settings['adminEmail'] => $this->settings['adminName']],
-                    LocalizationUtility::translate('subjectUnsubscribe') . $this->settings['newsletterName'],
-                    'Mail/CreateUnsubscribe',
-                    [
-                        'subscription' => $existing
-                    ]
-                );
-                $this->subscriptionRepository->update($existing);
+                try {
+                    $this->sendTemplateEmail(
+                        [$existing->getEmail() => $existing->getName()],
+                        [$this->settings['adminEmail'] => $this->settings['adminName']],
+                        LocalizationUtility::translate('subjectUnsubscribe', 'subscribe') . $this->settings['newsletterName'],
+                        'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/CreateUnsubscribe',
+                        [
+                            'subscription' => $existing
+                        ]
+                    );
+                    $this->subscriptionRepository->update($existing);
+                } catch (InvalidTemplateResourceException $exception) {
+                    $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                }
             }
         } else {
             $this->redirect('showUnsubscribeForm', null, null, ['message' => 'E-Mail-Adresse nicht valide']);
         }
 
-
-        $this->view->assignMultiple(compact('message'));
+        $this->view->assignMultiple(compact('message', 'email'));
     }
 
     /**
@@ -166,15 +169,20 @@ class SubscribeController extends ActionController
             // Abmelden Mail versenden
             /** @var Subscription $existing */
 
-            $this->sendTemplateEmail(
-                [$existing->getEmail() => $existing->getName()],
-                [$this->settings['adminEmail'] => $this->settings['adminName']],
-                'Ihr Abonnement',
-                'Mail/AlreadySubscribed',
-                [
-                    'subscription' => $existing,
-                ]
-            );
+            try {
+                $this->sendTemplateEmail(
+                    [$existing->getEmail() => $existing->getName()],
+                    [$this->settings['adminEmail'] => $this->settings['adminName']],
+                    'Ihr Abonnement',
+                    'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/AlreadySubscribed',
+                    [
+                        'subscription' => $existing,
+                    ]
+                );
+            } catch (InvalidTemplateResourceException $exception) {
+                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+            }
+
             //$this->subscriptionRepository->update($existing);
 
             $this->view->assignMultiple(['subscription' => $existing]);
@@ -191,15 +199,19 @@ class SubscribeController extends ActionController
             $this->subscriptionRepository->add($subscription);
             $this->persistenceManager->persistAll();
 
-            $this->sendTemplateEmail(
-                [$subscription->getEmail() => $subscription->getName()],
-                [$this->settings['adminEmail'] => $this->settings['adminName']],
-                'Ihr Abonnement',
-                'Mail/Confirmation',
-                [
-                    'subscription' => $subscription,
-                ]
-            );
+            try {
+                $this->sendTemplateEmail(
+                    [$subscription->getEmail() => $subscription->getName()],
+                    [$this->settings['adminEmail'] => $this->settings['adminName']],
+                    'Ihr Abonnement',
+                    'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/Confirmation',
+                    [
+                        'subscription' => $subscription,
+                    ]
+                );
+            } catch (InvalidTemplateResourceException $exception) {
+                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+            }
 
             $this->view->assignMultiple(['subscription' => $subscription]);
         }
@@ -237,6 +249,11 @@ class SubscribeController extends ActionController
         $this->view->assignMultiple(compact('message', 'subscription', 'success'));
     }
 
+    public function undosubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
+    {
+        $this->redirect('unsubscribe', null, null, compact('uid', 'subscriptionHash'));
+    }
+
     /**
      * @param int $uid
      * @param string $subscriptionHash
@@ -260,11 +277,9 @@ class SubscribeController extends ActionController
                 // increasing sleeptimer
                 $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
-
                 //TODO redirect with 404
 
             }
-
         } else {
             $message = 'Wir konnten kein entsprechende Abonnement finden. Haben Sie Ihr Abonnement vielleicht schon bestätigt?';
             //TODO redirect with 404
@@ -331,10 +346,9 @@ class SubscribeController extends ActionController
      * @param Subscription $subscription
      * @param int $maxSleeptime max time to wait after last hit, if reached, sleep is resetted
      * @param int $multiplier multipliere * hitnumber = seconds to wait,
-     *
      * @return Subscription
      */
-    protected function setSleep(Subscription $subscription, $maxSleeptime = 300, $multiplier = 2):Subscription
+    protected function setSleep(Subscription $subscription, $maxSleeptime = 300, $multiplier = 2): Subscription
     {
         $sleepTime = $subscription->getHitNumber() * $multiplier;
         if (time() > $subscription->getLastHit() + $maxSleeptime) {
@@ -349,5 +363,13 @@ class SubscribeController extends ActionController
         $subscription->setLastHit(time());
 
         return $subscription;
+    }
+
+    /**
+     * @return bool The flash message or FALSE if no flash message should be set
+     */
+    protected function getErrorFlashMessage()
+    {
+        return false;
     }
 }

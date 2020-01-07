@@ -5,19 +5,18 @@
       xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-
-
-<f:if condition="{subscription.name}">
-	<p>Hallo {subscription.name},</p>
+<f:if condition="{subscription.firstName} || {subscription.lastName}">
+	<p>Hello {subscription.firstName} {subscription.lastName},</p>
 </f:if>
 
-<p>Wenn Sie Ihr Abonnement kündigen wollen: Klicken Sie bitte folgenden Link.</p>
+<p>If you want to cancel your subscription to our Newsletter, click the following link.</p>
 
 <p>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">Cancel subscription</f:link.action>
 </p>
 
-<p>Herzliche Grüße,</p>
+<p>Kind regards,</p>
 
-<p>Ihr Newsletter-Team</p>
+<p>the newsletter team</p>
 </html>
+

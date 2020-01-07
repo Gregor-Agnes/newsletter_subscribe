@@ -5,23 +5,25 @@
       xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<p>Hallo {subscription.firstName} {subscription.lastName},
+<f:if condition="{subscription.firstName} || {subscription.lastName}">
+	<p>Hello {subscription.firstName} {subscription.lastName},</p>
+</f:if>
 
-<p>Sie haben den Newsletter schon abonniert und das Formular wurde erneut mit dieser E-Mail-Adresse versendet.</p>
+<p>You have already subscribed to this Newsletter.</p>
 
-<p>Sie haben das Formular nicht abgeschickt? Dann können Sie diese E-Mail ignorieren, Ihr Abonnement wird normal weitergeführt.</p>
+<p>You die not submit this form? Your subscription will continue, no action needed.</p>
 
-<p>Sie haben das Formular erneut abgeschickt? Wenn Sie Ihr Abonnement
-	<strong>kündigen</strong>
-   wollen: Wählen Sie folgenden Link oder kopieren Sie ihn in die Adresszeile Ihre Browsers.
+<p>You have submit the form and want to
+	<strong>cancel</strong>
+   your subscription? Please choose the following link:
 </p>
 
 <p>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="unsubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
+	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="undosubscribe" controller="Subscribe" pluginName="subscribe" extensionName="subscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">Cancel subscription</f:link.action>
 </p>
 
-<p>Herzliche Grüße,</p>
+<p>Kind regards,</p>
 
-<p>Ihr Newsletter-Team</p>
+<p>the newsletter team</p>
 
 </html>
