@@ -20,12 +20,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Zwo3\\Subscribe\\": "Classes/"
+      "Zwo3\\NewsletterSubscribe\\": "Classes/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Zwo3\\Subscribe\\Tests\\": "Tests/"
+      "Zwo3\\NewsletterSubscribe\\Tests\\": "Tests/"
     }
   }
 }

@@ -1,5 +1,5 @@
 plugin {
-	tx_subscribe {
+	tx_newsletter_subscribe {
 		view {
 		}
 		mvc {
@@ -9,7 +9,7 @@ plugin {
 			#overides the settings in the plugin form, if used
 			storagePid = 11
 			classes {
-				Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
+				Zwo3\NewsletterSubscribe\Domain\Model\Subscription.newRecordStoragePid = 175
 			}
 		}
 		features {

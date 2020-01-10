@@ -1,13 +1,13 @@
 <?php
 
-namespace Zwo3\Subscribe\Domain\Model;
+namespace Zwo3\NewsletterSubscribe\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\Validate;
 
 /**
  * Class Subscription
  *
- * @package Zwo3\Subscribe\Domain\Model
+ * @package Zwo3\NewsletterSubscribe\Domain\Model
  */
 class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 

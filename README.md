@@ -54,7 +54,7 @@ routeEnhancers:
     plugin: Unsubscribe
     routes:
       -
-        routePath: '/unsubscribe/{unsubscribe}/{uid}'
+        routePath: '/unnewsletter_subscribe/{unsubscribe}/{uid}'
         _controller: 'Subscribe::unsubscribe'
         _arguments:
           unsubscribe: subscriptionHash
@@ -71,7 +71,7 @@ routeEnhancers:
           confirm: subscriptionHash
           uid: uid
       -
-        routePath: '/unsubscribe/{unsubscribe}/{uid}'
+        routePath: '/unnewsletter_subscribe/{unsubscribe}/{uid}'
         _controller: 'Subscribe::unsubscribe'
         _arguments:
           unsubscribe: subscriptionHash
@@ -79,10 +79,10 @@ routeEnhancers:
 ```
 ## Unsubscribe link in direkt mail
 1. First add the field subscription_hash to the fields of direct mail in the extension configuration of direct mail: 
-![direct mail configuration](https://github.com/Gregor-Agnes/subscribe/raw/master/Resources/Public/Gfx/ExtManDirectMail1.png)
+![direct mail configuration](https://github.com/Gregor-Agnes/newsletter_subscribe/raw/master/Resources/Public/Gfx/ExtManDirectMail1.png)
 2. Add the link in your mail template:\
-`<a href="http://www.domain.tld/page/unsubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
-where this `unsubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.
+`<a href="http://www.domain.tld/page/unnewsletter_subscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
+where this `unnewsletter_subscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.
 
 ***
 

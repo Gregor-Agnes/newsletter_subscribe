@@ -64,7 +64,7 @@
             <settings.adminEmail>
                 <TCEforms>
                     <exclude>1</exclude>
-                    <label>LLL:EXT:subscribe/Resources/Private/Language/locallang.xlf:adminEmail</label>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:adminEmail</label>
                     <config>
                         <type>input</type>
                         <size>20</size>
@@ -76,7 +76,7 @@
             <settings.adminName>
                 <TCEforms>
                     <exclude>1</exclude>
-                    <label>LLL:EXT:subscribe/Resources/Private/Language/locallang.xlf:adminName</label>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:adminName</label>
                     <config>
                         <type>input</type>
                         <size>20</size>
@@ -88,7 +88,7 @@
             <settings.newwLetterName>
                 <TCEforms>
                     <exclude>1</exclude>
-                    <label>LLL:EXT:subscribe/Resources/Private/Language/locallang.xlf:newwLetterName</label>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:newwLetterName</label>
                     <config>
                         <type>input</type>
                         <size>20</size>

@@ -4,17 +4,17 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'Zwo3.Subscribe',
+    'Zwo3.NewsletterSubscribe',
     'Subscribe',
     'Subscribe to Addresslist',
-    'EXT:subscribe/Resources/Public/Gfx/Extension.png'
+    'EXT:newsletter_subscribe/Resources/Public/Gfx/Extension.png'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'Zwo3.Subscribe',
+    'Zwo3.NewsletterSubscribe',
     'Unsubscribe',
     'Unsubscribe from Addresslist',
-    'EXT:subscribe/Resources/Public/Gfx/Extension.png'
+    'EXT:newsletter_subscribe/Resources/Public/Gfx/Extension.png'
 );
 
 
@@ -26,10 +26,10 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['subscribe_un
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'subscribe_subscribe',
-    'FILE:EXT:subscribe/Configuration/FlexForm/flexform_subscribe.xml',
+    'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_subscribe.xml',
     '*'
 );\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'subscribe_unsubscribe',
-    'FILE:EXT:subscribe/Configuration/FlexForm/flexform_unsubscribe.xml',
+    'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_unsubscribe.xml',
     '*'
 );

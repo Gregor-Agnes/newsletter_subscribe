@@ -1,6 +1,6 @@
 <?php
 
-namespace Zwo3\Subscribe\Controller;
+namespace Zwo3\NewsletterSubscribe\Controller;
 
 /*
  * Subscription für tt_address
@@ -35,17 +35,17 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
-use Zwo3\Subscribe\Domain\Model\Subscription;
-use Zwo3\Subscribe\Domain\Repository\SubscriptionFeUserRepository;
-use Zwo3\Subscribe\Domain\Repository\SubscriptionRepository;
-use Zwo3\Subscribe\Domain\Repository\SubscriptionTtAddressRepository;
+use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
+use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionFeUserRepository;
+use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
+use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionTtAddressRepository;
 
 /**
  * Class SubscribeController
  *
- * @package Zwo3\Subscribe\Controller
+ * @package Zwo3\NewsletterSubscribe\Controller
  */
-class SubscribeController extends ActionController
+class NewsletterSubscribeController extends ActionController
 {
 
     /**
@@ -131,7 +131,7 @@ class SubscribeController extends ActionController
                     $this->sendTemplateEmail(
                         [$existing->getEmail() => $existing->getName()],
                         [$this->settings['adminEmail'] => $this->settings['adminName']],
-                        LocalizationUtility::translate('subjectUnsubscribe', 'subscribe') . $this->settings['newsletterName'],
+                        LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
                         'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/CreateUnsubscribe',
                         [
                             'subscription' => $existing
@@ -299,13 +299,13 @@ class SubscribeController extends ActionController
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
         $emailView = GeneralUtility::makeInstance(StandaloneView::class);
         $emailView->setLayoutRootPaths(
-            array(GeneralUtility::getFileAbsFileName('EXT:subscribe/Resources/Private/Layouts'))
+            array(GeneralUtility::getFileAbsFileName('EXT:newsletter_subscribe/Resources/Private/Layouts'))
         );
         $emailView->setPartialRootPaths(
-            array(GeneralUtility::getFileAbsFileName('EXT:subscribe/Resources/Private/Partials'))
+            array(GeneralUtility::getFileAbsFileName('EXT:newsletter_subscribe/Resources/Private/Partials'))
         );
         $emailView->setTemplateRootPaths(
-            array(GeneralUtility::getFileAbsFileName('EXT:subscribe/Resources/Private/Templates'))
+            array(GeneralUtility::getFileAbsFileName('EXT:newsletter_subscribe/Resources/Private/Templates'))
         );
         $emailView->setTemplate($templateName);
 
