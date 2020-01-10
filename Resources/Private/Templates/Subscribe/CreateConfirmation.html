@@ -9,14 +9,12 @@
 
 <f:section name="Default">
 
-	<h3>Anmeldung zum Newsletter</h3>
-	<p>Vielen Dank für Ihr Interesse!<br>
-	   Nächster Schritt: Newsletter-Anmeldung bestätigen</p>
-	<p>Wir haben Ihnen soeben eine E-Mail an folgende Adresse geschickt: {subscription.email}. Darin finden Sie einen Link zur Bestätigung.<br>
-	   Bitte beachten Sie, dass Ihre Anmeldung erst nach der Bestätigung des Links abgeschlossen ist!
+	<p>{f:translate(key: 'thankYou')}<br>
+	   {f:translate(key: 'nextStep')}</p>
+	<p>{f:translate(key: 'confirmationSendTo')}{subscription.email}. {f:translate(key: 'findLink')}
 	</p>
 	<p>
-		Wenn Sie in den nächsten Minuten keine E-Mail erhalten, prüfen Sie bitte Ihren Spam-Ordner.
+		{f:translate(key: 'checkSpam')}
 	</p>
 
 </f:section>

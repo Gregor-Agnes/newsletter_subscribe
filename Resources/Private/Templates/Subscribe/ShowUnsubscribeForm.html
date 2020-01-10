@@ -10,21 +10,23 @@
 <f:section name="Default">
 	<f:form object="{subscription}" action="createUnsubscribeMail">
 		<input type="hidden" name="formToken" value="{formToken}">
-		<p>Sie möchten den Newsletter nicht mehr erhalten? Tragen Sie die E-Mail-Adresse ein, mit der Sie sich angemeldet haben, wir senden Ihnen dann eine E-Mail mit weiteren Anweisungen zu.</p>
+		<p>{f:translate(key: 'wantToCancel')}</p>
 		<f:form.textfield name="email" placeholder="Ihre E-Mail-Adresse*"></f:form.textfield>
 		<f:form.validationResults for="subscription.email">
 			<f:if condition="{message}">
-						<p class="help-text">{message}</p>
+				<p class="help-text">{message}</p>
 			</f:if>
 		</f:form.validationResults>
 
 		<f:form.validationResults for="subscription.dataProtection">
 			<f:if condition="{validationResults.flattenedErrors}">
 				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text"><f:translate key="error.{error.code}"/></p>
+					<p class="help-text">
+						<f:translate key="error.{error.code}" />
+					</p>
 				</f:for>
 			</f:if>
 		</f:form.validationResults>
-		<button class="button hollow" type="submit">Mail senden</button>
+		<button class="button hollow" type="submit">{f:translate(key: 'sendMail')}</button>
 	</f:form>
 </f:section>

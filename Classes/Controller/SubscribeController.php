@@ -233,17 +233,14 @@ class SubscribeController extends ActionController
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash()) {
                 $this->subscriptionRepository->remove($subscription);
-                $message = 'Ihr Abonnement wurde beendet, alle Ihre Daten wurden endgültig aus unserer Datenbank gelöscht.';
                 $success = true;
             } else {
-                $message = 'Dieser Link ist nicht gültig';
                 // increasing sleeptimer
                 $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
                 //TODO redirect with 404
             }
         } else {
-            $message = 'Wir konnten kein entsprechendes Abonnement finden.';
             //TODO redirect with 404
         }
         $this->view->assignMultiple(compact('message', 'subscription', 'success'));

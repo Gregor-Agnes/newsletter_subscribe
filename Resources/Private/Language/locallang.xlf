@@ -87,6 +87,58 @@
             <trans-unit id="hallo">
                 <source>Hallo %1$s %2$s</source>
             </trans-unit>
+
+            <trans-unit id="newsletterSubscription">
+                <source>Newsletter Subscription</source>
+            </trans-unit>
+            <trans-unit id="noAboFound">
+                <source>We did not find a matching subscription</source>
+            </trans-unit>
+
+            <!-- Unsubscribe -->
+            <trans-unit id="youHaveUnsubscribed">
+                <source>You have successfully unsubscribed with the following data:</source>
+            </trans-unit>
+            <trans-unit id="sendMail">
+                <source>send mail</source>
+            </trans-unit>
+
+            <!-- Unsubscribe Form  -->
+            <trans-unit id="wantToCancel">
+                <source>You want to cancel your subscription? Please insert the email address you subscribed to</source>
+            </trans-unit>
+            <trans-unit id="subscribeAgain">
+                <source>You can subscribe again at any time:</source>
+            </trans-unit>
+
+            <!-- Confirm -->
+            <trans-unit id="confirmed">
+                <source>You have successfully confirmed your subscription</source>
+            </trans-unit>
+            <trans-unit id="youWillReceive">
+                <source>From now on, you will receive our newsletter.</source>
+            </trans-unit>
+            <trans-unit id="haveFun">
+                <source>Have fun while reading.</source>
+            </trans-unit>
+
+            <!-- Request for confirmation -->
+            <trans-unit id="thankYou">
+                <source>Thank you for your interest.</source>
+            </trans-unit>
+            <trans-unit id="nextStep">
+                <source>Next step: Confirm your subscription.</source>
+            </trans-unit>
+            <trans-unit id="confirmationSendTo">
+                <source>We`ve sent a confirmation link to the following address:</source>
+            </trans-unit>
+            <trans-unit id="findLink">
+                <source>There you will find link to confirm your subscription. Please note: your subscription will not be valid untill you click on that link!</source>
+            </trans-unit>
+            <trans-unit id="checkSpam">
+                <source>If you do not receive an email from us: please check your spam folder too.</source>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

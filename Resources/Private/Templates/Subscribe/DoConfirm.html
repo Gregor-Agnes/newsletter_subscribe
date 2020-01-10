@@ -8,15 +8,18 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-	<h3>Vielen Dank für Ihre Anmeldung</h3>
 	<p>
-		Wir haben Sie mit folgenden Daten gespeichert:</p>
+		{f:translate(key: 'confirmed')}:</p>
 	<p>
-		<f:if condition="{subscription.name}">
-			Name:{subscription.name}<br>
+		<f:if condition="{subscription.firstName} || {subscription.lastName}">
+			<f:then>{subscription.firstName} {subscription.lastName}
+				<br>
+			</f:then>
 		</f:if>
-		E-Mail: {subscription.email}
+		<f:if condition="{subscription.email}">
+			{subscription.email}
+		</f:if>
 	</p>
-	<p>Ab sofort erhalten Sie den Newsletter.</p>
-	<p>Viel Spaß beim Lesen!</p>
+	<p>{f:translate(key: 'youWillReceive')}</p>
+	<p>{f:translate(key: 'haveFun')}</p>
 </f:section>

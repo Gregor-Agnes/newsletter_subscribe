@@ -9,32 +9,30 @@
 
 <f:section name="Default">
 
-	<h3>Abmeldung vom Newsletter</h3>
-
 	<f:if condition="{success}">
 		<f:then>
 			<f:if condition="{subscription.email} || {subscription.name}">
 
-				<p>Sie haben sich mit folgenden Daten abgemeldet:
+				<p>{f:translate(key: 'youHaveUnsubscribed')}:
 					<br>
-					<f:if condition="{subscription.name}">
-						<f:then>Name: {subscription.name}
+					<f:if condition="{subscription.firstName} || {subscription.lastName}">
+						<f:then>{subscription.firstName} {subscription.lastName}
 							<br>
 						</f:then>
 					</f:if>
 					<f:if condition="{subscription.email}">
-						E-Mail: {subscription.email}
+						{subscription.email}
 					</f:if>
 				</p>
 
 			</f:if>
 			<p>
-				Sie können sich natürlich auch künftig jederzeit wieder für den Newsletter anmelden.
-				<f:link.page pageUid="2" class="button">Newsletter Abo</f:link.page>
+				{f:translate(key: 'subscribeAgain')}:
+				<f:link.page pageUid="2" class="button">{f:translate(key: 'newsletterSubscription')}</f:link.page>
 			</p>
 		</f:then>
 		<f:else>
-			{message}
+			{f:translate(key: 'noAboFound')}
 		</f:else>
 	</f:if>
 
