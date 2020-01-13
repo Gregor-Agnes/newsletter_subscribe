@@ -1,148 +1,191 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2019-10-16T13:32:10Z" product-name="newsletter_subscribe">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-10-16T13:32:10Z" product-name="newsletter_subscribe" target-language="de">
         <header/>
         <body>
             <trans-unit id="adminEmail">
-                <source>Admin Email Address</source>
+                <source>Admin email address</source>
+                <target state="translated">Admin E-Mail-Adresse</target>
             </trans-unit>
             <trans-unit id="adminName">
                 <source>Admin Name</source>
+                <target>Admin Name</target>
             </trans-unit>
             <trans-unit id="error.1238108067">
                 <source>Please insert a valid value</source>
+                <target>Bitte passenden Wert einfügen</target>
             </trans-unit>
             <trans-unit id="error.1221560718">
                 <source>Please fill in all fields marked with *</source>
+                <target>Bitte alle mit * markierten Felder ausfüllen!</target>
             </trans-unit>
             <trans-unit id="error.1221559976">
                 <source></source>
             </trans-unit>
             <trans-unit id="error.1361959228">
                 <source>You have to accept our data protection policy</source>
+                <target>Sie müssen die Datenschutzerklärung zur Kenntnis nehmen und den Bedingungen zustimmen.</target>
             </trans-unit>
             <trans-unit id="error.1396343138">
                 <source>Number too high</source>
+                <target>Anzahl zu hoch</target>
             </trans-unit>
             <trans-unit id="pleaseCorrectErrors">
                 <source>Please correct the highlighted errors below.</source>
+                <target>Bitte korrigieren Sie die folgenden Fehler.</target>
             </trans-unit>
             <trans-unit id="pidSubscribe">
                 <source>uid of page with unsubscribe form, also used for confirmation / unsubscribe links</source>
+                <target>uid der Seite mit dem Kündigen-Formular, auch für fie Bestätigung von Abo / Abo kündigen Links </target>
             </trans-unit>
             <trans-unit id="dataProtectionPage">
                 <source>Page with data protection information</source>
+                <target>Uid der Seite mit der Datenschutzerklärung</target>
             </trans-unit>
-            <trans-unit id="newsletterName">
+            <trans-unit id="newsLetterName">
                 <source>Title of the newsletter/subscription list</source>
+                <target>Titel/Name des Newsletters</target>
             </trans-unit>
             <trans-unit id="showFields">
                 <source>Additional fields to show in subscription form (gender,firstName,lastName), email and dataProtection are always shown.</source>
+                <target>Weitere Felder zur Anzeige im Abo-Formular (gender,firstName,lastName), email und dataProtection werden immer angezeigt.</target>
             </trans-unit>
             <trans-unit id="email">
                 <source>Email address</source>
+                <target>E-Mail-Adresse</target>
             </trans-unit>
             <trans-unit id="emailPlaceholder">
                 <source>Your email address</source>
+                <target>Ihre E-Mail-Adresse</target>
             </trans-unit>
             <trans-unit id="dataProtection">
                 <source>data protection</source>
+                <target>Datenschutzerklärung</target>
             </trans-unit>
             <trans-unit id="dataProtectionHint1">
-                <source>Yes, I want to receive the Newsletter. I have read and understand the </source>
+                <source>Yes, I want to receive the newsletter. I have read and understand the </source>
+                <target>Ja, ich möchte den Newsletter abonnieren. Ich habe die </target>
             </trans-unit>
             <trans-unit id="dataProtectionHint2">
-                <source>and agree with it.</source>
+                <source> and agree with it.</source>
+                <target> gelesen, verstanden und akzezptiert.</target>
             </trans-unit>
             <trans-unit id="gender">
                 <source>Salutation</source>
+                <target>Anrede</target>
             </trans-unit>
             <trans-unit id="mrs">
                 <source>Mrs</source>
+                <target>Frau</target>
             </trans-unit>
             <trans-unit id="mr">
                 <source>Mr</source>
+                <target>Herr</target>
             </trans-unit>
             <trans-unit id="various">
                 <source>various</source>
+                <target>divers</target>
             </trans-unit>
             <trans-unit id="firstName">
                 <source>First name</source>
+                <target>Vorname</target>
             </trans-unit>
             <trans-unit id="lastName">
                 <source>Last name</source>
+                <target>Nachname</target>
             </trans-unit>
             <trans-unit id="submit">
                 <source>Submit</source>
+                <target>Abschicken</target>
             </trans-unit>
             <trans-unit id="subjectUnsubscribe">
                 <source>Unsubscribe your subscription</source>
+                <target>Abonnement kündigen</target>
             </trans-unit>
             <trans-unit id="messageUnsubscribe">
                 <source>We've sent an email with further instruction to the following address:</source>
+                <target>Wir haben Ihnen eine Nachricht mit weiteren Anweisungen an folgende Adresse gesendet:</target>
             </trans-unit>
             <trans-unit id="didntReceiveMail">
                 <source>If you did not receive the mail</source>
+                <target>Falls Sie die E-Mail nicht erhalten haben</target>
             </trans-unit>
             <trans-unit id="didntReceiveMailReason1">
                 <source>Please verify the given email address</source>
+                <target>Bitte überprüfen Sie die E-Mail-Adresse</target>
             </trans-unit>
             <trans-unit id="didntReceiveMailReason2">
                 <source>Please check your spam folder too</source>
+                <target>Bitte kontrollieren Sie auch Ihren Spam-Ordner</target>
             </trans-unit>
             <trans-unit id="hallo">
                 <source>Hallo %1$s %2$s</source>
+                <target>Hallo %1$s %2$s</target>
             </trans-unit>
 
             <trans-unit id="newsletterSubscription">
                 <source>Newsletter Subscription</source>
+                <target>Newsletter Abonnement</target>
             </trans-unit>
             <trans-unit id="noAboFound">
                 <source>We did not find a matching subscription</source>
+                <target>Wir haben kein passendes Abonnement gefunden</target>
             </trans-unit>
 
             <!-- Unsubscribe -->
             <trans-unit id="youHaveUnsubscribed">
                 <source>You have successfully unsubscribed with the following data:</source>
+                <target>Sie haben sich erfolgreich mit folgenden Daten abgemeldet:</target>
             </trans-unit>
             <trans-unit id="sendMail">
                 <source>send mail</source>
+                <target>E-Mail senden</target>
             </trans-unit>
 
             <!-- Unsubscribe Form  -->
             <trans-unit id="wantToCancel">
                 <source>You want to cancel your subscription? Please insert the email address you subscribed to</source>
+                <target>Sie möchten Ihr Abo kündigen? Bitte fügen Sie die E-Mail-Adresse ein, mit der Sie abonniert haben</target>
             </trans-unit>
             <trans-unit id="subscribeAgain">
                 <source>You can subscribe again at any time:</source>
+                <target>Sie können jederzeit erneut abonnieren:</target>
             </trans-unit>
 
             <!-- Confirm -->
             <trans-unit id="confirmed">
                 <source>You have successfully confirmed your subscription</source>
+                <target>Sie haben Ihr Abonnement erfolgreich bestätigt</target>
             </trans-unit>
             <trans-unit id="youWillReceive">
                 <source>From now on, you will receive our newsletter.</source>
+                <target>Von nun an erhalten Sie unseren Newsletter.</target>
             </trans-unit>
             <trans-unit id="haveFun">
                 <source>Have fun while reading.</source>
+                <target>Viel Spaß beim Lesen.</target>
             </trans-unit>
 
             <!-- Request for confirmation -->
             <trans-unit id="thankYou">
                 <source>Thank you for your interest.</source>
+                <target>Vielen Dankf für Ihr Interesse.</target>
             </trans-unit>
             <trans-unit id="nextStep">
                 <source>Next step: Confirm your subscription.</source>
+                <target>Nächster Schritt: Bestätigen Sie Ihr Abonnement.</target>
             </trans-unit>
             <trans-unit id="confirmationSendTo">
                 <source>We`ve sent a confirmation link to the following address:</source>
+                <target>Wir haben Ihnen eine Nachricht an folgende Adresse gesendet:</target>
             </trans-unit>
             <trans-unit id="findLink">
                 <source>There you will find link to confirm your subscription. Please note: your subscription will not be valid untill you click on that link!</source>
+                <target>Dort finden Sie einen Link zur Bestätigung Ihres Abonnements. Bitte beachten Sie: Ihr Abonnement ist erst nach Bestätigung des Links gültig!</target>
             </trans-unit>
             <trans-unit id="checkSpam">
                 <source>If you do not receive an email from us: please check your spam folder too.</source>
+                <target>Falls Sie kein E-Mail von uns erhalten haben: Bitte kontrollieren Sie auch Ihren Spam-Ordner.</target>
             </trans-unit>
 
         </body>
