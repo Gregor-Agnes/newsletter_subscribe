@@ -16,7 +16,7 @@
     "friendsoftypo3/tt-address": "^4.0.0"
   },
   "replace": {
-    "zwo3/subscribe": "self.version"
+    "zwo3/newsletter_subscribe": "self.version"
   },
   "autoload": {
     "psr-4": {
