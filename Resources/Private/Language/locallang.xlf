@@ -31,7 +31,13 @@
                 <source>uid of page with unsubscribe form, also used for confirmation / unsubscribe links</source>
             </trans-unit>
             <trans-unit id="dataProtectionPage">
-                <source>Page withe data protection information</source>
+                <source>Page with data protection information</source>
+            </trans-unit>
+            <trans-unit id="newsLetterName">
+                <source>Title of the newsletter/subscription list</source>
+            </trans-unit>
+            <trans-unit id="showFields">
+                <source>Additional fields to show in subscription form (gender,firstName,lastName), email and dataProtection are always shown.</source>
             </trans-unit>
             <trans-unit id="email">
                 <source>Email address</source>

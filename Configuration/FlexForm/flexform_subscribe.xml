@@ -101,10 +101,10 @@
                     </config>
                 </TCEforms>
             </settings.adminName>
-            <settings.newwLetterName>
+            <settings.newsLetterName>
                 <TCEforms>
                     <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:newwLetterName</label>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:newsLetterName</label>
                     <config>
                         <type>input</type>
                         <size>20</size>
@@ -112,7 +112,19 @@
                         <eval>trim</eval>
                     </config>
                 </TCEforms>
-            </settings.newwLetterName>
+            </settings.newsLetterName>
+            <settings.showFields>
+                <TCEforms>
+                    <exclude>1</exclude>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:showFields</label>
+                    <config>
+                        <type>input</type>
+                        <size>20</size>
+                        <max>60</max>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </settings.showFields>
         </el>
     </ROOT>
 </T3DataStructure>
