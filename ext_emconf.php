@@ -11,7 +11,7 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'newsletter_subscribe',
+	'title' => 'Newsletter Subscribe',
 	'description' => 'subscribe and unsubscribe to tt_address, generate static Link to unsubscribe (to use in Newsletter)',
 	'category' => 'plugin',
 	'author' => 'Gregor Agnes',

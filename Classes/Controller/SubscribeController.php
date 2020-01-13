@@ -45,7 +45,7 @@ use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionTtAddressRepository;
  *
  * @package Zwo3\NewsletterSubscribe\Controller
  */
-class NewsletterSubscribeController extends ActionController
+class SubscribeController extends ActionController
 {
 
     /**

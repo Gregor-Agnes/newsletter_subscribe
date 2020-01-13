@@ -5,26 +5,26 @@ defined('TYPO3_MODE') || die('Access denied.');
     'Zwo3.NewsletterSubscribe',
     'Subscribe',
     [
-        'NewsletterSubscribe' => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
+        'Subscribe' => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
     ],
     // non-cacheable actions
     [
-        'NewsletterSubscribe' => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
+        'Subscribe' => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
     ]
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Zwo3.NewsletterSubscribe',
     'Unsubscribe',
     [
-        'NewsletterSubscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
+        'Subscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
     ],
     // non-cacheable actions
     [
-        'NewsletterSubscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
+        'Subscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
     ]
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newsletter_subscribe_subscribe[subscriptionHash]';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newsletter_subscribe_subscribe[uid]';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newsletter_subscribe_unsubscribe[subscriptionHash]';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newsletter_subscribe_unsubscribe[uid]';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_subscribe[subscriptionHash]';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_subscribe[uid]';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_unsubscribe[subscriptionHash]';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_unsubscribe[uid]';
