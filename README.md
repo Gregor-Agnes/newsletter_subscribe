@@ -50,18 +50,18 @@
 routeEnhancers:
   UnSubscribe:
     type: Extbase
-    extension: Subscribe
+    extension: NewsletterSubscribe
     plugin: Unsubscribe
     routes:
       -
-        routePath: '/unnewsletter_subscribe/{unsubscribe}/{uid}'
+        routePath: '/unsubscribe/{unsubscribe}/{uid}'
         _controller: 'Subscribe::unsubscribe'
         _arguments:
           unsubscribe: subscriptionHash
           uid: uid
   Subscribe:
     type: Extbase
-    extension: Subscribe
+    extension: NewsletterSubscribe
     plugin: Subscribe
     routes:
       -
@@ -71,8 +71,8 @@ routeEnhancers:
           confirm: subscriptionHash
           uid: uid
       -
-        routePath: '/unnewsletter_subscribe/{unsubscribe}/{uid}'
-        _controller: 'Subscribe::unsubscribe'
+        routePath: '/undosubscribe/{unsubscribe}/{uid}'
+        _controller: 'Subscribe::undosubscribe'
         _arguments:
           unsubscribe: subscriptionHash
           uid: uid
@@ -87,13 +87,5 @@ where this `unnewsletter_subscribe/###USER_subscription_hash###/###USER_uid###"`
 ***
 
 # To do
-- translation 
 - write a scheduler task to remove unconfirmed addresses (after some time)
 - creating ajax submit
-- maybe version for fe_users\
-(not planned yet because username and password are mandatory for fe_users - and should be)
-- writing information about technical background
-
-***
-
-# Technical background
