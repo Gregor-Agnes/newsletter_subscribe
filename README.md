@@ -96,6 +96,8 @@ routeEnhancers:
 `<a href="http://www.domain.tld/page/undosubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
 where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.
 
+Note: The subscribe plugin must be inserted on the page "page" in that url.
+
 ***
 
 # To do
