@@ -14,7 +14,7 @@
 		<v:condition.iterator.contains needle="gender" haystack="{fields}">
 			<label>
 				<f:translate key="gender"></f:translate>
-				<f:form.select property="gender" options="{w: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="select" />
+				<f:form.select property="gender" options="{w: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
 			</label>
 		</v:condition.iterator.contains>
 		<v:condition.iterator.contains needle="firstName" haystack="{fields}">

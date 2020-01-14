@@ -74,6 +74,10 @@
                 <source>Salutation</source>
                 <target>Anrede</target>
             </trans-unit>
+            <trans-unit id="select">
+                <source>select</source>
+                <target>bitte wählen</target>
+            </trans-unit>
             <trans-unit id="mrs">
                 <source>Mrs</source>
                 <target>Frau</target>

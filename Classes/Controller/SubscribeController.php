@@ -13,6 +13,7 @@ namespace Zwo3\NewsletterSubscribe\Controller;
  * Separate Funktion zur Kündigung  ohne Token, nur mit Action createUnsubscribeMail und E-Mail-Adresse erzeugt Mail mit Kündigungslink
  */
 
+use GeorgRinger\News\Utility\TypoScript;
 use ResourceBundle;
 use Swift_Attachment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -21,6 +22,7 @@ use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -39,6 +41,7 @@ use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionFeUserRepository;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionTtAddressRepository;
+use Zwo3\NewsletterSubscribe\Utilities\OverrideEmptyFlexformValues;
 
 /**
  * Class SubscribeController
@@ -63,11 +66,26 @@ class SubscribeController extends ActionController
      */
     protected $subscriptionRepository;
 
+    /**
+     * @var OverrideEmptyFlexformValues
+     */
+    protected $overrideFlexFormValues;
+
+    /**
+     * @var ConfigurationManagerInterface
+     */
+    protected $configurationManager;
+
     public function initializeAction()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
+        $this->configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
+        $this->overrideFlexFormValues = $this->objectManager->get(OverrideEmptyFlexformValues::class);
+
+        $this->settings = $this->overrideFlexFormValues->overrideSettings('newsletter_subscribe', 'Subscribe');
+
     }
 
     public function showFormAction()
@@ -369,4 +387,5 @@ class SubscribeController extends ActionController
     {
         return false;
     }
+
 }

@@ -27,6 +27,8 @@ plugin {
 			# used in several places
 			newsletterName = Newsletter
 
+			overrideFlexformSettingsIfEmpty = dataProtectionPage,adminName,showFields,newsletterName
+
 		}
 	}
 }
