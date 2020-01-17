@@ -13,22 +13,14 @@ namespace Zwo3\NewsletterSubscribe\Controller;
  * Separate Funktion zur Kündigung  ohne Token, nur mit Action createUnsubscribeMail und E-Mail-Adresse erzeugt Mail mit Kündigungslink
  */
 
-use GeorgRinger\News\Utility\TypoScript;
-use ResourceBundle;
-use Swift_Attachment;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
-use TYPO3\CMS\Extbase\Mvc\Web\Response;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -38,9 +30,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
-use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionFeUserRepository;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
-use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionTtAddressRepository;
 use Zwo3\NewsletterSubscribe\Utilities\OverrideEmptyFlexformValues;
 
 /**
