@@ -104,6 +104,9 @@ where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the i
 
 
 ***
+#Credits
+Extension icon from: [2020 Icons8 LLC.](https://icons8.de/)
+***
 
 # To do
 - write a scheduler task to remove unconfirmed addresses (after some time)
