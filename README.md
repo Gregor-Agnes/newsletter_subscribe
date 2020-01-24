@@ -104,8 +104,10 @@ where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the i
 
 
 ***
-#Credits
+
+# Credits
 Extension icon from: [2020 Icons8 LLC.](https://icons8.de/)
+
 ***
 
 # To do
