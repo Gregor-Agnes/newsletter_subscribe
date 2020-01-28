@@ -96,6 +96,9 @@
             <trans-unit id="hallo">
                 <source>Hallo %1$s %2$s</source>
             </trans-unit>
+            <trans-unit id="yourSubscription">
+                <source>Your subscription</source>
+            </trans-unit>
 
             <trans-unit id="newsletterSubscription">
                 <source>Newsletter Subscription</source>

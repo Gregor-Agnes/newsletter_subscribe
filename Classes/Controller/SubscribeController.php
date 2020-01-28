@@ -211,7 +211,7 @@ class SubscribeController extends ActionController
                 $this->sendTemplateEmail(
                     [$subscription->getEmail() => $subscription->getName()],
                     [$this->settings['adminEmail'] => $this->settings['adminName']],
-                    'Ihr Abonnement',
+                    LocalizationUtility::translate('yourSubscription', 'newsletterSubscribe'),
                     'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/Confirmation',
                     [
                         'subscription' => $subscription,
@@ -306,16 +306,9 @@ class SubscribeController extends ActionController
     {
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
         $emailView = GeneralUtility::makeInstance(StandaloneView::class);
-        $emailView->setLayoutRootPaths(
-            array(GeneralUtility::getFileAbsFileName('EXT:newsletter_subscribe/Resources/Private/Layouts'))
-        );
-        $emailView->setPartialRootPaths(
-            array(GeneralUtility::getFileAbsFileName('EXT:newsletter_subscribe/Resources/Private/Partials'))
-        );
-        $emailView->setTemplateRootPaths(
-            array(GeneralUtility::getFileAbsFileName('EXT:newsletter_subscribe/Resources/Private/Templates'))
-        );
+        $emailView->setControllerContext($this->controllerContext);
         $emailView->setTemplate($templateName);
+
 
         $emailView->assignMultiple($variables);
         $emailBody = $emailView->render();
