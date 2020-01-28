@@ -7,14 +7,14 @@ if (!defined('TYPO3_MODE')) {
     'Zwo3.NewsletterSubscribe',
     'Subscribe',
     'Subscribe to Addresslist',
-    'EXT:newsletter_subscribe/Resources/Public/Gfx/Extension.png'
+    'EXT:newsletter_subscribe/ext_icon.svg'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'Zwo3.NewsletterSubscribe',
     'Unsubscribe',
     'Unsubscribe from Addresslist',
-    'EXT:newsletter_subscribe/Resources/Public/Gfx/Extension.png'
+    'EXT:newsletter_subscribe/ext_icon.svg'
 );
 
 
