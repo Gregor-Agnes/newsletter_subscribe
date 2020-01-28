@@ -1,6 +1,20 @@
 plugin {
 	tx_newsletter_subscribe {
 		view {
+			templateRootPaths {
+				0 = EXT:newsletter_subscribe/Resources/Private/Templates/
+				1 = {$plugin.tx_newsletter_subscribe.view.templateRootPath}
+			}
+
+			partialRootPaths {
+				0 = EXT:newsletter_subscribe/Resources/Private/Partials/
+				1 = {$plugin.tx_newsletter_subscribe.view.partialRootPath}
+			}
+
+			layoutRootPaths {
+				0 = EXT:newsletter_subscribe/Resources/Private/Layouts/
+				1 = {$plugin.tx_newsletter_subscribe.view.layoutRootPath}
+			}
 		}
 		mvc {
 			callDefaultActionIfActionCantBeResolved = 0
