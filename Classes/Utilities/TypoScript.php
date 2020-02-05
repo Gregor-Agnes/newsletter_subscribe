@@ -2,69 +2,26 @@
 
 namespace Zwo3\NewsletterSubscribe\Utilities;
 
-use TYPO3\CMS\Core\TypoScript\TypoScriptService;
+/**
+ * This file is part of the "news" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
-class OverrideEmptyFlexformValues
+/**
+ * TypoScript Utility class
+ */
+class TypoScript
 {
-    public function overrideSettings($extensionName, $pluginName) {
-
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-
-        $this->configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
-
-        $tsSettings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
-            $extensionName,
-            $pluginName
-        );
-
-        $originalSettings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
-        );
-
-        // Use stdWrap for given defined settings
-        if (isset($originalSettings['useStdWrap']) && !empty($originalSettings['useStdWrap'])) {
-            $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
-            $typoScriptArray = $typoScriptService->convertPlainArrayToTypoScriptArray($originalSettings);
-            $stdWrapProperties = GeneralUtility::trimExplode(',', $originalSettings['useStdWrap'], true);
-            foreach ($stdWrapProperties as $key) {
-                if (is_array($typoScriptArray[$key . '.'])) {
-                    $originalSettings[$key] = $this->configurationManager->getContentObject()->stdWrap(
-                        $typoScriptArray[$key],
-                        $typoScriptArray[$key . '.']
-                    );
-                }
-            }
-        }
-
-        // start override
-        if (isset($tsSettings['settings']['overrideFlexformSettingsIfEmpty'])) {
-            $originalSettings = $this->override($originalSettings, $tsSettings);
-        }
-
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Controller/NewsController.php']['overrideSettings'])) {
-            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Controller/NewsController.php']['overrideSettings'] as $_funcRef) {
-                $_params = [
-                    'originalSettings' => $originalSettings,
-                    'tsSettings' => $tsSettings,
-                ];
-                $originalSettings = GeneralUtility::callUserFunction($_funcRef, $_params, $this);
-            }
-        }
-
-        return $originalSettings;
-    }
 
     /**
      * @param array $base
      * @param array $overload
      * @return array
      */
-    protected function override(array $base, array $overload)
+    public function override(array $base, array $overload)
     {
         $validFields = GeneralUtility::trimExplode(',', $overload['settings']['overrideFlexformSettingsIfEmpty'], true);
         foreach ($validFields as $fieldName) {

@@ -31,7 +31,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
-use Zwo3\NewsletterSubscribe\Utilities\OverrideEmptyFlexformValues;
+use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
 
 /**
  * Class SubscribeController
@@ -41,6 +41,7 @@ use Zwo3\NewsletterSubscribe\Utilities\OverrideEmptyFlexformValues;
 class SubscribeController extends ActionController
 {
 
+    use OverrideEmptyFlexformValuesTrait;
     /**
      * @var ObjectManager
      */
@@ -71,10 +72,7 @@ class SubscribeController extends ActionController
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
-        $this->configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
-        $this->overrideFlexFormValues = $this->objectManager->get(OverrideEmptyFlexformValues::class);
 
-        $this->settings = $this->overrideFlexFormValues->overrideSettings('newsletter_subscribe', 'Subscribe');
 
     }
 

@@ -50,7 +50,7 @@
   </tr>
   <tr>
     <th align="left">showFields</th>
-    <td align="left">Fields to show in subscription form (gender,firstName,lastName).<br>email and dataProtection are always shown.</td>
+    <td align="left">Additional fields to show in subscription form (gender,firstName,lastName).<br>email and dataProtection are always shown.</td>
     <td>string</td>
     <td>null</td>
   </tr>
