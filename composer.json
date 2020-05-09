@@ -12,8 +12,8 @@
   "homepage": "https://github.com/Gregor-Agnes/newsletter_subscribe",
   "license": ["GPL-2.0-or-later"],
   "require": {
-    "typo3/cms-core": "^9.5",
-    "friendsoftypo3/tt-address": "^4.0.0"
+    "typo3/cms-core": "^9.5 || ^10.4",
+    "friendsoftypo3/tt-address": "^4.3.0 || ^5.1.0"
   },
   "replace": {
     "zwo3/newsletter_subscribe": "self.version"

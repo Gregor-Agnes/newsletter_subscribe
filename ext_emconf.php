@@ -20,8 +20,8 @@ $EM_CONF['newsletter_subscribe'] = array(
 	'version' => '1.1.2',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '9.5.0-9.5.99',
-            'tt_address' => '4.0.0-4.99.99'
+			'typo3' => '9.5.0-10.4.99',
+            'tt_address' => '4.0.0-5.99.99'
 		),
 		'conflicts' => array(
 		),
