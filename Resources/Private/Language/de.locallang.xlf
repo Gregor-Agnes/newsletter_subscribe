@@ -13,6 +13,10 @@
 				<source><![CDATA[Admin Name]]></source>
 				<target><![CDATA[Admin Name]]></target>
 			</trans-unit>
+			<trans-unit id="mailTemplateRootPath" approved="yes">
+				<source><![CDATA[Admin Name]]></source>
+				<target><![CDATA[Pfad zu den E-Mail-Templates]]></target>
+			</trans-unit>
 			<trans-unit id="checkSpam" approved="yes">
 				<source><![CDATA[If you do not receive an email from us: please check your spam folder too.]]></source>
 				<target><![CDATA[Falls Sie kein E-Mail von uns erhalten haben: Bitte kontrollieren Sie auch Ihren Spam-Ordner.]]></target>

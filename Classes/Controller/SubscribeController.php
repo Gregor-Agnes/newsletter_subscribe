@@ -31,6 +31,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Fluid\View\TemplatePaths;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
@@ -305,17 +306,18 @@ class SubscribeController extends ActionController
      */
     protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName = 'Mail/Default', array $variables = array(), array $replyTo = null, array $attachments = [])
     {
-        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][200] = 'EXT:newsletter_subscribe/Resources/Private/Templates/Mail/' . $GLOBALS['TSFE']->config['config']['language'] .'/';
-        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['format'] = 'html';
+        $templatePath = new TemplatePaths();
+        $templatePath->setTemplateRootPaths([GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]);
         /** @var FluidEmail $email */
-        $email = GeneralUtility::makeInstance(FluidEmail::class);
+        $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePath);
+        $email->format('html');
         $email
             ->to(new Address(...$recipient))
             ->from(new Address(...$sender))
             ->subject($subject)
             ->html('')// only HTML mail
             ->setTemplate($templateName)
-            ->assignMultiple(compact($variables));
+            ->assignMultiple($variables);
 
         GeneralUtility::makeInstance(Mailer::class)->send($email);
 

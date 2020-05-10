@@ -27,9 +27,11 @@ plugin {
 			}
 		}
 		features {
-			requireCHashArgumentForActionArguments = 0
+			//requireCHashArgumentForActionArguments = 0
 		}
 		settings {
+
+			mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
 
 			# uid of page with data protection information (if any)
 			dataProtectionPage = 1
@@ -41,7 +43,7 @@ plugin {
 			# used in several places
 			newsletterName = Newsletter
 
-			overrideFlexformSettingsIfEmpty = dataProtectionPage,adminName,showFields,newsletterName
+			overrideFlexformSettingsIfEmpty = mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
 		}
 	}

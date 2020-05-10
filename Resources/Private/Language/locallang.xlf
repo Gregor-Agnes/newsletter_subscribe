@@ -9,6 +9,9 @@
             <trans-unit id="adminName">
                 <source>Admin Name</source>
             </trans-unit>
+            <trans-unit id="mailTemplateRootPath">
+                <source>Template Path for Mails</source>
+            </trans-unit>
             <trans-unit id="error.1238108067">
                 <source>Please insert a valid value</source>
             </trans-unit>
