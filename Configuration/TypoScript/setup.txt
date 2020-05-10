@@ -21,7 +21,7 @@ plugin {
 		}
 		persistence {
 			#overides the settings in the plugin form, if used
-			storagePid = 11
+			#storagePid = 23
 			classes {
 				Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
 			}

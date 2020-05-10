@@ -13,7 +13,10 @@ namespace Zwo3\NewsletterSubscribe\Controller;
  * Separate Funktion zur Kündigung  ohne Token, nur mit Action createUnsubscribeMail und E-Mail-Adresse erzeugt Mail mit Kündigungslink
  */
 
+use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
+use TYPO3\CMS\Core\Mail\FluidEmail;
+use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -135,10 +138,10 @@ class SubscribeController extends ActionController
 
                 try {
                     $this->sendTemplateEmail(
-                        [$existing->getEmail() => $existing->getName()],
-                        [$this->settings['adminEmail'] => $this->settings['adminName']],
+                        [$existing->getEmail(), $existing->getName()],
+                        [$this->settings['adminEmail'], $this->settings['adminName']],
                         LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
-                        'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/CreateUnsubscribe',
+                        'CreateUnsubscribe',
                         [
                             'subscription' => $existing
                         ]
@@ -177,10 +180,10 @@ class SubscribeController extends ActionController
 
             try {
                 $this->sendTemplateEmail(
-                    [$existing->getEmail() => $existing->getName()],
-                    [$this->settings['adminEmail'] => $this->settings['adminName']],
+                    [$existing->getEmail(), $existing->getName()],
+                    [$this->settings['adminEmail'], $this->settings['adminName']],
                     'Ihr Abonnement',
-                    'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/AlreadySubscribed',
+                    'AlreadySubscribed',
                     [
                         'subscription' => $existing,
                     ]
@@ -207,10 +210,10 @@ class SubscribeController extends ActionController
 
             try {
                 $this->sendTemplateEmail(
-                    [$subscription->getEmail() => $subscription->getName()],
-                    [$this->settings['adminEmail'] => $this->settings['adminName']],
+                    [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')],
+                    [$this->settings['adminEmail'], $this->settings['adminName']],
                     LocalizationUtility::translate('yourSubscription', 'newsletterSubscribe'),
-                    'Mail/' . $GLOBALS['TSFE']->sys_language_isocode . '/Confirmation',
+                    'Confirmation',
                     [
                         'subscription' => $subscription,
                     ]
@@ -302,40 +305,22 @@ class SubscribeController extends ActionController
      */
     protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName = 'Mail/Default', array $variables = array(), array $replyTo = null, array $attachments = [])
     {
-        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
-        $emailView = GeneralUtility::makeInstance(StandaloneView::class);
-        $emailView->setControllerContext($this->controllerContext);
-        $emailView->setTemplate($templateName);
+        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][200] = 'EXT:newsletter_subscribe/Resources/Private/Templates/Mail/' . $GLOBALS['TSFE']->config['config']['language'] .'/';
+        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['format'] = 'html';
+        /** @var FluidEmail $email */
+        $email = GeneralUtility::makeInstance(FluidEmail::class);
+        $email
+            ->to(new Address(...$recipient))
+            ->from(new Address(...$sender))
+            ->subject($subject)
+            ->html('')// only HTML mail
+            ->setTemplate($templateName)
+            ->assignMultiple(compact($variables));
 
+        GeneralUtility::makeInstance(Mailer::class)->send($email);
 
-        $emailView->assignMultiple($variables);
-        $emailBody = $emailView->render();
+        return true;
 
-        /** @var $message \TYPO3\CMS\Core\Mail\MailMessage */
-        $message = new MailMessage();
-        $message->setTo($recipient)
-            ->setFrom($sender)
-            ->setSubject($subject) // ->setBcc(array('form@zwo3.de' => 'zwo3.de'))
-        ;
-
-        if ($replyTo) {
-            $message->setReplyTo($replyTo);
-        }
-
-        // Possible attachments here
-        foreach ($attachments as $attachment) {
-            $message->attach($attachment);
-        }
-
-        // HTML Email
-        $message->setBody($emailBody, 'text/html');
-
-        // Add TXT Part
-        #$message->addPart($emailBodyTxt, 'text/plain');
-
-        $message->send();
-
-        return $message->isSent();
     }
 
     /**
