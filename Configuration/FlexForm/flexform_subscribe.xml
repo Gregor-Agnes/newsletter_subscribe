@@ -85,7 +85,7 @@
                         <type>input</type>
                         <size>20</size>
                         <max>60</max>
-                        <eval>trim,required</eval>
+                        <eval>trim</eval>
                     </config>
                 </TCEforms>
             </settings.mailTemplateRootPath>
@@ -97,7 +97,7 @@
                         <type>input</type>
                         <size>20</size>
                         <max>60</max>
-                        <eval>trim,email,required</eval>
+                        <eval>trim,email</eval>
                     </config>
                 </TCEforms>
             </settings.adminEmail>

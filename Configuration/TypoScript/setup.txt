@@ -1,50 +1,56 @@
 plugin {
-	tx_newsletter_subscribe {
-		view {
-			templateRootPaths {
-				0 = EXT:newsletter_subscribe/Resources/Private/Templates/
-				1 = {$plugin.tx_newsletter_subscribe.view.templateRootPath}
-			}
+    tx_newsletter_subscribe {
+        view {
+            templateRootPaths {
+                0 = EXT:newsletter_subscribe/Resources/Private/Templates/
+                1 = {$plugin.tx_newsletter_subscribe.view.templateRootPath}
+            }
 
-			partialRootPaths {
-				0 = EXT:newsletter_subscribe/Resources/Private/Partials/
-				1 = {$plugin.tx_newsletter_subscribe.view.partialRootPath}
-			}
+            partialRootPaths {
+                0 = EXT:newsletter_subscribe/Resources/Private/Partials/
+                1 = {$plugin.tx_newsletter_subscribe.view.partialRootPath}
+            }
 
-			layoutRootPaths {
-				0 = EXT:newsletter_subscribe/Resources/Private/Layouts/
-				1 = {$plugin.tx_newsletter_subscribe.view.layoutRootPath}
-			}
-		}
-		mvc {
-			callDefaultActionIfActionCantBeResolved = 0
-		}
-		persistence {
-			#overides the settings in the plugin form, if used
-			#storagePid = 23
-			classes {
-				Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
-			}
-		}
-		features {
-			//requireCHashArgumentForActionArguments = 0
-		}
-		settings {
+            layoutRootPaths {
+                0 = EXT:newsletter_subscribe/Resources/Private/Layouts/
+                1 = {$plugin.tx_newsletter_subscribe.view.layoutRootPath}
+            }
+        }
 
-			mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
+        mvc {
+            callDefaultActionIfActionCantBeResolved = 0
+        }
 
-			# uid of page with data protection information (if any)
-			dataProtectionPage = 1
+        persistence {
+            #overides the settings in the plugin form, if used
+            #storagePid = 23
+            classes {
+                Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
 
-			adminEmail = admin.name@domain.tld
-			adminName = Your admin Name
-			# email and data_protection are always shown
-			showFields =  gender,firstName,lastName
-			# used in several places
-			newsletterName = Newsletter
+            }
 
-			overrideFlexformSettingsIfEmpty = mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
+        }
 
-		}
-	}
+        features {
+            //requireCHashArgumentForActionArguments = 0
+        }
+
+        settings {
+
+            mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
+
+            # uid of page with data protection information (if any)
+            dataProtectionPage = 1
+
+            adminEmail = admin.name@domain.tld
+            adminName = Your admin Name
+            # email and data_protection are always shown
+            showFields = gender,firstName,lastName
+            # used in several places
+            newsletterName = Newsletter
+
+            overrideFlexformSettingsIfEmpty = adminEmail,adminName,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
+
+        }
+    }
 }

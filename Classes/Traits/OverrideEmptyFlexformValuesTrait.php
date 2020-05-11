@@ -23,10 +23,10 @@ trait OverrideEmptyFlexformValuesTrait {
         $this->configurationManager = $configurationManager;
 
         $tsSettings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
-            'onetimesecret',
-            'onetimesecret_onetimesecret'
-        );
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+
+        $tsSettings = $tsSettings['plugin.']['tx_newsletter_subscribe.']['settings.'];
+
 
         $originalSettings = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
@@ -66,6 +66,5 @@ trait OverrideEmptyFlexformValuesTrait {
         }
 
         $this->settings = $originalSettings;
-
     }
 }

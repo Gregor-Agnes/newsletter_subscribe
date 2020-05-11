@@ -77,6 +77,7 @@ class SubscribeController extends ActionController
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
 
+        DebuggerUtility::var_dump($this->settings);
 
     }
 
