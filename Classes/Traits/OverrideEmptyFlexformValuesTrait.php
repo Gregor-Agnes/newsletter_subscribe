@@ -24,8 +24,13 @@ trait OverrideEmptyFlexformValuesTrait {
 
         $tsSettings = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-
-        $tsSettings = $tsSettings['plugin.']['tx_newsletter_subscribe.']['settings.'];
+    
+        $tsSettings = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+            'NewsletterSubscribe',
+            'newslettersubscribe_subscribe'
+        );
+        
 
 
         $originalSettings = $this->configurationManager->getConfiguration(

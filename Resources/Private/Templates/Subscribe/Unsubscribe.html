@@ -28,7 +28,7 @@
 			</f:if>
 			<p>
 				{f:translate(key: 'subscribeAgain')}:
-				<f:link.page pageUid="2" class="button">{f:translate(key: 'newsletterSubscription')}</f:link.page>
+				<f:link.page pageUid="{settings.subscribePageUid}" class="button">{f:translate(key: 'newsletterSubscription')}</f:link.page>
 			</p>
 		</f:then>
 		<f:else>

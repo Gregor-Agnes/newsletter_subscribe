@@ -1,5 +1,5 @@
 plugin {
-    tx_newsletter_subscribe {
+    tx_newslettersubscribe {
         view {
             templateRootPaths {
                 0 = EXT:newsletter_subscribe/Resources/Private/Templates/
@@ -43,13 +43,15 @@ plugin {
             dataProtectionPage = 1
 
             adminEmail = admin.name@domain.tld
-            adminName = Your admin Name
+	        adminName = Your admin Name
             # email and data_protection are always shown
-            showFields = gender,firstName,lastName
+            #showFields = gender,firstName,lastName
             # used in several places
             newsletterName = Newsletter
+	        # Page with SubscriptinForm (used in E-Mail-Templates
+	        subscribePageUid = 23
 
-            overrideFlexformSettingsIfEmpty = adminEmail,adminName,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
+            overrideFlexformSettingsIfEmpty = adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
         }
     }

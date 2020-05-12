@@ -55,10 +55,16 @@
     <td>null</td>
   </tr>
   <tr>
+    <th align="left">subscribePageUid</th>
+    <td align="left">Uid of page with subscription form. Used for links in templates and mails.</td>
+    <td>string</td>
+    <td>null</td>
+  </tr>
+  <tr>
     <th align="left">overrideFlexformSettingsIfEmpty</th>
     <td align="left">Fields, which sould be overridden from TypoScript if left blank in the flexform (like in tx_news, thx to Georg Ringer!).</td>
     <td>string</td>
-    <td>dataProtectionPage, adminName, showFields, newsletterName</td>
+    <td>adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName</td>
   </tr>
 </table>
 

@@ -26,10 +26,8 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['newslettersu
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'newslettersubscribe_subscribe',
-    'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_subscribe.xml',
-    '*'
+    'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_subscribe.xml'
 );\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'newslettersubscribe_unsubscribe',
-    'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_unsubscribe.xml',
-    '*'
+    'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_unsubscribe.xml'
 );

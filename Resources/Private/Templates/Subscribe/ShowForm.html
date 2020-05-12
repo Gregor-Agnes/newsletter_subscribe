@@ -8,7 +8,7 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-	<f:form object="{subscription}" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
+	<f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
 		<input type="hidden" name="formToken" value="{formToken}">
 		</input.hidden>
 		<v:condition.iterator.contains needle="gender" haystack="{fields}">

@@ -76,9 +76,7 @@ class SubscribeController extends ActionController
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
-
-        DebuggerUtility::var_dump($this->settings);
-
+        
     }
 
     public function showFormAction()
@@ -182,9 +180,9 @@ class SubscribeController extends ActionController
 
             try {
                 $this->sendTemplateEmail(
-                    [$existing->getEmail(), $existing->getName()],
+                    [$existing->getEmail(), ($existing->getName() ?: 'no name given')],
                     [$this->settings['adminEmail'], $this->settings['adminName']],
-                    'Ihr Abonnement',
+                    LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe'),
                     'AlreadySubscribed',
                     [
                         'subscription' => $existing,
