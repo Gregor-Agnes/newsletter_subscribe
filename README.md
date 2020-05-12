@@ -61,10 +61,16 @@
     <td>null</td>
   </tr>
   <tr>
-    <th align="left">overrideFlexformSettingsIfEmpty</th>
-    <td align="left">Fields, which sould be overridden from TypoScript if left blank in the flexform (like in tx_news, thx to Georg Ringer!).</td>
+    <th align="left">mailTemplateRootPath</th>
+    <td align="left">path to the mail templates, root for different languages (e.g. en, de, dk)</td>
     <td>string</td>
-    <td>adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName</td>
+    <td>EXT:newsletter_subscribe/Resources/Private/Templates/Mail/</td>
+  </tr>
+  <tr>
+    <th align="left">overrideFlexformSettingsIfEmpty</th>
+    <td align="left">Fields, which should be overridden from typosrcipt if left blank in the flexform (like in tx_news, thx to Georg Ringer!).</td>
+    <td>string</td>
+    <td>adminEmail, adminName, subscribePageUid, mailTemplateRootPath, dataProtectionPage, adminName, showFields, newsletterName</td>
   </tr>
 </table>
 
