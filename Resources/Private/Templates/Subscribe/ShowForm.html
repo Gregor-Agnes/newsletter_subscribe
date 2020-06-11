@@ -9,6 +9,10 @@
 
 <f:section name="Default">
 	<f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
+		<f:if condition="{settings.useHCaptcha}">
+			<div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
+			<script src="https://hcaptcha.com/1/api.js" async defer></script>
+		</f:if>
 		<input type="hidden" name="formToken" value="{formToken}">
 		</input.hidden>
 		<v:condition.iterator.contains needle="gender" haystack="{fields}">
@@ -42,7 +46,7 @@
 				</f:for>
 			</f:if>
 		</f:form.validationResults>
-		<f:form.checkbox property="dataProtectionAccepted" value="1" checked="{dataProtectionAccepted} == 1" id="dataProtectionAccepted"></f:form.checkbox>
+		<f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted"></f:form.checkbox>
 		<label for="dataProtectionAccepted">
 			<i class="fal fa-square-full fa-lg"></i>
 			<i class="fal fa-check fa-2x"></i>

@@ -37,6 +37,10 @@ plugin {
 
         settings {
 
+            useHCaptcha = 1
+            hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
+            hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
+
             mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
 
             # uid of page with data protection information (if any)

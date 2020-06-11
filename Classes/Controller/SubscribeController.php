@@ -13,6 +13,7 @@ namespace Zwo3\NewsletterSubscribe\Controller;
  * Separate Funktion zur Kündigung  ohne Token, nur mit Action createUnsubscribeMail und E-Mail-Adresse erzeugt Mail mit Kündigungslink
  */
 
+use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Mail\FluidEmail;
@@ -20,6 +21,7 @@ use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
@@ -76,10 +78,13 @@ class SubscribeController extends ActionController
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
-        
     }
 
-    public function showFormAction()
+    /**
+     * @param null|Subscription $subscription
+     * @IgnoreValidation("subscription"))
+     */
+    public function showFormAction(Subscription $subscription = null)
     {
 
         $formToken = FormProtectionFactory::get('frontend')
@@ -90,7 +95,8 @@ class SubscribeController extends ActionController
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'formToken' => $formToken,
-            'fields' => $fields
+            'fields' => $fields,
+            'subscription' => $subscription
         ]);
     }
 
@@ -119,6 +125,7 @@ class SubscribeController extends ActionController
      */
     public function createUnsubscribeMailAction(?string $email = null)
     {
+
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
                 (string)GeneralUtility::_POST('formToken'),
@@ -158,20 +165,52 @@ class SubscribeController extends ActionController
         $this->view->assignMultiple(compact('message', 'email'));
     }
 
+
+
+
     /**
      * @param Subscription $subscription
-     * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
      * @throws IllegalObjectTypeException
+     * @throws StopActionException
      */
     public function createConfirmationAction(Subscription $subscription)
     {
+
+        if ($this->settings['useHCaptcha']) {
+            if (GeneralUtility::_POST('h-captcha-response')) {
+                $data = [
+                    'secret' => $this->settings['hCaptchaSecretKey'],
+                    'response' => GeneralUtility::_GP('h-captcha-response')
+                ];
+                $verify = curl_init();
+                curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+                curl_setopt($verify, CURLOPT_POST, true);
+                curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($verify);
+// var_dump($response);
+                $responseData = json_decode($response);
+                if($responseData->success) {
+                    // your success code goes here
+                    //$this->addFlashMessage('Super, geschafft!', '', AbstractMessage::ERROR);
+                }
+                else {
+                    $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe')
+                        , '', AbstractMessage::ERROR);
+                    $this->forward('showForm', null, null, ['subscription' => $subscription]);
+                }
+            } else {
+                $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'), '', AbstractMessage::ERROR);
+                $this->forward('showForm', null, null, ['subscription' => $subscription]);
+            }
+        }
+
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
                 (string)GeneralUtility::_POST('formToken'),
                 'Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']
             )) {
-            $this->redirect('showForm');
+            $this->forward('showForm', null, null, ['subscription' => $subscription]);
         }
         // already subscribed
         if ($existing = $this->subscriptionRepository->findOneByEmail($subscription->getEmail(), false)) {
