@@ -13,6 +13,23 @@
 			<div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
 			<script src="https://hcaptcha.com/1/api.js" async defer></script>
 		</f:if>
+		<f:if condition="{captchaImage}">
+			<img src="{captchaImage}" id="captchaImage"/>
+			<button type="button" onclick="changeImage();">Bild erneut laden</button>
+			<f:debug>{f:format.date()}</f:debug>
+			<script>
+				function changeImage() {
+					var xhr = new XMLHttpRequest();
+					xhr.onload = function () {
+						if (xhr.status >= 200 && xhr.status < 300) {
+							document.getElementById('captchaImage').src=xhr.response
+						}
+					}
+					xhr.open('GET', '<f:format.raw><t:uri.ajaxAction action="refreshCaptchaImage" additionalParams="{time: '{f:format.date(format:\'hms\')}'}"></t:uri.ajaxAction></f:format.raw>');
+					xhr.send();
+				}
+			</script>
+		</f:if>
 		<input type="hidden" name="formToken" value="{formToken}">
 		</input.hidden>
 		<v:condition.iterator.contains needle="gender" haystack="{fields}">

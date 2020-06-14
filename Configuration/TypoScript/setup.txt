@@ -37,9 +37,11 @@ plugin {
 
         settings {
 
-            useHCaptcha = 1
+            useHCaptcha = 0
             hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
             hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
+
+            useGregwarCaptcha = 1
 
             mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
 

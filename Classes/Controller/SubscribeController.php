@@ -14,6 +14,7 @@ namespace Zwo3\NewsletterSubscribe\Controller;
  */
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
+use Gregwar\Captcha\CaptchaBuilder;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Mail\FluidEmail;
@@ -80,12 +81,25 @@ class SubscribeController extends ActionController
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
     }
 
+    public function refreshCaptchaImageAction() {
+        $builder = new CaptchaBuilder();
+        $builder->build();
+        $captchaImage = $builder->inline();
+        return $captchaImage;
+    }
     /**
      * @param null|Subscription $subscription
      * @IgnoreValidation("subscription"))
      */
     public function showFormAction(Subscription $subscription = null)
     {
+        if ($this->settings['useGregwarCaptcha']) {
+            $builder = new CaptchaBuilder();
+            $builder->build();
+            $captchaImage = $builder->inline();
+
+        }
+
 
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
@@ -96,7 +110,8 @@ class SubscribeController extends ActionController
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'formToken' => $formToken,
             'fields' => $fields,
-            'subscription' => $subscription
+            'subscription' => $subscription,
+            'captchaImage' => $captchaImage
         ]);
     }
 
