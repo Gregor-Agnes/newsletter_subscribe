@@ -49,6 +49,7 @@ class SubscribeController extends ActionController
 {
 
     use OverrideEmptyFlexformValuesTrait;
+
     /**
      * @var ObjectManager
      */
@@ -74,19 +75,37 @@ class SubscribeController extends ActionController
      */
     protected $configurationManager;
 
-    public function initializeAction()
-    {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
-        $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
+    public function __construct(
+        ObjectManager $objectManager,
+        PersistenceManager $persistenceManager,
+        SubscriptionRepository $subscriptionRepository
+    ) {
+        $this->objectManager = $objectManager;
+        $this->persistenceManager = $persistenceManager;
+        $this->subscriptionRepository = $subscriptionRepository;
     }
 
-    public function refreshCaptchaImageAction() {
+    public function initializeAction()
+    {
+        //DebuggerUtility::var_dump($GLOBALS["TSFE"]->fe_user->id);
+        //DebuggerUtility::var_dump($this->request->getArguments());
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'nl', 1);
+        $GLOBALS["TSFE"]->fe_user->storeSessionData();
+        //DebuggerUtility::var_dump($GLOBALS["TSFE"]->fe_user->id);
+
+    }
+
+    public function refreshCaptchaImageAction()
+    {
         $builder = new CaptchaBuilder();
         $builder->build();
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'captcha', $builder->getPhrase());
+        $GLOBALS["TSFE"]->fe_user->storeSessionData();
+
         $captchaImage = $builder->inline();
         return $captchaImage;
     }
+
     /**
      * @param null|Subscription $subscription
      * @IgnoreValidation("subscription"))
@@ -96,6 +115,8 @@ class SubscribeController extends ActionController
         if ($this->settings['useGregwarCaptcha']) {
             $builder = new CaptchaBuilder();
             $builder->build();
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'captcha', $builder->getPhrase());
+            $GLOBALS["TSFE"]->fe_user->storeSessionData();
             $captchaImage = $builder->inline();
 
         }
@@ -121,7 +142,8 @@ class SubscribeController extends ActionController
     public function showUnsubscribeFormAction(?string $message = null)
     {
         $formToken = FormProtectionFactory::get('frontend')
-            ->generateToken('Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']);
+            ->generateToken('Subscribe', 'showUnsubscribeForm',
+                $this->configurationManager->getContentObject()->data['uid']);
 
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
@@ -154,7 +176,8 @@ class SubscribeController extends ActionController
                 /** @var Subscription $existing */
                 // if no hash (e.g. manually added address), create one!
                 if (!$existing->getSubscriptionHash()) {
-                    $existing->setSubscriptionHash(hash('sha256', $existing->getEmail() . $existing->getCrdate() . random_bytes(32)));
+                    $existing->setSubscriptionHash(hash('sha256',
+                        $existing->getEmail() . $existing->getCrdate() . random_bytes(32)));
                 }
                 // Abmelden Mail versenden
 
@@ -162,7 +185,8 @@ class SubscribeController extends ActionController
                     $this->sendTemplateEmail(
                         [$existing->getEmail(), $existing->getName()],
                         [$this->settings['adminEmail'], $this->settings['adminName']],
-                        LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
+                        LocalizationUtility::translate('subjectUnsubscribe',
+                            'newsletter_subscribe') . $this->settings['newsletterName'],
                         'CreateUnsubscribe',
                         [
                             'subscription' => $existing
@@ -170,7 +194,8 @@ class SubscribeController extends ActionController
                     );
                     $this->subscriptionRepository->update($existing);
                 } catch (InvalidTemplateResourceException $exception) {
-                    $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                    $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).',
+                        'No E-Mail-Template found', AbstractMessage::ERROR);
                 }
             }
         } else {
@@ -179,8 +204,6 @@ class SubscribeController extends ActionController
 
         $this->view->assignMultiple(compact('message', 'email'));
     }
-
-
 
 
     /**
@@ -205,17 +228,17 @@ class SubscribeController extends ActionController
                 $response = curl_exec($verify);
 // var_dump($response);
                 $responseData = json_decode($response);
-                if($responseData->success) {
+                if ($responseData->success) {
                     // your success code goes here
                     //$this->addFlashMessage('Super, geschafft!', '', AbstractMessage::ERROR);
-                }
-                else {
+                } else {
                     $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe')
                         , '', AbstractMessage::ERROR);
                     $this->forward('showForm', null, null, ['subscription' => $subscription]);
                 }
             } else {
-                $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'), '', AbstractMessage::ERROR);
+                $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'), '',
+                    AbstractMessage::ERROR);
                 $this->forward('showForm', null, null, ['subscription' => $subscription]);
             }
         }
@@ -243,7 +266,8 @@ class SubscribeController extends ActionController
                     ]
                 );
             } catch (InvalidTemplateResourceException $exception) {
-                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).',
+                    'No E-Mail-Template found', AbstractMessage::ERROR);
             }
 
             //$this->subscriptionRepository->update($existing);
@@ -254,7 +278,8 @@ class SubscribeController extends ActionController
             $subscription->setModuleSysDmailNewsletter(true);
             $subscription->setModuleSysDmailHtml(true);
             $subscription->setCrdate(time());
-            $subscription->setSubscriptionHash(hash('sha256', $subscription->getEmail() . $subscription->getCrdate() . random_bytes(32)));
+            $subscription->setSubscriptionHash(hash('sha256',
+                $subscription->getEmail() . $subscription->getCrdate() . random_bytes(32)));
             $subscription->setPid($this->subscriptionRepository->createQuery()
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
@@ -273,7 +298,8 @@ class SubscribeController extends ActionController
                     ]
                 );
             } catch (InvalidTemplateResourceException $exception) {
-                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).',
+                    'No E-Mail-Template found', AbstractMessage::ERROR);
             }
 
             $this->view->assignMultiple(['subscription' => $subscription]);
@@ -357,10 +383,17 @@ class SubscribeController extends ActionController
      * @param array $replyTo replyTo Address
      * @return boolean TRUE on success, otherwise false
      */
-    protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName = 'Mail/Default', array $variables = array(), array $replyTo = null, array $attachments = [])
-    {
+    protected function sendTemplateEmail(
+        array $recipient,
+        array $sender,
+        $subject,
+        $templateName = 'Mail/Default',
+        array $variables = array(),
+        array $replyTo = null,
+        array $attachments = []
+    ) {
         $templatePath = new TemplatePaths();
-        $templatePath->setTemplateRootPaths([GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]);
+        $templatePath->setTemplateRootPaths([GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] . '/')]);
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePath);
         $email->format('html');

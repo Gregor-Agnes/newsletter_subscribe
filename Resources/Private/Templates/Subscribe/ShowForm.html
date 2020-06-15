@@ -16,7 +16,7 @@
 		<f:if condition="{captchaImage}">
 			<img src="{captchaImage}" id="captchaImage"/>
 			<button type="button" onclick="changeImage();">Bild erneut laden</button>
-			<f:debug>{f:format.date()}</f:debug>
+
 			<script>
 				function changeImage() {
 					var xhr = new XMLHttpRequest();
@@ -25,7 +25,7 @@
 							document.getElementById('captchaImage').src=xhr.response
 						}
 					}
-					xhr.open('GET', '<f:format.raw><t:uri.ajaxAction action="refreshCaptchaImage" additionalParams="{time: '{f:format.date(format:\'hms\')}'}"></t:uri.ajaxAction></f:format.raw>');
+					xhr.open('GET', '<f:format.raw><t:uri.ajaxAction action="refreshCaptchaImage"></t:uri.ajaxAction></f:format.raw>&iebuster='+new Date().getTime());
 					xhr.send();
 				}
 			</script>
