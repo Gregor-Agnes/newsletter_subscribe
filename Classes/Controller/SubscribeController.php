@@ -164,7 +164,13 @@ class SubscribeController extends ActionController
 
         $this->view->assignMultiple(compact('message', 'email'));
     }
-
+    
+    public function initializeCreateConfirmationAction()
+    {
+        if (!$this->request->hasArgument('subscription')) {
+            $this->forward('showForm', 'Subscribe', 'newsletter_subscribe');
+        }
+    }
 
 
 
@@ -175,6 +181,7 @@ class SubscribeController extends ActionController
      */
     public function createConfirmationAction(Subscription $subscription)
     {
+        
 
         if ($this->settings['useHCaptcha']) {
             if (GeneralUtility::_POST('h-captcha-response')) {
