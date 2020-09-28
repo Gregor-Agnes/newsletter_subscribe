@@ -19,11 +19,11 @@
 			</trans-unit>
 			<trans-unit id="checkSpam" approved="yes">
 				<source><![CDATA[If you do not receive an email from us: please check your spam folder too.]]></source>
-				<target><![CDATA[Falls Sie kein E-Mail von uns erhalten haben: Bitte kontrollieren Sie auch Ihren Spam-Ordner.]]></target>
+				<target><![CDATA[Falls Sie keine E-Mail von uns erhalten haben: Bitte kontrollieren Sie auch Ihren Spam-Ordner.]]></target>
 			</trans-unit>
 			<trans-unit id="confirmationSendTo" approved="yes">
-				<source><![CDATA[We`ve sent a confirmation link to the following address:]]></source>
-				<target><![CDATA[Wir haben Ihnen eine Nachricht an folgende Adresse gesendet:]]></target>
+				<source><![CDATA[We`ve sent a confirmation link to the following address: ]]></source>
+				<target><![CDATA[Wir haben Ihnen eine Nachricht an folgende Adresse gesendet: ]]></target>
 			</trans-unit>
 			<trans-unit id="confirmed" approved="yes">
 				<source><![CDATA[You have successfully confirmed your subscription]]></source>
@@ -175,7 +175,7 @@
 			</trans-unit>
 			<trans-unit id="thankYou" approved="yes">
 				<source><![CDATA[Thank you for your interest.]]></source>
-				<target><![CDATA[Vielen Dankf für Ihr Interesse.]]></target>
+				<target><![CDATA[Vielen Dank für Ihr Interesse.]]></target>
 			</trans-unit>
 			<trans-unit id="various" approved="yes">
 				<source><![CDATA[various]]></source>
@@ -187,7 +187,7 @@
 			</trans-unit>
 			<trans-unit id="youHaveUnsubscribed" approved="yes">
 				<source><![CDATA[You have successfully unsubscribed with the following data:]]></source>
-				<target><![CDATA[Sie haben sich erfolgreich mit folgenden Daten abgemeldet:]]></target>
+				<target><![CDATA[Sie haben sich erfolgreich mit folgenden Daten abgemeldet: F]]></target>
 			</trans-unit>
 			<trans-unit id="youWillReceive" approved="yes">
 				<source><![CDATA[From now on, you will receive our newsletter.]]></source>
