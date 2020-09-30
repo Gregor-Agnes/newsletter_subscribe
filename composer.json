@@ -13,7 +13,9 @@
   "license": ["GPL-2.0-or-later"],
   "require": {
     "typo3/cms-core": "^10.4.2",
-    "friendsoftypo3/tt-address": "^4.3.0 || ^5.1.0"
+    "friendsoftypo3/tt-address": "^4.3.0 || ^5.1.0",
+    "fluidtypo3/vhs": "^6.0.0"
+
   },
   "replace": {
     "zwo3/newsletter_subscribe": "self.version"
