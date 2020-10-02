@@ -250,7 +250,7 @@ class SubscribeController extends ActionController
             $subscription->setPid($this->subscriptionRepository->createQuery()
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
-
+            $subscription->setName($subscription->getFirstName()." ".$subscription->getLastName());
             $this->subscriptionRepository->add($subscription);
             $this->persistenceManager->persistAll();
 
