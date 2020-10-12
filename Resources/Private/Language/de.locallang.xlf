@@ -183,7 +183,7 @@
 			</trans-unit>
 			<trans-unit id="various" approved="yes">
 				<source><![CDATA[various]]></source>
-				<target><![CDATA[divers]]></target>
+				<target><![CDATA[Divers]]></target>
 			</trans-unit>
 			<trans-unit id="wantToCancel" approved="yes">
 				<source><![CDATA[You want to cancel your subscription? Please insert the email address you subscribed to]]></source>
