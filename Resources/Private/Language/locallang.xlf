@@ -78,6 +78,9 @@
             <trans-unit id="lastName">
                 <source>Last name</source>
             </trans-unit>
+            <trans-unit id="company">
+                <source>Company</source>
+            </trans-unit>
             <trans-unit id="submit">
                 <source>Submit</source>
             </trans-unit>

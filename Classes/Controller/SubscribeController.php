@@ -90,7 +90,7 @@ class SubscribeController extends ActionController
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
 
-        $fields = explode(',', $this->settings['showFields']);
+        $fields = array_map('trim', explode(',', $this->settings['showFields']));
 
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],

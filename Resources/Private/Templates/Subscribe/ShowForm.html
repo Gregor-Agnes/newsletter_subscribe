@@ -8,63 +8,69 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-	<f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
-		<f:if condition="{settings.useHCaptcha}">
-			<div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
-			<script src="https://hcaptcha.com/1/api.js" async defer></script>
-		</f:if>
-		<input type="hidden" name="formToken" value="{formToken}">
-		</input.hidden>
-		<v:condition.iterator.contains needle="gender" haystack="{fields}">
-			<label>
-				<f:translate key="gender"></f:translate>
-				<f:form.select property="gender" options="{w: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
-			</label>
-		</v:condition.iterator.contains>
-		<v:condition.iterator.contains needle="firstName" haystack="{fields}">
-			<label>
-				<f:translate key="firstName"></f:translate>
-				<f:form.textfield property="firstName" />
-			</label>
-		</v:condition.iterator.contains>
-		<v:condition.iterator.contains needle="lastName" haystack="{fields}">
-			<label>
-				<f:translate key="lastName"></f:translate>
-				<f:form.textfield property="lastName" />
-			</label>
-		</v:condition.iterator.contains>
-		<label>
-			<f:translate key="email"></f:translate>
-			<f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}"></f:form.textfield>
-		</label>
-		<f:form.validationResults for="subscription.email">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text">
-						<f:translate key="error.{error.code}" />
-					</p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
-		<f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted"></f:form.checkbox>
-		<label for="dataProtectionAccepted">
-			<i class="fal fa-square-full fa-lg"></i>
-			<i class="fal fa-check fa-2x"></i>
-			{f:translate(key: 'dataProtectionHint1')}
-			<f:link.typolink parameter="{dataProtectionPage}" target="_blank">{f:translate(key: 'dataProtection')}</f:link.typolink>
-			{f:translate(key: 'dataProtectionHint2')}
-		</label>
-		<f:form.validationResults for="subscription.dataProtectionAccepted">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text">
-						<f:translate key="error.{error.code}" />
-					</p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
-		<p>
-			<button class="button hollow" type="submit">{f:translate(key: 'submit')}</button>
-		</p>
-	</f:form>
+    <f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
+        <f:if condition="{settings.useHCaptcha}">
+            <div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
+            <script src="https://hcaptcha.com/1/api.js" async defer></script>
+        </f:if>
+        <input type="hidden" name="formToken" value="{formToken}">
+        </input.hidden>
+        <v:condition.iterator.contains needle="gender" haystack="{fields}">
+            <label>
+                <f:translate key="gender"></f:translate>
+                <f:form.select property="gender" options="{w: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
+            </label>
+        </v:condition.iterator.contains>
+        <v:condition.iterator.contains needle="firstName" haystack="{fields}">
+            <label>
+                <f:translate key="firstName"></f:translate>
+                <f:form.textfield property="firstName" />
+            </label>
+        </v:condition.iterator.contains>
+        <v:condition.iterator.contains needle="lastName" haystack="{fields}">
+            <label>
+                <f:translate key="lastName"></f:translate>
+                <f:form.textfield property="lastName" />
+            </label>
+        </v:condition.iterator.contains>
+        <v:condition.iterator.contains needle="company" haystack="{fields}">
+            <label>
+                <f:translate key="company"></f:translate>
+                <f:form.textfield property="company" />
+            </label>
+        </v:condition.iterator.contains>
+        <label>
+            <f:translate key="email"></f:translate>
+            <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}"></f:form.textfield>
+        </label>
+        <f:form.validationResults for="subscription.email">
+            <f:if condition="{validationResults.flattenedErrors}">
+                <f:for each="{validationResults.errors}" as="error">
+                    <p class="help-text">
+                        <f:translate key="error.{error.code}" />
+                    </p>
+                </f:for>
+            </f:if>
+        </f:form.validationResults>
+        <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted"></f:form.checkbox>
+        <label for="dataProtectionAccepted">
+            <i class="fal fa-square-full fa-lg"></i>
+            <i class="fal fa-check fa-2x"></i>
+            {f:translate(key: 'dataProtectionHint1')}
+            <f:link.typolink parameter="{dataProtectionPage}" target="_blank">{f:translate(key: 'dataProtection')}</f:link.typolink>
+            {f:translate(key: 'dataProtectionHint2')}
+        </label>
+        <f:form.validationResults for="subscription.dataProtectionAccepted">
+            <f:if condition="{validationResults.flattenedErrors}">
+                <f:for each="{validationResults.errors}" as="error">
+                    <p class="help-text">
+                        <f:translate key="error.{error.code}" />
+                    </p>
+                </f:for>
+            </f:if>
+        </f:form.validationResults>
+        <p>
+            <button class="button hollow" type="submit">{f:translate(key: 'submit')}</button>
+        </p>
+    </f:form>
 </f:section>

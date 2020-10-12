@@ -109,6 +109,10 @@
 				<source><![CDATA[Last name]]></source>
 				<target><![CDATA[Nachname]]></target>
 			</trans-unit>
+			<trans-unit id="company" approved="yes">
+				<source><![CDATA[Company]]></source>
+				<target><![CDATA[Unternehmen / Institut]]></target>
+			</trans-unit>
 			<trans-unit id="messageUnsubscribe" approved="yes">
 				<source><![CDATA[We've sent an email with further instruction to the following address:]]></source>
 				<target><![CDATA[Wir haben Ihnen eine Nachricht mit weiteren Anweisungen an folgende Adresse gesendet:]]></target>
