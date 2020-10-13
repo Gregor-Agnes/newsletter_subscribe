@@ -351,10 +351,11 @@ class SubscribeController extends ActionController
      */
     protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName = 'Mail/Default', array $variables = array(), array $replyTo = null, array $attachments = [])
     {
-        $templatePath = new TemplatePaths();
-        $templatePath->setTemplateRootPaths([GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]);
+        $templatePaths = new TemplatePaths();
+        
+        $templatePaths->setTemplateRootPaths([GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]);
         /** @var FluidEmail $email */
-        $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePath);
+        $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
         $email->format('html');
         $email
             ->to(new Address(...$recipient))
