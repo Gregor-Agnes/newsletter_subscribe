@@ -322,10 +322,8 @@ class SubscribeController extends ActionController
             if ($subscriptionHash == $subscription->getSubscriptionHash() && $subscription->isHidden()) {
                 $subscription->setHidden(0);
                 $this->subscriptionRepository->update($subscription);
-                $message = 'Sie haben Ihr Abonnement erfolgreich bestätigt und werden ab sofort den Blickpunkt Infodienst erhalten!';
                 $success = true;
             } else {
-                $message = 'Dieser Link ist nicht gültig';
                 // increasing sleeptimer
                 $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
@@ -333,11 +331,10 @@ class SubscribeController extends ActionController
 
             }
         } else {
-            $message = 'Wir konnten kein entsprechende Abonnement finden. Haben Sie Ihr Abonnement vielleicht schon bestätigt?';
             //TODO redirect with 404
         }
 
-        $this->view->assignMultiple(compact('message', 'subscription', 'success'));
+        $this->view->assignMultiple(compact( 'subscription', 'success'));
     }
 
     /**
