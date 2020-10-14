@@ -205,6 +205,13 @@
 				<source><![CDATA[Please insert the captcha]]></source>
 				<target><![CDATA[Bitte lösen Sie das Captcha]]></target>
 			</trans-unit>
-		</body>
+
+            <!-- AdminInfo -->
+            <trans-unit id="newSubscription">
+                <source>New Subcription</source>
+                <target><![CDATA[Neues Abonnement]]></target>
+            </trans-unit>
+
+        </body>
 	</file>
 </xliff>

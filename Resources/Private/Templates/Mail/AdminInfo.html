@@ -1,0 +1,19 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<p>Email: {subscription.email}</p>
+
+<p>
+    <v:variable.set name="genders" value="{w: 'Mrs', m: 'Mr', v: 'various'}"></v:variable.set>
+
+    Saluation: <f:if condition="{subscription.gender}">
+        {genders.{subscription.gender}}
+</f:if><br>
+    Firstname: {subscription.firstName}<br>
+    Lastname: {subscription.lastName}<br>
+    Company / Institution: {subscription.company}<br>
+</p>

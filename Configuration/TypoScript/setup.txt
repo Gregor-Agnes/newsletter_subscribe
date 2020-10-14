@@ -1,62 +1,64 @@
 plugin {
-    tx_newslettersubscribe {
-        view {
-            templateRootPaths {
-                0 = EXT:newsletter_subscribe/Resources/Private/Templates/
-                1 = {$plugin.tx_newsletter_subscribe.view.templateRootPath}
-            }
+	tx_newslettersubscribe {
+		view {
+			templateRootPaths {
+				0 = EXT:newsletter_subscribe/Resources/Private/Templates/
+				1 = {$plugin.tx_newsletter_subscribe.view.templateRootPath}
+			}
 
-            partialRootPaths {
-                0 = EXT:newsletter_subscribe/Resources/Private/Partials/
-                1 = {$plugin.tx_newsletter_subscribe.view.partialRootPath}
-            }
+			partialRootPaths {
+				0 = EXT:newsletter_subscribe/Resources/Private/Partials/
+				1 = {$plugin.tx_newsletter_subscribe.view.partialRootPath}
+			}
 
-            layoutRootPaths {
-                0 = EXT:newsletter_subscribe/Resources/Private/Layouts/
-                1 = {$plugin.tx_newsletter_subscribe.view.layoutRootPath}
-            }
-        }
+			layoutRootPaths {
+				0 = EXT:newsletter_subscribe/Resources/Private/Layouts/
+				1 = {$plugin.tx_newsletter_subscribe.view.layoutRootPath}
+			}
+		}
 
-        mvc {
-            callDefaultActionIfActionCantBeResolved = 0
-        }
+		mvc {
+			callDefaultActionIfActionCantBeResolved = 0
+		}
 
-        persistence {
-            #overides the settings in the plugin form, if used
-            #storagePid = 23
-            classes {
-                Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
+		persistence {
+			#overides the settings in the plugin form, if used
+			#storagePid = 23
+			classes {
+				Zwo3\Subscribe\Domain\Model\Subscription.newRecordStoragePid = 175
 
-            }
+			}
 
-        }
+		}
 
-        features {
-            //requireCHashArgumentForActionArguments = 0
-        }
+		features {
+			//requireCHashArgumentForActionArguments = 0
+		}
 
-        settings {
+		settings {
 
-            useHCaptcha = 1
-            hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
-            hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
+			useHCaptcha = 1
+			hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
+			hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
 
-            mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
+			mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
 
-            # uid of page with data protection information (if any)
-            dataProtectionPage = 1
+			# uid of page with data protection information (if any)
+			dataProtectionPage = 1
 
-            adminEmail = admin.name@domain.tld
-	        adminName = Your admin Name
-            # email and data_protection are always shown
-            #showFields = gender,firstName,lastName
-            # used in several places
-            newsletterName = Newsletter
-	        # Page with SubscriptinForm (used in E-Mail-Templates
-	        subscribePageUid = 23
+			adminEmail = admin.name@domain.tld
+			adminName = Your admin Name
+			# email and data_protection are always shown
+			#showFields = gender,firstName,lastName
+			# used in several places
+			newsletterName = Newsletter
+			# Page with SubscriptinForm (used in E-Mail-Templates
+			subscribePageUid = 23
+			# whether the admin should get an info mail on every confirmation
+			sendAdminInfo = 0
 
-            overrideFlexformSettingsIfEmpty = adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
+			overrideFlexformSettingsIfEmpty = adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
-        }
-    }
+		}
+	}
 }

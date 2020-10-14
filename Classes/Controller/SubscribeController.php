@@ -333,8 +333,30 @@ class SubscribeController extends ActionController
         } else {
             //TODO redirect with 404
         }
+        
+        if ($success && $this->settings['sendAdminInfo']) {
+            $this->sendAdminInfo($subscription);
+        }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));
+    }
+    
+    public function sendAdminInfo(Subscription $subscription)
+    {
+        try {
+            $this->sendTemplateEmail(
+                [$this->settings['adminEmail'], $this->settings['adminName']],
+                [$this->settings['adminEmail'], $this->settings['adminName']],
+                LocalizationUtility::translate('newSubscription', 'newsletterSubscribe'),
+                'AdminInfo',
+                [
+                    'subscription' => $subscription,
+                ],
+                [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')]
+            );
+        } catch (InvalidTemplateResourceException $exception) {
+            $this->addFlashMessage('Template for AdminInfo Missing', 'No E-Mail-Template found', AbstractMessage::ERROR);
+        }
     }
 
     /**
@@ -350,7 +372,17 @@ class SubscribeController extends ActionController
     {
         $templatePaths = new TemplatePaths();
         
-        $templatePaths->setTemplateRootPaths([GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]);
+        if (mb_stripos($templateName, 'admin') !== false) {
+            // Admin Mail, no translation possible (and necessary
+            $templatePaths->setTemplateRootPaths(
+                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'])]
+            );
+        } else {
+            // User Mails
+            $templatePaths->setTemplateRootPaths(
+                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]
+            );
+        }
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
         $email->format('html');
@@ -361,6 +393,10 @@ class SubscribeController extends ActionController
             ->html('')// only HTML mail
             ->setTemplate($templateName)
             ->assignMultiple($variables);
+        
+        if ($replyTo) {
+            $email->replyTo(new Address(...$replyTo));
+        }
 
         GeneralUtility::makeInstance(Mailer::class)->send($email);
 

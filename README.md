@@ -61,6 +61,12 @@
     <td>null</td>
   </tr>
   <tr>
+    <th align="left">sendAdminInfo</th>
+    <td align="left">whether the admin should get an info mail on every confirmation</td>
+    <td>bool</td>
+    <td>0</td>
+  </tr>
+  <tr>
     <th align="left">mailTemplateRootPath</th>
     <td align="left">path to the mail templates, root for different languages (e.g. en, de, dk)</td>
     <td>string</td>
