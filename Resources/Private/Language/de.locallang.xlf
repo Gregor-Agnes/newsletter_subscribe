@@ -171,7 +171,7 @@
 			</trans-unit>
 			<trans-unit id="thankYou" approved="yes">
 				<source><![CDATA[Thank you for your interest.]]></source>
-				<target><![CDATA[Vielen Dankf für Ihr Interesse.]]></target>
+				<target><![CDATA[Vielen Dank für Ihr Interesse.]]></target>
 			</trans-unit>
 			<trans-unit id="various" approved="yes">
 				<source><![CDATA[various]]></source>
