@@ -112,7 +112,6 @@ class SubscribeController extends ActionController
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'message' => $message,
             'formToken' => $formToken
-
         ]);
     }
 
