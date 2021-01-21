@@ -30,19 +30,21 @@ let insertNoSpamBotField = () => {
   let noSpamField = document.createElement('div')
   noSpamField.innerHTML = `
 <input id="iAmNotASpamBotHere" type="checkbox" name="iAmNotASpamBotHere" value="${iAmNotASpamBotValue}">
-                <label class="label" for="iAmNotASpamBotHere">
-                    ${iAmNotARobotLabel}
-                </label>
+<label class="label" for="iAmNotASpamBotHere">
+    ${iAmNotARobotLabel}
+</label>
                 
 <input type="hidden" name="iAmNotASpamBot" value="">
 <input id="iAmNotASpamBot" type="checkbox" name="iAmNotASpamBot" value="${iAmNotASpamBotValue}">
-                <label class="label" for="iAmNotASpamBot">
-                    ${iAmNotARobotLabel}
-                </label>`
+<label class="label" for="iAmNotASpamBot">
+    ${iAmNotARobotLabel}
+</label>`
 
   document.getElementById('NewsletterSubscribeSubmit').before(noSpamField)
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  insertNoSpamBotField()
-})
+if (iAmNotASpamBotValue) {
+  document.addEventListener("DOMContentLoaded", () => {
+    insertNoSpamBotField()
+  })
+}

@@ -89,22 +89,23 @@ class SubscribeController extends ActionController
      */
     public function showFormAction(Subscription $subscription = null)
     {
-
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
 
         $fields = array_map('trim', explode(',', $this->settings['showFields']));
     
-        $iAmNotASpamBotValue = $token = bin2hex(random_bytes(16));
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
-        $GLOBALS["TSFE"]->fe_user->storeSessionData();
+        if ($this->settings['useSimpleSpamPrevention']) {
+            $iAmNotASpamBotValue = $token = bin2hex(random_bytes(16));
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
+            $GLOBALS["TSFE"]->fe_user->storeSessionData();
+            $this->view->assign('iAmNotASpamBotValue', $iAmNotASpamBotValue);
+        }
         
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'formToken' => $formToken,
             'fields' => $fields,
             'subscription' => $subscription,
-            'iAmNotASpamBotValue' => $iAmNotASpamBotValue,
         ]);
     }
 
