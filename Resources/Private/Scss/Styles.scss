@@ -1,0 +1,6 @@
+#iAmNotASpamBotHere {
+  display: none;
+  & + label {
+    display: none;
+  }
+}

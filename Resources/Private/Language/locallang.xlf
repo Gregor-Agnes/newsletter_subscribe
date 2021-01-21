@@ -162,6 +162,11 @@
                 <source>New Subcription</source>
             </trans-unit>
 
+            <!-- NoSpamBot -->
+            <trans-unit id="iAmNotASpamBotLabel">
+                <source>I am not a spambot</source>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

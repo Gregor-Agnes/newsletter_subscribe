@@ -94,12 +94,17 @@ class SubscribeController extends ActionController
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
 
         $fields = array_map('trim', explode(',', $this->settings['showFields']));
-
+    
+        $iAmNotASpamBotValue = $token = bin2hex(random_bytes(16));
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
+        $GLOBALS["TSFE"]->fe_user->storeSessionData();
+        
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'formToken' => $formToken,
             'fields' => $fields,
-            'subscription' => $subscription
+            'subscription' => $subscription,
+            'iAmNotASpamBotValue' => $iAmNotASpamBotValue,
         ]);
     }
 
@@ -110,7 +115,7 @@ class SubscribeController extends ActionController
     {
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']);
-
+        
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'message' => $message,
@@ -183,8 +188,17 @@ class SubscribeController extends ActionController
      */
     public function createConfirmationAction(Subscription $subscription)
     {
+        if ($this->settings['useSimpleSpamPrevention']) {
+            if (
+                !empty(GeneralUtility::_POST('iAmNotASpamBotHere')) ||
+                GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
+            ) {
+                sleep(5);
+                $this->forward('showForm');
+            }
+        }
         
-
+    
         if ($this->settings['useHCaptcha']) {
             if (GeneralUtility::_POST('h-captcha-response')) {
                 $data = [
@@ -395,7 +409,9 @@ class SubscribeController extends ActionController
             $templatePaths->setTemplateRootPaths(
                 [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]
             );
+            $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
         }
+    
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
         $email->format('html');
@@ -406,7 +422,7 @@ class SubscribeController extends ActionController
             ->html('')// only HTML mail
             ->setTemplate($templateName)
             ->assignMultiple($variables);
-        
+    
         if ($replyTo) {
             $email->replyTo(new Address(...$replyTo));
         }

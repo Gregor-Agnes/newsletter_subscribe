@@ -1,5 +1,4 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:flux="http://typo3.org/ns/FluidTYPO3/Flux/ViewHelpers"
       xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
       xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
       xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
@@ -8,6 +7,10 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
+    <script>
+      const iAmNotARobotValue = <f:format.raw>{iAmNotARobotValue}</f:format.raw>
+      const iAmNotARobotLabel = '<f:translate key="iAmNotASpamBotLabel"></f:translate>'
+    </script>
     <f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
         <f:if condition="{settings.useHCaptcha}">
             <div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
@@ -70,7 +73,7 @@
             </f:if>
         </f:form.validationResults>
         <p>
-            <button class="button hollow" type="submit">{f:translate(key: 'submit')}</button>
+            <button class="button hollow" id="NewsletterSubscribeSubmit" type="submit">{f:translate(key: 'submit')}</button>
         </p>
     </f:form>
 </f:section>

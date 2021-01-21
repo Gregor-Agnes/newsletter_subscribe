@@ -1,3 +1,5 @@
+<INCLUDE_TYPOSCRIPT: source="DIR: ./Library" extensions="ts">
+
 plugin {
 	tx_newslettersubscribe {
 		view {
@@ -37,7 +39,9 @@ plugin {
 
 		settings {
 
-			useHCaptcha = 1
+			useSimpleSpamPrevention = 1
+
+			useHCaptcha = 0
 			hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
 			hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
 

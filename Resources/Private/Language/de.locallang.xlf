@@ -191,7 +191,7 @@
 			</trans-unit>
 			<trans-unit id="youHaveUnsubscribed" approved="yes">
 				<source><![CDATA[You have successfully unsubscribed with the following data:]]></source>
-				<target><![CDATA[Sie haben sich erfolgreich mit folgenden Daten abgemeldet: F]]></target>
+				<target><![CDATA[Sie haben sich erfolgreich mit folgenden Daten abgemeldet:]]></target>
 			</trans-unit>
 			<trans-unit id="youWillReceive" approved="yes">
 				<source><![CDATA[From now on, you will receive our newsletter.]]></source>
@@ -209,8 +209,15 @@
             <!-- AdminInfo -->
             <trans-unit id="newSubscription">
                 <source>New Subcription</source>
-                <target><![CDATA[Neues Abonnement]]></target>
+                <target><![CDATA[Neues Abbonement]]></target>
             </trans-unit>
+
+            <!-- NoSpamBot -->
+            <trans-unit id="iAmNotASpamBotLabel">
+                <source>I am not a spambot</source>
+                <target><![CDATA[Ich bin kein Spambot]]></target>
+            </trans-unit>
+
 
         </body>
 	</file>
