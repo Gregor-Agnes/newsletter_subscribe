@@ -44,6 +44,5 @@ let insertNoSpamBotField = () => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('haos')
   insertNoSpamBotField()
 })
