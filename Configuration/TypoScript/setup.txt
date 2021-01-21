@@ -46,6 +46,8 @@ plugin {
 			hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
 
 			mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
+			mailLayoutRootPath = EXT:core/Resources/Private/Layouts/
+
 
 			# uid of page with data protection information (if any)
 			dataProtectionPage = 1

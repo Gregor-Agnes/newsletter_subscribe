@@ -197,7 +197,6 @@ class SubscribeController extends ActionController
                 $this->forward('showForm');
             }
         }
-        
     
         if ($this->settings['useHCaptcha']) {
             if (GeneralUtility::_POST('h-captcha-response')) {

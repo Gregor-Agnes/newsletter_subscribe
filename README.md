@@ -61,6 +61,30 @@
     <td>null</td>
   </tr>
   <tr>
+    <th align="left">useSimpleSpamPrevention</th>
+    <td align="left">whether there should be a simple spam preventition using javascript and session (with <strong>session cookie</strong>)</td>
+    <td>bool</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <th align="left">useHCaptcha</th>
+    <td align="left">whether hCaptcha (https://www.hcaptcha.com/) should be used, needs further configuration</td>
+    <td>bool</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th align="left">hCaptchaSiteKey</th>
+    <td align="left">hCaptcha site key, only if hCaptcha is used</td>
+    <td>string</td>
+    <td>10000000-ffff-ffff-ffff-000000000001</td>
+  </tr>
+  <tr>
+    <th align="left">hCaptchaSecretKey</th>
+    <td align="left">hCaptcha secret key, only if hCaptcha is used</td>
+    <td>string</td>
+    <td>0x0000000000000000000000000000000000000000</td>
+  </tr>
+  <tr>
     <th align="left">sendAdminInfo</th>
     <td align="left">whether the admin should get an info mail on every confirmation</td>
     <td>bool</td>
@@ -71,6 +95,12 @@
     <td align="left">path to the mail templates, root for different languages (e.g. en, de, dk)</td>
     <td>string</td>
     <td>EXT:newsletter_subscribe/Resources/Private/Templates/Mail/</td>
+  </tr>
+  <tr>
+    <th align="left">mailLayoutRootPath</th>
+    <td align="left">path to the mail layouts used from the templates</td>
+    <td>string</td>
+    <td>EXT:core/Resources/Private/Layouts/</td>
   </tr>
   <tr>
     <th align="left">overrideFlexformSettingsIfEmpty</th>
