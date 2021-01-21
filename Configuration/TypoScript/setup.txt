@@ -40,6 +40,7 @@ plugin {
 		settings {
 
 			useSimpleSpamPrevention = 1
+			spamTimeout = 5
 
 			useHCaptcha = 0
 			hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001

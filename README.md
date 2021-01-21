@@ -67,6 +67,12 @@
     <td>1</td>
   </tr>
   <tr>
+    <th align="left">spamTimeout</th>
+    <td align="left">time in seconds to wait before form gets rendered again if spam check fails</td>
+    <td>int</td>
+    <td>5</td>
+  </tr>
+  <tr>
     <th align="left">useHCaptcha</th>
     <td align="left">whether hCaptcha (https://www.hcaptcha.com/) should be used, needs further configuration</td>
     <td>bool</td>

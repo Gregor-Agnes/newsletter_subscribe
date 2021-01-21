@@ -4,3 +4,8 @@
     display: none;
   }
 }
+#iAmNotASpamBot {
+  & + label {
+    margin-bottom: 20px;
+  }
+}

@@ -193,7 +193,7 @@ class SubscribeController extends ActionController
                 !empty(GeneralUtility::_POST('iAmNotASpamBotHere')) ||
                 GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
             ) {
-                sleep(5);
+                sleep($this->settings['spamTimeout']);
                 $this->forward('showForm');
             }
         }
