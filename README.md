@@ -2,6 +2,7 @@
 
 * Subcribe for Newsletters for TYPO3 >= 9.5
 * Depends on tt_address
+* Scheduler Task to delete unconfirmed subscribers after a while (since v.3.1.0)
 
 ## What does it do?
 
