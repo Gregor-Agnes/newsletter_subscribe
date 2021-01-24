@@ -167,6 +167,26 @@
                 <source>I am not a spambot</source>
             </trans-unit>
 
+            <!-- Scheduler -->
+            <trans-unit id="schedulerAge">
+                <source>Delete all unvalidated Subscriptions oder than (days)</source>
+            </trans-unit>
+            <trans-unit id="schedulerPids">
+                <source>Delete all unvalidated Subscriptions from pages (comma separated list)</source>
+            </trans-unit>
+            <trans-unit id="error.schedulerAge">
+                <source>Please insert minimum age of the subscriptions to be deleted (min. 7)</source>
+            </trans-unit>
+            <trans-unit id="error.schedulerPids">
+                <source>Please insert the pid of the folder(s) which to consider</source>
+            </trans-unit>
+            <trans-unit id="schedulerDeleteUnvalidated.name">
+                <source>Delete none validated subscribers</source>
+            </trans-unit>
+            <trans-unit id="schedulerDeleteUnvalidated.description">
+                <source>Deletes all none validated user from given folder with given age</source>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

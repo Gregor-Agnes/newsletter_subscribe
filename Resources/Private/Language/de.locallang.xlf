@@ -218,7 +218,31 @@
                 <target><![CDATA[Ich bin kein Spambot]]></target>
             </trans-unit>
 
-
+            <!-- Scheduler -->
+            <trans-unit id="schedulerAge">
+                <source>Delete all unvalidated Subscriptions oder than (days)</source>
+                <target>Lösche alle nicht valididierten Anmeldungen älter als (in Tagen)</target>
+            </trans-unit>
+            <trans-unit id="schedulerPids">
+                <source>Delete all unvalidated Subscriptions from pages (comma separated list)</source>
+                <target>Lösche alle nicht valididierten Anmeldungen aus den Seiten mit folgen PIDs (komma-separierte Liste</target>
+            </trans-unit>
+            <trans-unit id="error.schedulerAge">
+                <source>Please insert minimum age of the subscriptions to be deleted (min. 7)</source>
+                <target>Bitte Alter in Tagen der zu löschenden Anmeldungen eingeben (mind. 7)</target>
+            </trans-unit>
+            <trans-unit id="error.schedulerPids">
+                <source>Please insert the pid of the folder(s) which to consider</source>
+                <target>Bitte pids der Ordner angeben, welche verarbeitet werden sollen</target>
+            </trans-unit>
+            <trans-unit id="schedulerDeleteUnvalidated.name">
+                <source>Delete none validated subscribers</source>
+                <target>Nicht validierte Subscriber löschen</target>
+            </trans-unit>
+            <trans-unit id="schedulerDeleteUnvalidated.description">
+                <source>Deletes all none validated user from given folder with given age</source>
+                <target>Löscht alle nicht validierte NL-Subscriber, Ordner und Alter können konfiguriert werden</target>
+            </trans-unit>
         </body>
 	</file>
 </xliff>

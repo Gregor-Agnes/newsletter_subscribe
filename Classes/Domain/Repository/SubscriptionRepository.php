@@ -39,8 +39,27 @@ class SubscriptionRepository extends Repository {
                 $query->equals('deleted', 0)
             ))->execute()->getFirst();
     }
-
-
-
-
+    
+    
+    public function findOldUnvalidated($days, $pids)
+    {
+        $query = $this->createQuery();
+        $query->matching(
+            $query->logicalAnd(
+                [
+                    $query->lessThan('crdate', time() - 86400 * $days),
+                    $query->equals('hidden', true),
+                    $query->in('pid', explode(',', $pids)),
+                ]
+            )
+        );
+        $query->setLimit(10);
+        
+        return $query->execute();
+    }
+    
+    
+    
+    
+    
 }

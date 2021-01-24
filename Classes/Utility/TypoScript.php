@@ -1,6 +1,6 @@
 <?php
 
-namespace Zwo3\NewsletterSubscribe\Utilities;
+namespace Zwo3\NewsletterSubscribe\Utility;
 
 /**
  * This file is part of the "news" Extension for TYPO3 CMS.

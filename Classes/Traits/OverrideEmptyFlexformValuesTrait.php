@@ -5,7 +5,7 @@ namespace Zwo3\NewsletterSubscribe\Traits;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use Zwo3\NewsletterSubscribe\Utilities\TypoScript;
+use Zwo3\NewsletterSubscribe\Utility\TypoScript;
 
 trait OverrideEmptyFlexformValuesTrait {
     /***************************************************************************
