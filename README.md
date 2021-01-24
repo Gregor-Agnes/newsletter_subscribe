@@ -160,5 +160,4 @@ where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the i
 ***
 
 # To do
-- write a scheduler task to remove unconfirmed addresses (after some time)
 - creating ajax submit
