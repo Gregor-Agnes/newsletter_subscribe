@@ -1,5 +1,3 @@
-const typo3Themename = 'klimawettetheme'
-
 const path = require('path');
 
 module.exports = {
