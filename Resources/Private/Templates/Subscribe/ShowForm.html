@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
       xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
       xmlns:t="Helhum\TyposcriptRendering\ViewHelpers"
+      xmlns:ns="http://typo3.org/ns/Zwo3\NewsletterSubscribe/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <f:layout name="Standard"></f:layout>
@@ -18,30 +18,30 @@
         </f:if>
         <input type="hidden" name="formToken" value="{formToken}">
         </input.hidden>
-        <v:condition.iterator.contains needle="gender" haystack="{fields}">
+        <ns:condition.iterator.contains needle="gender" haystack="{fields}">
             <label>
                 <f:translate key="gender"></f:translate>
                 <f:form.select property="gender" options="{f: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
             </label>
-        </v:condition.iterator.contains>
-        <v:condition.iterator.contains needle="firstName" haystack="{fields}">
+        </ns:condition.iterator.contains>
+        <ns:condition.iterator.contains needle="firstName" haystack="{fields}">
             <label>
                 <f:translate key="firstName"></f:translate>
                 <f:form.textfield property="firstName" />
             </label>
-        </v:condition.iterator.contains>
-        <v:condition.iterator.contains needle="lastName" haystack="{fields}">
+        </ns:condition.iterator.contains>
+        <ns:condition.iterator.contains needle="lastName" haystack="{fields}">
             <label>
                 <f:translate key="lastName"></f:translate>
                 <f:form.textfield property="lastName" />
             </label>
-        </v:condition.iterator.contains>
-        <v:condition.iterator.contains needle="company" haystack="{fields}">
+        </ns:condition.iterator.contains>
+        <ns:condition.iterator.contains needle="company" haystack="{fields}">
             <label>
                 <f:translate key="company"></f:translate>
                 <f:form.textfield property="company" />
             </label>
-        </v:condition.iterator.contains>
+        </ns:condition.iterator.contains>
         <label>
             <f:translate key="email"></f:translate>
             <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}"></f:form.textfield>
