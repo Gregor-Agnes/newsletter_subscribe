@@ -43,7 +43,7 @@ let insertNoSpamBotField = () => {
   document.getElementById('NewsletterSubscribeSubmit').before(noSpamField)
 }
 
-if (iAmNotASpamBotValue) {
+if (typeof (iAmNotASpamBotValue) !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     insertNoSpamBotField()
   })
