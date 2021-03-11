@@ -13,6 +13,10 @@
 				<source><![CDATA[Admin Name]]></source>
 				<target><![CDATA[Admin Name]]></target>
 			</trans-unit>
+			<trans-unit id="nameEmpty">
+				<source>Subscriber</source>
+				<target>Abonnent/Abonnentin</target>
+			</trans-unit>
 			<trans-unit id="mailTemplateRootPath" approved="yes">
 				<source><![CDATA[Admin Name]]></source>
 				<target><![CDATA[Pfad zu den E-Mail-Templates]]></target>

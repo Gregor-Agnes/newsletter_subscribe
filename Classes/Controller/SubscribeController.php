@@ -150,10 +150,10 @@ class SubscribeController extends ActionController
                     $existing->setSubscriptionHash(hash('sha256', $existing->getEmail() . $existing->getCrdate() . random_bytes(32)));
                 }
                 // Abmelden Mail versenden
-
+                $name = $existing->getName() ?: LocalizationUtility::translate('nameEmpty', 'newsletter_subscribe');
                 try {
                     $this->sendTemplateEmail(
-                        [$existing->getEmail(), $existing->getName()],
+                        [$existing->getEmail(), $name],
                         [$this->settings['adminEmail'], $this->settings['adminName']],
                         LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
                         'CreateUnsubscribe',
