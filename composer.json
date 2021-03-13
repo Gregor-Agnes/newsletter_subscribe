@@ -27,5 +27,10 @@
     "psr-4": {
       "Zwo3\\NewsletterSubscribe\\Tests\\": "Tests/"
     }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "newsletter_subscrib"
+    }
   }
 }
