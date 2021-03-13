@@ -30,7 +30,7 @@
   },
   "extra": {
     "typo3/cms": {
-      "extension-key": "newsletter_subscrib"
+      "extension-key": "newsletter_subscribe"
     }
   }
 }
