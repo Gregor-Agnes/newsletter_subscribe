@@ -31,8 +31,8 @@
                     <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.recursive</label>
                     <config>
                         <type>select</type>
+                        <renderType>selectSingle</renderType>
                         <items type="array">
-
                             <numIndex index="2" type="array">
                                 <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.0</numIndex>
                                 <numIndex index="1">0</numIndex>
