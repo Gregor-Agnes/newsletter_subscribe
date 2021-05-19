@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['newsletter_subscribe'] = [
 	'title' => 'Newsletter Subscribe',
 	'description' => 'subscribe and unsubscribe to tt_address, generate static Link to unsubscribe (to use in Newsletter)',
 	'category' => 'plugin',
@@ -9,7 +9,7 @@ $EM_CONF[$_EXTKEY] = [
 	'author_company' => 'Gregor Agnes & Markus Cousin GbR',
 	'state' => 'stable',
 	'clearCacheOnLoad' => 0,
-	'version' => '3.2.6',
+	'version' => '3.2.7',
 	'constraints' => [
 		'depends' => [
 			'typo3' => '10.4.2-10.4.99',
