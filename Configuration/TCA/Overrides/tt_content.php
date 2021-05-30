@@ -4,14 +4,14 @@ if (!defined('TYPO3_MODE')) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'Zwo3.NewsletterSubscribe',
+    'NewsletterSubscribe',
     'Subscribe',
     'Subscribe to Addresslist',
     'EXT:newsletter_subscribe/ext_icon.svg'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'Zwo3.NewsletterSubscribe',
+    'NewsletterSubscribe',
     'Unsubscribe',
     'Unsubscribe from Addresslist',
     'EXT:newsletter_subscribe/ext_icon.svg'

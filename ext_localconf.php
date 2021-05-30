@@ -2,25 +2,25 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Zwo3.NewsletterSubscribe',
+    'NewsletterSubscribe',
     'Subscribe',
     [
-        'Subscribe' => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
     ],
     // non-cacheable actions
     [
-        'Subscribe' => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
     ]
 );
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Zwo3.NewsletterSubscribe',
+    'NewsletterSubscribe',
     'Unsubscribe',
     [
-        'Subscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
     ],
     // non-cacheable actions
     [
-        'Subscribe' => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
     ]
 );
 
