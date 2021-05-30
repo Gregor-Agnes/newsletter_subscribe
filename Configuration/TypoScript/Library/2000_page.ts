@@ -13,7 +13,7 @@ page {
 	}
 }
 
-[request.getPageArguments().get('dev-nl') > 0]
+[traverse(request.getQueryParams(), 'dev-nl') > 0]
 	page.meta.robots = noindex
 	config {
 		linkVars := addToList(dev-nl(1))
