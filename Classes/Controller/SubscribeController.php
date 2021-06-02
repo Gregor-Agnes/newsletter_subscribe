@@ -180,8 +180,6 @@ class SubscribeController extends ActionController
         }
     }
 
-
-
     /**
      * @param Subscription $subscription
      * @throws IllegalObjectTypeException
@@ -387,6 +385,33 @@ class SubscribeController extends ActionController
     }
 
     /**
+     *
+     * @return string
+     */
+    protected function getTwoLetterIsoCodeFromSiteConfig() {
+        $siteFinder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+        $site = $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
+        $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
+        $language = $site->getLanguageById($languageAspect->getId());
+        return $language->getTwoLetterIsoCode();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function prepareTwoLetterIsoCode() {
+        if(!empty($GLOBALS['TSFE']->config['config']['language'])) {
+            $twoLetterIsoCode = $GLOBALS['TSFE']->config['config']['language'];
+        }
+        else {
+            $twoLetterIsoCode = $this->getTwoLetterIsoCodeFromSiteConfig();
+        }
+
+        return $twoLetterIsoCode;
+    }
+
+    /**
      * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
      * @param array $sender sender of the email in the format array('sender@domain.tld' => 'Sender Name')
      * @param string $subject subject of the email
@@ -400,14 +425,15 @@ class SubscribeController extends ActionController
         $templatePaths = new TemplatePaths();
         
         if (mb_stripos($templateName, 'admin') !== false) {
-            // Admin Mail, no translation possible (and necessary
+            // Admin Mail, no translation possible and necessary
             $templatePaths->setTemplateRootPaths(
                 [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'])]
             );
         } else {
             // User Mails
+            $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
             $templatePaths->setTemplateRootPaths(
-                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]
+                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $twoLetterIsoCode .'/')]
             );
             $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
         }
