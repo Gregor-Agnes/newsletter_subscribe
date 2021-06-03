@@ -170,7 +170,7 @@ class SubscribeController extends ActionController
             $this->redirect('showUnsubscribeForm', null, null, ['message' => 'E-Mail-Adresse nicht valide']);
         }
 
-        $this->view->assignMultiple(compact('message', 'email'));
+        $this->view->assignMultiple(compact('email'));
     }
     
     public function initializeCreateConfirmationAction()
