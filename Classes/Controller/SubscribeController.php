@@ -312,7 +312,7 @@ class SubscribeController extends ActionController
         } else {
             //TODO redirect with 404
         }
-        $this->view->assignMultiple(compact('message', 'subscription', 'success'));
+        $this->view->assignMultiple(compact('subscription', 'success'));
     }
 
     public function undosubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
