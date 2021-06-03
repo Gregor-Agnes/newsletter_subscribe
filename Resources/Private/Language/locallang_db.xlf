@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf" date="2021-06-03T15:00:00Z" product-name="newsletter_subscribe">
+        <header/>
+        <body>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.name" resname="tx_zwo3_newslettersubscribe_subscribe.name">
+                <source>Newsletter subscribe</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.description" resname="tx_zwo3_newslettersubscribe_subscribe.description">
+                <source>Subscribe to Addresslist</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_unsubscribe.name" resname="tx_zwo3_newslettersubscribe_unsubscribe.name">
+                <source>Newsletter unsubscribe</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_unsubscribe.description" resname="tx_zwo3_newslettersubscribe_unsubscribe.description">
+                <source>Unsubscribe from Addresslist</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
