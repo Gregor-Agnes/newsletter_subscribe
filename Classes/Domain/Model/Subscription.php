@@ -351,6 +351,6 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
      */
     public function setSalutation($salutation): void
     {
-        $this->title = $salutation;
+        $this->salutation = $salutation;
     }
 }
