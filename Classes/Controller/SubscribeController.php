@@ -209,7 +209,7 @@ class SubscribeController extends ActionController
                 curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
                 curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($verify);
-// var_dump($response);
+                // var_dump($response);
                 $responseData = json_decode($response);
                 if($responseData->success) {
                     // your success code goes here

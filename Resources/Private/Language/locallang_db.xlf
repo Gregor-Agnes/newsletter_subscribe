@@ -15,6 +15,21 @@
             <trans-unit id="tx_zwo3_newslettersubscribe_unsubscribe.description" resname="tx_zwo3_newslettersubscribe_unsubscribe.description">
                 <source>Unsubscribe from Addresslist</source>
             </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.salutation" resname="tx_zwo3_newslettersubscribe_subscribe.salutation">
+                <source>Salutation</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.hit_number" resname="tx_zwo3_newslettersubscribe_subscribe.hit_number">
+                <source>Number of Hits</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.last_hit" resname="tx_zwo3_newslettersubscribe_subscribe.last_hit">
+                <source>Last Hit</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.subscription_hash" resname="tx_zwo3_newslettersubscribe_subscribe.subscription_hash">
+                <source>Subscription Hash</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted" resname="tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted">
+                <source>Data Protection Accepted</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
