@@ -1,6 +1,7 @@
 plugin {
     tx_newslettersubscribe {
         settings {
+            addsalutation = 1
             salutation {
                 en {
                     default = Dear Reader

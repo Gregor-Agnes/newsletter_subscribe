@@ -36,6 +36,7 @@ plugin {
 		}
 
         settings {
+            addsalutation = {$plugin.tx_newslettersubscribe.settings.addsalutation}
             salutation {
                 en {
                     default = {$plugin.tx_newslettersubscribe.settings.salutation.en.default}

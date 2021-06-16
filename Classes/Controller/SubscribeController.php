@@ -265,6 +265,9 @@ class SubscribeController extends ActionController
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
             $subscription->setName($subscription->getFirstName()." ".$subscription->getLastName());
+
+            $this->addSalutation($subscription);
+
             $this->subscriptionRepository->add($subscription);
             $this->persistenceManager->persistAll();
 
@@ -381,6 +384,24 @@ class SubscribeController extends ActionController
             );
         } catch (InvalidTemplateResourceException $exception) {
             $this->addFlashMessage('Template for AdminInfo Missing', 'No E-Mail-Template found', AbstractMessage::ERROR);
+        }
+    }
+
+    protected function addSalutation(&$subscription) {
+        if(isset($this->settings['addsalutation']) && $this->settings['addsalutation']) {
+            $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
+            if(isset($this->settings['salutation'][$twoLetterIsoCode])) {
+                if(isset($this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()]) && $subscription->getLastName()) {
+                    $salutation = $this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()];
+                    $salutation .= $subscription->getTitle() ? ' '.$subscription->getTitle() : '';
+                    $salutation .= ' '.$subscription->getLastName();
+                }
+                else {
+                    $salutation = $this->settings['salutation'][$twoLetterIsoCode]['default'];
+                }
+
+                $subscription->setSalutation($salutation);
+            }
         }
     }
 
