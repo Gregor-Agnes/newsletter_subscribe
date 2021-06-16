@@ -1,0 +1,18 @@
+plugin {
+    tx_newslettersubscribe {
+        settings {
+            salutation {
+                en {
+                    default = Dear Reader
+                    m = Dear Mr.
+                    f = Dear Mrs.
+                }
+                de {
+                    default = Liebe(r) Leser(in)
+                    m = Sehr geehrter Herr
+                    f = Sehr geehrte Frau
+                }
+            }
+        }
+    }
+}

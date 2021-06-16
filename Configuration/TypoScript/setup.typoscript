@@ -35,8 +35,20 @@ plugin {
 			//requireCHashArgumentForActionArguments = 0
 		}
 
-		settings {
-
+        settings {
+            salutation {
+                en {
+                    default = {$plugin.tx_newslettersubscribe.settings.salutation.en.default}
+                    m = {$plugin.tx_newslettersubscribe.settings.salutation.en.m}
+                    f = {$plugin.tx_newslettersubscribe.settings.salutation.en.f}
+                }
+                de {
+                    default = {$plugin.tx_newslettersubscribe.settings.salutation.de.default}
+                    m = {$plugin.tx_newslettersubscribe.settings.salutation.de.m}
+                    f = {$plugin.tx_newslettersubscribe.settings.salutation.de.f}
+                }
+            }
+            
 			useSimpleSpamPrevention = 1
 			spamTimeout = 5
 
@@ -63,6 +75,6 @@ plugin {
 
 			overrideFlexformSettingsIfEmpty = adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
-		}
-	}
+        }
+    }
 }
