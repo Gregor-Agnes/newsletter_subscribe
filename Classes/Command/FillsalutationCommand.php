@@ -15,24 +15,25 @@ class FillsalutationCommand extends Command
     private $salutations = [];
     
     /**
+     * @var ConfigurationManagerInterface
+     */
+    protected $configurationManager;
+
+    /**
+     * Injects the Configuration Manager and is initializing the framework settings
+     *
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager Instance of the Configuration Manager
+     */
+    public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
+        $this->configurationManager = $configurationManager;
+    }
+
+    /**
      * Configure the command by defining the name, options and arguments
      */
     protected function configure()
     {
-        //@TODO
-        $this->salutations = 
-        [
-            0 => [
-                'default' => 'Liebe(r) Leser(in)',
-                'm' => 'Sehr geehrter Herr',
-                'f' => 'Sehr geehrte Frau'
-            ],
-            1 => [
-                'default' => 'Dear Reader',
-                'm' => 'Dear Mr.',
-                'f' => 'Dear Mrs.'
-            ]
-        ];
+
     }
 
     /**
@@ -44,11 +45,20 @@ class FillsalutationCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //@TODO
+        $tsSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['de.'])) {
+            $this->salutations[0] = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['de.'];
+        }
+        if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['en.'])) {
+            $this->salutations[1] = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['en.'];
+        }
+
         $counter = 0;
         $table = 'tt_address';
         $io = new SymfonyStyle($input, $output);
         $io->title($this->getDescription());
-
+        
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         $queryBuilder
             ->select('uid', 'pid', 'last_name', 'title', 'gender', 'sys_language_uid')
