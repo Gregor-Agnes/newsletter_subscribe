@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Zwo3\NewsletterSubscribe\:
+    resource: '../Classes/*'
+    
+  Zwo3\NewsletterSubscribe\Command\FillsalutationCommand:
+    tags:
+      - name: 'console.command'
+        command: 'newslettersubscribe:fillsalutation'
+        description: 'Fill salutation field in tt_address'
+        # not required, defaults to false
+        #hidden: false
+        #schedulable: false
