@@ -51,7 +51,7 @@ class FillsalutationCommand extends Command
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         $queryBuilder
-            ->select('uid', 'pid', 'last_name', 'gender', 'sys_language_uid')
+            ->select('uid', 'pid', 'last_name', 'title', 'gender', 'sys_language_uid')
             ->from($table)
             ->where(
                 $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))  
@@ -75,6 +75,7 @@ class FillsalutationCommand extends Command
                 $salutation = $this->salutations[$row['sys_language_uid']]['default'];
                 if(isset($this->salutations[$row['sys_language_uid']][$row['gender']]) && !empty($row['last_name'])) {
                     $salutation = $this->salutations[$row['sys_language_uid']][$row['gender']];
+                    $salutation .= !empty($row['title']) ? ' '.$row['title'] : '';
                     $salutation .= ' '.$row['last_name'];
                 }
                 //$io->writeln($salutation);
