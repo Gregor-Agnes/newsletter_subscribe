@@ -30,6 +30,12 @@
             <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted" resname="tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted">
                 <source>Data Protection Accepted</source>
             </trans-unit>
+            <trans-unit id="settings.senderEmail" resname="settings.senderEmail">
+                <source>Sender Email Address</source>
+            </trans-unit>
+            <trans-unit id="settings.senderName" resname="settings.senderName">
+                <source>Sender Name</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

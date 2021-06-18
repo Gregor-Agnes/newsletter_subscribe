@@ -78,7 +78,7 @@ plugin {
 			# whether the admin should get an info mail on every confirmation
 			sendAdminInfo = 0
 
-			overrideFlexformSettingsIfEmpty = adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
+			overrideFlexformSettingsIfEmpty = senderEmail,senderName,adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
         }
     }

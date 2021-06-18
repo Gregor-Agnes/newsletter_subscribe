@@ -39,6 +39,14 @@
                 <source>Data Protection Accepted</source>
                 <target>Datenschutzerklärung akzeptiert</target>
             </trans-unit>
+            <trans-unit id="settings.senderEmail" resname="settings.senderEmail">
+                <source>Sender Email Address</source>
+                <target>Absender E-Mail-Adresse</target>
+            </trans-unit>
+            <trans-unit id="settings.senderName" resname="settings.senderName">
+                <source>Sender Name</source>
+                <target>Absender Name</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
