@@ -133,7 +133,6 @@ class SubscribeController extends ActionController
      */
     public function createUnsubscribeMailAction(?string $email = null)
     {
-
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
                 (string)GeneralUtility::_POST('formToken'),
@@ -154,7 +153,7 @@ class SubscribeController extends ActionController
                 try {
                     $this->sendTemplateEmail(
                         [$existing->getEmail(), $name],
-                        [$this->settings['adminEmail'], $this->settings['adminName']],
+                        [$this->settings['senderEmail'], $this->settings['senderName']],
                         LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
                         'CreateUnsubscribe',
                         [
