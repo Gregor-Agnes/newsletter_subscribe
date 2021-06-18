@@ -50,6 +50,12 @@ plugin {
                 }
             }
             
+            senderEmail = {$plugin.tx_newslettersubscribe.settings.senderEmail}
+            senderName = {$plugin.tx_newslettersubscribe.settings.senderName}
+            
+            adminEmail = {$plugin.tx_newslettersubscribe.settings.adminEmail}
+            adminName = {$plugin.tx_newslettersubscribe.settings.adminName}
+            
 			useSimpleSpamPrevention = 1
 			spamTimeout = 5
 
@@ -62,9 +68,7 @@ plugin {
 
 			# uid of page with data protection information (if any)
 			dataProtectionPage = 1
-
-			adminEmail = admin.name@domain.tld
-			adminName = Your admin Name
+			
 			# email and data_protection are always shown
 			#showFields = gender,firstName,lastName
 			# used in several places

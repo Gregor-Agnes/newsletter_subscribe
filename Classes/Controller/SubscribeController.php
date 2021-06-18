@@ -49,8 +49,8 @@ use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
  */
 class SubscribeController extends ActionController
 {
-
     use OverrideEmptyFlexformValuesTrait;
+
     /**
      * @var ObjectManager
      */
