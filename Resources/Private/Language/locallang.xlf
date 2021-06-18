@@ -166,7 +166,6 @@
             </trans-unit>
             <trans-unit id="unsubscription">
                 <source>Unsubscription</source>
-                <target>Abonnement Kündigung</target>
             </trans-unit>
             
             <!-- NoSpamBot -->
