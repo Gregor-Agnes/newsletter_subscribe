@@ -215,7 +215,11 @@
                 <source>New Subcription</source>
                 <target><![CDATA[Neues Abbonement]]></target>
             </trans-unit>
-
+            <trans-unit id="unsubscription">
+                <source>Unsubscription</source>
+                <target>Abonnement Kündigung</target>
+            </trans-unit>
+            
             <!-- NoSpamBot -->
             <trans-unit id="iAmNotASpamBotLabel">
                 <source>I am not a spambot</source>

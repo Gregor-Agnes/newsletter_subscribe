@@ -299,7 +299,6 @@ class SubscribeController extends ActionController
 
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findByUid($uid, false);
-
         $success = false;
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash()) {
@@ -312,8 +311,18 @@ class SubscribeController extends ActionController
                 //TODO redirect with 404
             }
         } else {
-            //TODO redirect with 404
+            $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+                \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
+                'Page not found',
+                ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+            );
+            throw new ImmediateResponseException($response);
         }
+
+        if ($success && $this->settings['sendAdminInfo']) {
+            $this->sendAdminInfo($subscription, 0);
+        }
+        
         $this->view->assignMultiple(compact('subscription', 'success'));
     }
 
@@ -362,19 +371,21 @@ class SubscribeController extends ActionController
         }
         
         if ($success && $this->settings['sendAdminInfo']) {
-            $this->sendAdminInfo($subscription);
+            $this->sendAdminInfo($subscription, 1);
         }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));
     }
     
-    public function sendAdminInfo(Subscription $subscription)
+    public function sendAdminInfo(Subscription $subscription, int $unsubscribeaction = 0)
     {
+        $subject = $unsubscribeaction == 0 ? LocalizationUtility::translate('unsubscription', 'newsletterSubscribe') : LocalizationUtility::translate('newSubscription', 'newsletterSubscribe');
+        
         try {
             $this->sendTemplateEmail(
                 [$this->settings['adminEmail'], $this->settings['adminName']],
                 [$this->settings['adminEmail'], $this->settings['adminName']],
-                LocalizationUtility::translate('newSubscription', 'newsletterSubscribe'),
+                $subject,
                 'AdminInfo',
                 [
                     'subscription' => $subscription,
@@ -476,7 +487,6 @@ class SubscribeController extends ActionController
         GeneralUtility::makeInstance(Mailer::class)->send($email);
 
         return true;
-
     }
 
     /**
