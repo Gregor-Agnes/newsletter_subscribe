@@ -240,7 +240,7 @@ class SubscribeController extends ActionController
             try {
                 $this->sendTemplateEmail(
                     [$existing->getEmail(), ($existing->getName() ?: 'no name given')],
-                    [$this->settings['adminEmail'], $this->settings['adminName']],
+                    [$this->settings['senderEmail'], $this->settings['senderName']],
                     LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe'),
                     'AlreadySubscribed',
                     [
@@ -273,7 +273,7 @@ class SubscribeController extends ActionController
             try {
                 $this->sendTemplateEmail(
                     [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')],
-                    [$this->settings['adminEmail'], $this->settings['adminName']],
+                    [$this->settings['senderEmail'], $this->settings['senderEmail']],
                     LocalizationUtility::translate('yourSubscription', 'newsletterSubscribe'),
                     'Confirmation',
                     [
