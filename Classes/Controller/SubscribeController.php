@@ -353,7 +353,7 @@ class SubscribeController extends ActionController
                 $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
                 $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-                    $GLOBALS['TYPO3_REQUEST'],
+                    \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                     'Page not found',
                     ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
                 );
@@ -362,7 +362,7 @@ class SubscribeController extends ActionController
             }
         } else {
             $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-                $GLOBALS['TYPO3_REQUEST'],
+                \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                 'Page not found',
                 ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
             );
