@@ -60,6 +60,7 @@ class FillsalutationCommand extends Command
         $io->title($this->getDescription());
         
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        $queryBuilder->getRestrictions()->removeAll();
         $queryBuilder
             ->select('uid', 'pid', 'last_name', 'title', 'gender', 'sys_language_uid')
             ->from($table)
@@ -74,7 +75,6 @@ class FillsalutationCommand extends Command
               )
              //->setMaxResults(10)
              ->orderBy('uid', 'asc');
-        
         //$io->writeln($queryBuilder->getSQL());
         $rowIterator = $queryBuilder->execute();
         
