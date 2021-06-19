@@ -11,9 +11,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FillsalutationCommand extends Command
-{
-    private $salutations = [];
-    
+{   
     /**
      * @var ConfigurationManagerInterface
      */
@@ -36,6 +34,25 @@ class FillsalutationCommand extends Command
 
     }
 
+    protected function prepareSalutations(): array
+    {
+        $salutations = [];
+        
+        $tsSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['languages.'])) {
+            $languageConfig = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['languages.'];
+            if(is_array($languageConfig) && count($languageConfig)) {
+                foreach($languageConfig as $l => $lId) {
+                    if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.'][$l.'.'])) {
+                        $salutations[$lId] = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.'][$l.'.'];
+                    }
+                }
+            }
+        }
+        
+        return $salutations;
+    }
+    
     /**
      * Executes the command to fill salutation field
      *
@@ -45,14 +62,7 @@ class FillsalutationCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //@TODO
-        $tsSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['de.'])) {
-            $this->salutations[0] = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['de.'];
-        }
-        if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['en.'])) {
-            $this->salutations[1] = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['en.'];
-        }
+        $salutations = $this->prepareSalutations();
 
         $counter = 0;
         $table = 'tt_address';
@@ -81,10 +91,10 @@ class FillsalutationCommand extends Command
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         
         while ($row = $rowIterator->fetch()) {
-            if(isset($this->salutations[$row['sys_language_uid']])) {
-                $salutation = $this->salutations[$row['sys_language_uid']]['default'];
-                if(isset($this->salutations[$row['sys_language_uid']][$row['gender']]) && !empty($row['last_name'])) {
-                    $salutation = $this->salutations[$row['sys_language_uid']][$row['gender']];
+            if(isset($salutations[$row['sys_language_uid']])) {
+                $salutation = $salutations[$row['sys_language_uid']]['default'];
+                if(isset($salutations[$row['sys_language_uid']][$row['gender']]) && !empty($row['last_name'])) {
+                    $salutation = $salutations[$row['sys_language_uid']][$row['gender']];
                     $salutation .= !empty($row['title']) ? ' '.$row['title'] : '';
                     $salutation .= ' '.$row['last_name'];
                 }

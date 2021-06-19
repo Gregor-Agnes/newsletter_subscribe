@@ -48,6 +48,10 @@ plugin {
                     m = {$plugin.tx_newslettersubscribe.settings.salutation.de.m}
                     f = {$plugin.tx_newslettersubscribe.settings.salutation.de.f}
                 }
+                languages {
+                    de = 0
+                    en = 1
+                }
             }
             
             senderEmail = {$plugin.tx_newslettersubscribe.settings.senderEmail}
