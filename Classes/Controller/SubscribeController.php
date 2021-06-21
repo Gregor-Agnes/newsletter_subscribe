@@ -280,7 +280,7 @@ class SubscribeController extends ActionController
             try {
                 $this->sendTemplateEmail(
                     [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')],
-                    [$this->settings['senderEmail'], $this->settings['senderEmail']],
+                    [$this->settings['senderEmail'], $this->settings['senderName']],
                     $subject,
                     'Confirmation',
                     [
