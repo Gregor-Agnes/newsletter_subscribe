@@ -56,7 +56,7 @@
     <td>Your sender name</td>
   </tr>
   <tr>
-    <th align="left">newsLetterName</th>
+    <th align="left">newsletterName</th>
     <td align="left">Title of the newsletter / subscription list</td>
     <td>string</td>
     <td>Newsletter</td>

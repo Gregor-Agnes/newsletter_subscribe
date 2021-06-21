@@ -129,10 +129,6 @@
 				<source><![CDATA[Mrs]]></source>
 				<target><![CDATA[Frau]]></target>
 			</trans-unit>
-			<trans-unit id="newsLetterName" approved="yes">
-				<source><![CDATA[]]></source>
-				<target><![CDATA[Titel/Name des Newsletters]]></target>
-			</trans-unit>
 			<trans-unit id="newsletterName" approved="yes">
 				<source><![CDATA[Title of the newsletter/subscription list]]></source>
 				<target><![CDATA[Titel des Newsletters]]></target>
