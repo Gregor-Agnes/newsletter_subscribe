@@ -149,12 +149,15 @@ class SubscribeController extends ActionController
                     $existing->setSubscriptionHash(hash('sha256', $existing->getEmail() . $existing->getCrdate() . random_bytes(32)));
                 }
                 // Abmelden Mail versenden
-                $name = $existing->getName() ?: LocalizationUtility::translate('nameEmpty', 'newsletter_subscribe');
+                $name = $existing->getName() ?: LocalizationUtility::translate('nameEmpty', 'NewsletterSubscribe');
+                $subject = $this->settings['newsletterName'];
+                $subject .= $subject ? ' - ' : '';
+                $subject .= LocalizationUtility::translate('subjectUnsubscribe', 'NewsletterSubscribe');
                 try {
                     $this->sendTemplateEmail(
                         [$existing->getEmail(), $name],
                         [$this->settings['senderEmail'], $this->settings['senderName']],
-                        LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
+                        $subject,
                         'CreateUnsubscribe',
                         [
                             'subscription' => $existing
@@ -236,12 +239,14 @@ class SubscribeController extends ActionController
         if ($existing = $this->subscriptionRepository->findOneByEmail($subscription->getEmail(), false)) {
             // Abmelden Mail versenden
             /** @var Subscription $existing */
-
+            $subject = $this->settings['newsletterName'];
+            $subject .= $subject ? ' - ' : '';
+            $subject .= LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe');
             try {
                 $this->sendTemplateEmail(
                     [$existing->getEmail(), ($existing->getName() ?: 'no name given')],
                     [$this->settings['senderEmail'], $this->settings['senderName']],
-                    LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe'),
+                    $subject,
                     'AlreadySubscribed',
                     [
                         'subscription' => $existing,
@@ -269,12 +274,14 @@ class SubscribeController extends ActionController
 
             $this->subscriptionRepository->add($subscription);
             $this->persistenceManager->persistAll();
-
+            $subject = $this->settings['newsletterName'];
+            $subject .= $subject ? ' - ' : '';
+            $subject .= LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe');
             try {
                 $this->sendTemplateEmail(
                     [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')],
                     [$this->settings['senderEmail'], $this->settings['senderEmail']],
-                    LocalizationUtility::translate('yourSubscription', 'newsletterSubscribe'),
+                    $subject,
                     'Confirmation',
                     [
                         'subscription' => $subscription,
