@@ -49,4 +49,4 @@ $tempColumns = [
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address',$tempColumns,1);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tt_address',
-    'data_protection, subscription_hash, last_hit, hit_number');
+    'data_protection_accepted, subscription_hash, last_hit, hit_number');
