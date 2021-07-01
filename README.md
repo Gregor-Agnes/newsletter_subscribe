@@ -150,6 +150,9 @@ routeEnhancers:
     plugin: Subscribe
     routes:
       -
+        routePath: '/confirm/create'
+        _controller: 'Subscribe::createConfirmation'
+      -
         routePath: '/confirm/{confirm}/{uid}'
         _controller: 'Subscribe::doConfirm'
         _arguments:
