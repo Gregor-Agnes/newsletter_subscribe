@@ -1,195 +1,195 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2019-10-16T13:32:10Z" product-name="newsletter_subscribe">
-        <header/>
-        <body>
-            <trans-unit id="adminEmail">
-                <source>Admin Email Address</source>
-            </trans-unit>
-            <trans-unit id="adminName">
-                <source>Admin Name</source>
-            </trans-unit>
-            <trans-unit id="nameEmpty">
-                <source>Subscriber</source>
-            </trans-unit>
-            <trans-unit id="mailTemplateRootPath">
-                <source>Template Path for Mails</source>
-            </trans-unit>
-            <trans-unit id="error.1238108067">
-                <source>Please insert a valid value</source>
-            </trans-unit>
-            <trans-unit id="error.1221560718">
-                <source>Please fill in all fields marked with *</source>
-            </trans-unit>
-            <trans-unit id="error.1221559976">
-                <source>You must enter a valid email address</source>
-            </trans-unit>
-            <trans-unit id="error.1361959228">
-                <source>You have to accept our data protection policy</source>
-            </trans-unit>
-            <trans-unit id="error.1396343138">
-                <source>Number too high</source>
-            </trans-unit>
-            <trans-unit id="pleaseCorrectErrors">
-                <source>Please correct the highlighted errors below.</source>
-            </trans-unit>
-            <trans-unit id="pidSubscribe">
-                <source>uid of page with unsubscribe form, also used for confirmation / unsubscribe links</source>
-            </trans-unit>
-            <trans-unit id="dataProtectionPage">
-                <source>Page with data protection information</source>
-            </trans-unit>
-            <trans-unit id="newsletterName">
-                <source>Title of the newsletter/subscription list</source>
-            </trans-unit>
-            <trans-unit id="showFields">
-                <source>Additional fields to show in subscription form (gender,firstName,lastName), email and dataProtection are always shown.</source>
-            </trans-unit>
-            <trans-unit id="email">
-                <source>Email address</source>
-            </trans-unit>
-            <trans-unit id="emailPlaceholder">
-                <source>Your email address</source>
-            </trans-unit>
-            <trans-unit id="dataProtection">
-                <source>data protection</source>
-            </trans-unit>
-            <trans-unit id="dataProtectionHint1">
-                <source>Yes, I want to receive the Newsletter. I have read and understand the </source>
-            </trans-unit>
-            <trans-unit id="dataProtectionHint2">
-                <source>and agree with it.</source>
-            </trans-unit>
-            <trans-unit id="gender">
-                <source>Salutation</source>
-            </trans-unit>
-            <trans-unit id="select">
-                <source>select</source>
-            </trans-unit>
-            <trans-unit id="mrs">
-                <source>Mrs</source>
-            </trans-unit>
-            <trans-unit id="mr">
-                <source>Mr</source>
-            </trans-unit>
-            <trans-unit id="various">
-                <source>various</source>
-            </trans-unit>
-            <trans-unit id="firstName">
-                <source>First name</source>
-            </trans-unit>
-            <trans-unit id="lastName">
-                <source>Last name</source>
-            </trans-unit>
-            <trans-unit id="company">
-                <source>Company</source>
-            </trans-unit>
-            <trans-unit id="submit">
-                <source>Submit</source>
-            </trans-unit>
-            <trans-unit id="subjectUnsubscribe">
-                <source>Unsubscribe your subscription</source>
-            </trans-unit>
-            <trans-unit id="messageUnsubscribe">
-                <source>We've sent an email with further instruction to the following address:</source>
-            </trans-unit>
-            <trans-unit id="didntReceiveMail">
-                <source>If you did not receive the mail</source>
-            </trans-unit>
-            <trans-unit id="didntReceiveMailReason1">
-                <source>Please verify the given email address</source>
-            </trans-unit>
-            <trans-unit id="didntReceiveMailReason2">
-                <source>Please check your spam folder too</source>
-            </trans-unit>
-            <trans-unit id="hallo">
-                <source>Hallo %1$s %2$s</source>
-            </trans-unit>
-            <trans-unit id="yourSubscription">
-                <source>Your subscription</source>
-            </trans-unit>
-            <trans-unit id="captchaWrong">
-                <source>Capchta must be solved</source>
-            </trans-unit>
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-10-16T13:32:10Z" product-name="newsletter_subscribe">
+		<header/>
+		<body>
+			<trans-unit id="adminEmail">
+				<source>Admin Email Address</source>
+			</trans-unit>
+			<trans-unit id="adminName">
+				<source>Admin Name</source>
+			</trans-unit>
+			<trans-unit id="nameEmpty">
+				<source>Subscriber</source>
+			</trans-unit>
+			<trans-unit id="mailTemplateRootPath">
+				<source>Template Path for Mails</source>
+			</trans-unit>
+			<trans-unit id="error.1238108067">
+				<source>Please insert a valid value</source>
+			</trans-unit>
+			<trans-unit id="error.1221560718">
+				<source>Please fill in all fields marked with *</source>
+			</trans-unit>
+			<trans-unit id="error.1221559976">
+				<source>You must enter a valid email address</source>
+			</trans-unit>
+			<trans-unit id="error.1361959228">
+				<source>You have to accept our data protection policy</source>
+			</trans-unit>
+			<trans-unit id="error.1396343138">
+				<source>Number too high</source>
+			</trans-unit>
+			<trans-unit id="pleaseCorrectErrors">
+				<source>Please correct the highlighted errors below.</source>
+			</trans-unit>
+			<trans-unit id="pidSubscribe">
+				<source>uid of page with unsubscribe form, also used for confirmation / unsubscribe links</source>
+			</trans-unit>
+			<trans-unit id="dataProtectionPage">
+				<source>Page with data protection information</source>
+			</trans-unit>
+			<trans-unit id="newsletterName">
+				<source>Title of the newsletter/subscription list</source>
+			</trans-unit>
+			<trans-unit id="showFields">
+				<source>Additional fields to show in subscription form (gender,firstName,lastName), email and dataProtection are always shown.</source>
+			</trans-unit>
+			<trans-unit id="email">
+				<source>Email address</source>
+			</trans-unit>
+			<trans-unit id="emailPlaceholder">
+				<source>Your email address</source>
+			</trans-unit>
+			<trans-unit id="dataProtection">
+				<source>data protection</source>
+			</trans-unit>
+			<trans-unit id="dataProtectionHint1">
+				<source>Yes, I want to receive the Newsletter. I have read and understand the </source>
+			</trans-unit>
+			<trans-unit id="dataProtectionHint2">
+				<source>and agree with it.</source>
+			</trans-unit>
+			<trans-unit id="gender">
+				<source>Salutation</source>
+			</trans-unit>
+			<trans-unit id="select">
+				<source>select</source>
+			</trans-unit>
+			<trans-unit id="mrs">
+				<source>Mrs</source>
+			</trans-unit>
+			<trans-unit id="mr">
+				<source>Mr</source>
+			</trans-unit>
+			<trans-unit id="various">
+				<source>various</source>
+			</trans-unit>
+			<trans-unit id="firstName">
+				<source>First name</source>
+			</trans-unit>
+			<trans-unit id="lastName">
+				<source>Last name</source>
+			</trans-unit>
+			<trans-unit id="company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="submit">
+				<source>Submit</source>
+			</trans-unit>
+			<trans-unit id="subjectUnsubscribe">
+				<source>Unsubscribe your subscription</source>
+			</trans-unit>
+			<trans-unit id="messageUnsubscribe">
+				<source>We've sent an email with further instruction to the following address:</source>
+			</trans-unit>
+			<trans-unit id="didntReceiveMail">
+				<source>If you did not receive the mail</source>
+			</trans-unit>
+			<trans-unit id="didntReceiveMailReason1">
+				<source>Please verify the given email address</source>
+			</trans-unit>
+			<trans-unit id="didntReceiveMailReason2">
+				<source>Please check your spam folder too</source>
+			</trans-unit>
+			<trans-unit id="hallo">
+				<source>Hallo %1$s %2$s</source>
+			</trans-unit>
+			<trans-unit id="yourSubscription">
+				<source>Your subscription</source>
+			</trans-unit>
+			<trans-unit id="captchaWrong">
+				<source>Capchta must be solved</source>
+			</trans-unit>
 
-            <trans-unit id="newsletterSubscription">
-                <source>Newsletter Subscription</source>
-            </trans-unit>
-            <trans-unit id="noAboFound">
-                <source>We did not find a matching subscription</source>
-            </trans-unit>
+			<trans-unit id="newsletterSubscription">
+				<source>Newsletter Subscription</source>
+			</trans-unit>
+			<trans-unit id="noAboFound">
+				<source>We did not find a matching subscription</source>
+			</trans-unit>
 
-            <!-- Unsubscribe -->
-            <trans-unit id="youHaveUnsubscribed">
-                <source>You have successfully unsubscribed with the following data:</source>
-            </trans-unit>
-            <trans-unit id="sendMail">
-                <source>send mail</source>
-            </trans-unit>
+			<!-- Unsubscribe -->
+			<trans-unit id="youHaveUnsubscribed">
+				<source>You have successfully unsubscribed with the following data:</source>
+			</trans-unit>
+			<trans-unit id="sendMail">
+				<source>send mail</source>
+			</trans-unit>
 
-            <!-- Unsubscribe Form  -->
-            <trans-unit id="wantToCancel">
-                <source>You want to cancel your subscription? Please insert the email address you subscribed to</source>
-            </trans-unit>
-            <trans-unit id="subscribeAgain">
-                <source>You can subscribe again at any time:</source>
-            </trans-unit>
+			<!-- Unsubscribe Form  -->
+			<trans-unit id="wantToCancel">
+				<source>You want to cancel your subscription? Please insert the email address you subscribed to</source>
+			</trans-unit>
+			<trans-unit id="subscribeAgain">
+				<source>You can subscribe again at any time:</source>
+			</trans-unit>
 
-            <!-- Confirm -->
-            <trans-unit id="confirmed">
-                <source>You have successfully confirmed your subscription</source>
-            </trans-unit>
-            <trans-unit id="youWillReceive">
-                <source>From now on, you will receive our newsletter.</source>
-            </trans-unit>
-            <trans-unit id="haveFun">
-                <source>Have fun while reading.</source>
-            </trans-unit>
+			<!-- Confirm -->
+			<trans-unit id="confirmed">
+				<source>You have successfully confirmed your subscription</source>
+			</trans-unit>
+			<trans-unit id="youWillReceive">
+				<source>From now on, you will receive our newsletter.</source>
+			</trans-unit>
+			<trans-unit id="haveFun">
+				<source>Have fun while reading.</source>
+			</trans-unit>
 
-            <!-- Request for confirmation -->
-            <trans-unit id="nextStep">
-                <source>Next step: Confirm your subscription.</source>
-            </trans-unit>
-            <trans-unit id="confirmationSendTo">
-                <source>We`ve sent a confirmation link to the following address:</source>
-            </trans-unit>
-            <trans-unit id="findLink">
-                <source>There you will find link to confirm your subscription. Please note: your subscription will not be valid untill you click on that link!</source>
-            </trans-unit>
-            <trans-unit id="checkSpam">
-                <source>If you do not receive an email from us: please check your spam folder too.</source>
-            </trans-unit>
+			<!-- Request for confirmation -->
+			<trans-unit id="nextStep">
+				<source>Next step: Confirm your subscription.</source>
+			</trans-unit>
+			<trans-unit id="confirmationSendTo">
+				<source>We`ve sent a confirmation link to the following address:</source>
+			</trans-unit>
+			<trans-unit id="findLink">
+				<source>There you will find link to confirm your subscription. Please note: your subscription will not be valid untill you click on that link!</source>
+			</trans-unit>
+			<trans-unit id="checkSpam">
+				<source>If you do not receive an email from us: please check your spam folder too.</source>
+			</trans-unit>
 
-            <!-- AdminInfo -->
-            <trans-unit id="newSubscription">
-                <source>New Subcription</source>
-            </trans-unit>
+			<!-- AdminInfo -->
+			<trans-unit id="newSubscription">
+				<source>New Subcription</source>
+			</trans-unit>
 
-            <!-- NoSpamBot -->
-            <trans-unit id="iAmNotASpamBotLabel">
-                <source>I am not a spambot</source>
-            </trans-unit>
+			<!-- NoSpamBot -->
+			<trans-unit id="iAmNotASpamBotLabel">
+				<source>I am not a spambot</source>
+			</trans-unit>
 
-            <!-- Scheduler -->
-            <trans-unit id="schedulerAge">
-                <source>Delete all unvalidated Subscriptions oder than (days)</source>
-            </trans-unit>
-            <trans-unit id="schedulerPids">
-                <source>Delete all unvalidated Subscriptions from pages (comma separated list)</source>
-            </trans-unit>
-            <trans-unit id="error.schedulerAge">
-                <source>Please insert minimum age of the subscriptions to be deleted (min. 7)</source>
-            </trans-unit>
-            <trans-unit id="error.schedulerPids">
-                <source>Please insert the pid of the folder(s) which to consider</source>
-            </trans-unit>
-            <trans-unit id="schedulerDeleteUnvalidated.name">
-                <source>Delete none validated subscribers</source>
-            </trans-unit>
-            <trans-unit id="schedulerDeleteUnvalidated.description">
-                <source>Deletes all none validated user from given folder with given age</source>
-            </trans-unit>
+			<!-- Scheduler -->
+			<trans-unit id="schedulerAge">
+				<source>Delete all unvalidated Subscriptions oder than (days)</source>
+			</trans-unit>
+			<trans-unit id="schedulerPids">
+				<source>Delete all unvalidated Subscriptions from pages (comma separated list)</source>
+			</trans-unit>
+			<trans-unit id="error.schedulerAge">
+				<source>Please insert minimum age of the subscriptions to be deleted (min. 7)</source>
+			</trans-unit>
+			<trans-unit id="error.schedulerPids">
+				<source>Please insert the pid of the folder(s) which to consider</source>
+			</trans-unit>
+			<trans-unit id="schedulerDeleteUnvalidated.name">
+				<source>Delete none validated subscribers</source>
+			</trans-unit>
+			<trans-unit id="schedulerDeleteUnvalidated.description">
+				<source>Deletes all none validated user from given folder with given age</source>
+			</trans-unit>
 
-        </body>
-    </file>
+		</body>
+	</file>
 </xliff>
