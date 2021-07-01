@@ -22,7 +22,7 @@
                 <source>Please fill in all fields marked with *</source>
             </trans-unit>
             <trans-unit id="error.1221559976">
-                <source></source>
+                <source>You must enter a valid email address</source>
             </trans-unit>
             <trans-unit id="error.1361959228">
                 <source>You have to accept our data protection policy</source>

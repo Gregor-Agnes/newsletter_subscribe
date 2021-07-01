@@ -70,8 +70,8 @@
 				<target><![CDATA[Ihre E-Mail-Adresse]]></target>
 			</trans-unit>
 			<trans-unit id="error.1221559976" approved="yes">
-				<source><![CDATA[]]></source>
-				<target><![CDATA[]]></target>
+				<source><![CDATA[You must enter a valid email address]]></source>
+				<target><![CDATA[Sie müssen eine gültige E-Mail Adresse eingeben]]></target>
 			</trans-unit>
 			<trans-unit id="error.1221560718" approved="yes">
 				<source><![CDATA[Please fill in all fields marked with *]]></source>
