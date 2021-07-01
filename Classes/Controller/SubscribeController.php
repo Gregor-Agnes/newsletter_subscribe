@@ -49,8 +49,8 @@ use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
  */
 class SubscribeController extends ActionController
 {
-
     use OverrideEmptyFlexformValuesTrait;
+
     /**
      * @var ObjectManager
      */
@@ -133,7 +133,6 @@ class SubscribeController extends ActionController
      */
     public function createUnsubscribeMailAction(?string $email = null)
     {
-
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
                 (string)GeneralUtility::_POST('formToken'),
@@ -150,12 +149,15 @@ class SubscribeController extends ActionController
                     $existing->setSubscriptionHash(hash('sha256', $existing->getEmail() . $existing->getCrdate() . random_bytes(32)));
                 }
                 // Abmelden Mail versenden
-                $name = $existing->getName() ?: LocalizationUtility::translate('nameEmpty', 'newsletter_subscribe');
+                $name = $existing->getName() ?: LocalizationUtility::translate('nameEmpty', 'NewsletterSubscribe');
+                $subject = $this->settings['newsletterName'];
+                $subject .= $subject ? ' - ' : '';
+                $subject .= LocalizationUtility::translate('subjectUnsubscribe', 'NewsletterSubscribe');
                 try {
                     $this->sendTemplateEmail(
                         [$existing->getEmail(), $name],
-                        [$this->settings['adminEmail'], $this->settings['adminName']],
-                        LocalizationUtility::translate('subjectUnsubscribe', 'newsletter_subscribe') . $this->settings['newsletterName'],
+                        [$this->settings['senderEmail'], $this->settings['senderName']],
+                        $subject,
                         'CreateUnsubscribe',
                         [
                             'subscription' => $existing
@@ -170,7 +172,7 @@ class SubscribeController extends ActionController
             $this->redirect('showUnsubscribeForm', null, null, ['message' => 'E-Mail-Adresse nicht valide']);
         }
 
-        $this->view->assignMultiple(compact('message', 'email'));
+        $this->view->assignMultiple(compact('email'));
     }
     
     public function initializeCreateConfirmationAction()
@@ -179,8 +181,6 @@ class SubscribeController extends ActionController
             $this->forward('showForm', 'Subscribe', 'newsletter_subscribe');
         }
     }
-
-
 
     /**
      * @param Subscription $subscription
@@ -211,7 +211,7 @@ class SubscribeController extends ActionController
                 curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
                 curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($verify);
-// var_dump($response);
+                // var_dump($response);
                 $responseData = json_decode($response);
                 if($responseData->success) {
                     // your success code goes here
@@ -239,12 +239,14 @@ class SubscribeController extends ActionController
         if ($existing = $this->subscriptionRepository->findOneByEmail($subscription->getEmail(), false)) {
             // Abmelden Mail versenden
             /** @var Subscription $existing */
-
+            $subject = $this->settings['newsletterName'];
+            $subject .= $subject ? ' - ' : '';
+            $subject .= LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe');
             try {
                 $this->sendTemplateEmail(
                     [$existing->getEmail(), ($existing->getName() ?: 'no name given')],
-                    [$this->settings['adminEmail'], $this->settings['adminName']],
-                    LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe'),
+                    [$this->settings['senderEmail'], $this->settings['senderName']],
+                    $subject,
                     'AlreadySubscribed',
                     [
                         'subscription' => $existing,
@@ -267,14 +269,19 @@ class SubscribeController extends ActionController
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
             $subscription->setName($subscription->getFirstName()." ".$subscription->getLastName());
+
+            $this->addSalutation($subscription);
+
             $this->subscriptionRepository->add($subscription);
             $this->persistenceManager->persistAll();
-
+            $subject = $this->settings['newsletterName'];
+            $subject .= $subject ? ' - ' : '';
+            $subject .= LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe');
             try {
                 $this->sendTemplateEmail(
                     [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')],
-                    [$this->settings['adminEmail'], $this->settings['adminName']],
-                    LocalizationUtility::translate('yourSubscription', 'newsletterSubscribe'),
+                    [$this->settings['senderEmail'], $this->settings['senderName']],
+                    $subject,
                     'Confirmation',
                     [
                         'subscription' => $subscription,
@@ -299,7 +306,6 @@ class SubscribeController extends ActionController
 
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findByUid($uid, false);
-
         $success = false;
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash()) {
@@ -312,9 +318,19 @@ class SubscribeController extends ActionController
                 //TODO redirect with 404
             }
         } else {
-            //TODO redirect with 404
+            $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+                \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
+                'Page not found',
+                ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+            );
+            throw new ImmediateResponseException($response);
         }
-        $this->view->assignMultiple(compact('message', 'subscription', 'success'));
+
+        if ($success && $this->settings['sendAdminInfo']) {
+            $this->sendAdminInfo($subscription, 0);
+        }
+        
+        $this->view->assignMultiple(compact('subscription', 'success'));
     }
 
     public function undosubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
@@ -344,7 +360,7 @@ class SubscribeController extends ActionController
                 $subscription = $this->setSleep($subscription, 300, 2);
                 $this->subscriptionRepository->update($subscription);
                 $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-                    $GLOBALS['TYPO3_REQUEST'],
+                    \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                     'Page not found',
                     ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
                 );
@@ -353,7 +369,7 @@ class SubscribeController extends ActionController
             }
         } else {
             $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-                $GLOBALS['TYPO3_REQUEST'],
+                \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                 'Page not found',
                 ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
             );
@@ -362,19 +378,21 @@ class SubscribeController extends ActionController
         }
         
         if ($success && $this->settings['sendAdminInfo']) {
-            $this->sendAdminInfo($subscription);
+            $this->sendAdminInfo($subscription, 1);
         }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));
     }
     
-    public function sendAdminInfo(Subscription $subscription)
+    public function sendAdminInfo(Subscription $subscription, int $unsubscribeaction = 0)
     {
+        $subject = $unsubscribeaction == 0 ? LocalizationUtility::translate('unsubscription', 'newsletterSubscribe') : LocalizationUtility::translate('newSubscription', 'newsletterSubscribe');
+        
         try {
             $this->sendTemplateEmail(
                 [$this->settings['adminEmail'], $this->settings['adminName']],
                 [$this->settings['adminEmail'], $this->settings['adminName']],
-                LocalizationUtility::translate('newSubscription', 'newsletterSubscribe'),
+                $subject,
                 'AdminInfo',
                 [
                     'subscription' => $subscription,
@@ -384,6 +402,51 @@ class SubscribeController extends ActionController
         } catch (InvalidTemplateResourceException $exception) {
             $this->addFlashMessage('Template for AdminInfo Missing', 'No E-Mail-Template found', AbstractMessage::ERROR);
         }
+    }
+
+    protected function addSalutation(&$subscription) {
+        if(isset($this->settings['addsalutation']) && $this->settings['addsalutation']) {
+            $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
+            if(isset($this->settings['salutation'][$twoLetterIsoCode])) {
+                if(isset($this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()]) && $subscription->getLastName()) {
+                    $salutation = $this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()];
+                    $salutation .= $subscription->getTitle() ? ' '.$subscription->getTitle() : '';
+                    $salutation .= ' '.$subscription->getLastName();
+                }
+                else {
+                    $salutation = $this->settings['salutation'][$twoLetterIsoCode]['default'];
+                }
+
+                $subscription->setSalutation($salutation);
+            }
+        }
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function getTwoLetterIsoCodeFromSiteConfig() {
+        $siteFinder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+        $site = $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
+        $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
+        $language = $site->getLanguageById($languageAspect->getId());
+        return $language->getTwoLetterIsoCode();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function prepareTwoLetterIsoCode() {
+        if(!empty($GLOBALS['TSFE']->config['config']['language'])) {
+            $twoLetterIsoCode = $GLOBALS['TSFE']->config['config']['language'];
+        }
+        else {
+            $twoLetterIsoCode = $this->getTwoLetterIsoCodeFromSiteConfig();
+        }
+
+        return $twoLetterIsoCode;
     }
 
     /**
@@ -400,14 +463,15 @@ class SubscribeController extends ActionController
         $templatePaths = new TemplatePaths();
         
         if (mb_stripos($templateName, 'admin') !== false) {
-            // Admin Mail, no translation possible (and necessary
+            // Admin Mail, no translation possible and necessary
             $templatePaths->setTemplateRootPaths(
                 [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'])]
             );
         } else {
             // User Mails
+            $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
             $templatePaths->setTemplateRootPaths(
-                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $GLOBALS['TSFE']->config['config']['language'] .'/')]
+                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $twoLetterIsoCode .'/')]
             );
             $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
         }
@@ -430,7 +494,6 @@ class SubscribeController extends ActionController
         GeneralUtility::makeInstance(Mailer::class)->send($email);
 
         return true;
-
     }
 
     /**

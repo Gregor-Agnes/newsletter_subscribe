@@ -1,0 +1,25 @@
+plugin {
+    tx_newslettersubscribe {
+        settings {
+            addsalutation = 1
+            salutation {
+                en {
+                    default = Dear Reader
+                    m = Dear Mr.
+                    f = Dear Mrs.
+                }
+                de {
+                    default = Liebe(r) Leser(in)
+                    m = Sehr geehrter Herr
+                    f = Sehr geehrte Frau
+                }
+            }
+
+            senderEmail = noreply@domain.tld
+            senderName = Your sender name
+
+            adminEmail = admin.name@domain.tld
+            adminName = Your admin name
+        }
+    }
+}

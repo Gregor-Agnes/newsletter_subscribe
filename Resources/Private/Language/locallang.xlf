@@ -159,17 +159,19 @@
 			<trans-unit id="checkSpam">
 				<source>If you do not receive an email from us: please check your spam folder too.</source>
 			</trans-unit>
-
-			<!-- AdminInfo -->
-			<trans-unit id="newSubscription">
-				<source>New Subcription</source>
-			</trans-unit>
-
-			<!-- NoSpamBot -->
-			<trans-unit id="iAmNotASpamBotLabel">
-				<source>I am not a spambot</source>
-			</trans-unit>
-
+      
+      <!-- AdminInfo -->
+      <trans-unit id="newSubscription">
+          <source>New Subcription</source>
+      </trans-unit>
+      <trans-unit id="unsubscription">
+          <source>Unsubscription</source>
+      </trans-unit>
+      
+      <!-- NoSpamBot -->
+      <trans-unit id="iAmNotASpamBotLabel">
+          <source>I am not a spambot</source>
+      </trans-unit>
 			<!-- Scheduler -->
 			<trans-unit id="schedulerAge">
 				<source>Delete all unvalidated Subscriptions oder than (days)</source>

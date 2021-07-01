@@ -129,10 +129,6 @@
 				<source><![CDATA[Mrs]]></source>
 				<target><![CDATA[Frau]]></target>
 			</trans-unit>
-			<trans-unit id="newsLetterName" approved="yes">
-				<source><![CDATA[]]></source>
-				<target><![CDATA[Titel/Name des Newsletters]]></target>
-			</trans-unit>
 			<trans-unit id="newsletterName" approved="yes">
 				<source><![CDATA[Title of the newsletter/subscription list]]></source>
 				<target><![CDATA[Titel des Newsletters]]></target>
@@ -209,19 +205,21 @@
 				<source><![CDATA[Please insert the captcha]]></source>
 				<target><![CDATA[Bitte lösen Sie das Captcha]]></target>
 			</trans-unit>
+      <!-- AdminInfo -->
+      <trans-unit id="newSubscription">
+          <source>New Subcription</source>
+          <target><![CDATA[Neues Abbonement]]></target>
+      </trans-unit>
+      <trans-unit id="unsubscription">
+          <source>Unsubscription</source>
+          <target>Abonnement Kündigung</target>
+      </trans-unit>
 
-			<!-- AdminInfo -->
-			<trans-unit id="newSubscription">
-				<source>New Subcription</source>
-				<target><![CDATA[Neues Abbonement]]></target>
-			</trans-unit>
-
-			<!-- NoSpamBot -->
-			<trans-unit id="iAmNotASpamBotLabel">
-				<source>I am not a spambot</source>
-				<target><![CDATA[Ich bin kein Spambot]]></target>
-			</trans-unit>
-
+      <!-- NoSpamBot -->
+      <trans-unit id="iAmNotASpamBotLabel">
+          <source>I am not a spambot</source>
+          <target><![CDATA[Ich bin kein Spambot]]></target>
+      </trans-unit>
 			<!-- Scheduler -->
 			<trans-unit id="schedulerAge">
 				<source>Delete all unvalidated Subscriptions oder than (days)</source>

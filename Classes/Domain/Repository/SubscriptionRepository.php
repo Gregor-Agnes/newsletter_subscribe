@@ -58,8 +58,4 @@ class SubscriptionRepository extends Repository {
         return $query->execute();
     }
     
-    
-    
-    
-    
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf" date="2021-06-03T15:00:00Z" product-name="newsletter_subscribe">
+        <header/>
+        <body>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.name" resname="tx_zwo3_newslettersubscribe_subscribe.name">
+                <source>Newsletter subscribe</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.description" resname="tx_zwo3_newslettersubscribe_subscribe.description">
+                <source>Subscribe to Addresslist</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_unsubscribe.name" resname="tx_zwo3_newslettersubscribe_unsubscribe.name">
+                <source>Newsletter unsubscribe</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_unsubscribe.description" resname="tx_zwo3_newslettersubscribe_unsubscribe.description">
+                <source>Unsubscribe from Addresslist</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.salutation" resname="tx_zwo3_newslettersubscribe_subscribe.salutation">
+                <source>Salutation</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.hit_number" resname="tx_zwo3_newslettersubscribe_subscribe.hit_number">
+                <source>Number of Hits</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.last_hit" resname="tx_zwo3_newslettersubscribe_subscribe.last_hit">
+                <source>Last Hit</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.subscription_hash" resname="tx_zwo3_newslettersubscribe_subscribe.subscription_hash">
+                <source>Subscription Hash</source>
+            </trans-unit>
+            <trans-unit id="tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted" resname="tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted">
+                <source>Data Protection Accepted</source>
+            </trans-unit>
+            <trans-unit id="settings.senderEmail" resname="settings.senderEmail">
+                <source>Sender Email Address</source>
+            </trans-unit>
+            <trans-unit id="settings.senderName" resname="settings.senderName">
+                <source>Sender Name</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

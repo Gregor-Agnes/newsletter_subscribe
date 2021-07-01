@@ -7,7 +7,7 @@
 	<f:form object="{subscription}" action="createUnsubscribeMail">
 		<input type="hidden" name="formToken" value="{formToken}">
 		<p>{f:translate(key: 'wantToCancel')}</p>
-		<f:form.textfield name="email" placeholder="Ihre E-Mail-Adresse*"></f:form.textfield>
+		<f:form.textfield name="email" placeholder="{f:translate(key: 'emailPlaceholder')} *"></f:form.textfield>
 		<f:form.validationResults for="subscription.email">
 			<f:if condition="{message}">
 				<p class="help-text">{message}</p>
@@ -26,3 +26,4 @@
 		<button class="button hollow" type="submit">{f:translate(key: 'sendMail')}</button>
 	</f:form>
 </f:section>
+</html>

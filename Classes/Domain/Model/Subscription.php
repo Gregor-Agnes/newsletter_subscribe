@@ -95,6 +95,11 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     protected $hitNumber;
 
     /**
+     * @var string
+     */
+    protected $salutation;
+    
+    /**
      * @return int
      */
     public function getCrdate(): ?int
@@ -332,4 +337,20 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
         $this->gender = $gender;
     }
 
+    
+    /**
+     * @return mixed
+     */
+    public function getSalutation()
+    {
+        return $this->salutation;
+    }
+    
+    /**
+     * @param mixed $salutation
+     */
+    public function setSalutation($salutation): void
+    {
+        $this->salutation = $salutation;
+    }
 }

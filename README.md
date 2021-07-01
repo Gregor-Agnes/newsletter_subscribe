@@ -33,18 +33,30 @@
   </tr>
   <tr>
     <th align="left">adminEmail</th>
-    <td align="left">Email address in confirmation mails</td>
+    <td align="left">Email address in admin notification mails</td>
     <td>string, email, mandatory</td>
     <td>admin.name@domain.tld</td>
   </tr>
   <tr>
     <th align="left">adminName</th>
-    <td align="left">Name in confirmation mails</td>
+    <td align="left">Name in admin notification mails</td>
     <td>string</td>
-    <td>Your admin Name</td>
+    <td>Your admin name</td>
   </tr>
   <tr>
-    <th align="left">newsLetterName</th>
+    <th align="left">senderEmail</th>
+    <td align="left">Email address in confirmation mails</td>
+    <td>string, email, mandatory</td>
+    <td>noreply@domain.tld</td>
+  </tr>
+  <tr>
+    <th align="left">senderName</th>
+    <td align="left">Name in confirmation mails</td>
+    <td>string</td>
+    <td>Your sender name</td>
+  </tr>
+  <tr>
+    <th align="left">newsletterName</th>
     <td align="left">Title of the newsletter / subscription list</td>
     <td>string</td>
     <td>Newsletter</td>

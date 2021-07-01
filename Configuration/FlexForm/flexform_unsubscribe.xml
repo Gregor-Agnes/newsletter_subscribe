@@ -61,6 +61,30 @@
                     </config>
                 </TCEforms>
             </persistence.recursive>
+            <settings.senderEmail>
+                <TCEforms>
+                    <exclude>1</exclude>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:settings.senderEmail</label>
+                    <config>
+                        <type>input</type>
+                        <size>20</size>
+                        <max>60</max>
+                        <eval>trim,email</eval>
+                    </config>
+                </TCEforms>
+            </settings.senderEmail>
+            <settings.senderName>
+                <TCEforms>
+                    <exclude>1</exclude>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:settings.senderName</label>
+                    <config>
+                        <type>input</type>
+                        <size>20</size>
+                        <max>60</max>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </settings.senderName>
             <settings.adminEmail>
                 <TCEforms>
                     <exclude>1</exclude>
@@ -85,7 +109,7 @@
                     </config>
                 </TCEforms>
             </settings.adminName>
-            <settings.newsLetterName>
+            <settings.newsletterName>
                 <TCEforms>
                     <exclude>1</exclude>
                     <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:newsletterName</label>
@@ -96,7 +120,7 @@
                         <eval>trim</eval>
                     </config>
                 </TCEforms>
-            </settings.newsLetterName>
+            </settings.newsletterName>
         </el>
     </ROOT>
 </T3DataStructure>
