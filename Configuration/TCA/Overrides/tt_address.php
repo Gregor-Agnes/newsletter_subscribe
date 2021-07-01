@@ -1,52 +1,51 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-    die ('Access denied.');
-}
+defined('TYPO3_MODE') || die();
 
 $GLOBALS['TCA']['tt_address']['ctrl']['delete'] = null;
 
 $tempColumns = [
-    'data_protection_accepted' => array(
-        'exclude' => 0,
+    'data_protection_accepted' => [
+        'exclude' => true,
         'label' => 'Datenschutzerklärung akzeptiert',
-        'config' => array(
+        'config' => [
             'type' => 'check',
             'default' => 0
-        ),
-    ),
-    'subscription_hash' => array(
+        ],
+    ],
+    'subscription_hash' => [
         'label' => 'Subscription Hash',
-        'exclude' => 1,
-        'config' => array(
+        'exclude' => true,
+        'config' => [
             'size' => 30,
             'type' => 'input',
             'default' => '',
-            'readOnly' =>1
-        ),
-    ),
-    'last_hit' => array(
+            'readOnly' => true
+        ],
+    ],
+    'last_hit' => [
         'label' => 'Last Hit',
-        'exclude' => 1,
+        'exclude' => true,
         'config' => [
             'type' => 'input',
             'renderType' => 'inputDateTime',
             'eval' => 'datetime',
-            'readOnly' =>1
+            'readOnly' => true
         ]
-    ),
-    'hit_number' => array(
+    ],
+    'hit_number' => [
         'label' => 'Number of Hits',
-        'exclude' => 1,
-        'config' => array(
+        'exclude' => true,
+        'config' => [
             'size' => 30,
             'type' => 'input',
             'default' => '',
-            'readOnly' =>1
-        ),
-    ),
+            'readOnly' => true
+        ],
+    ],
 ];
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address',$tempColumns,1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_address', $tempColumns, 1);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tt_address',
-    'data_protection_accepted, subscription_hash, last_hit, hit_number');
+    'data_protection_accepted, subscription_hash, last_hit, hit_number'
+);

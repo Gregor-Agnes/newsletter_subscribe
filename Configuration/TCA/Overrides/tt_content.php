@@ -1,7 +1,5 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'NewsletterSubscribe',
@@ -27,7 +25,9 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['newslettersu
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'newslettersubscribe_subscribe',
     'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_subscribe.xml'
-);\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'newslettersubscribe_unsubscribe',
     'FILE:EXT:newsletter_subscribe/Configuration/FlexForm/flexform_unsubscribe.xml'
 );
