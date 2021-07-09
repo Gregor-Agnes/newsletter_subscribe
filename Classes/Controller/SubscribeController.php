@@ -244,7 +244,7 @@ class SubscribeController extends ActionController
             $subject .= LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe');
             try {
                 $this->sendTemplateEmail(
-                    [$existing->getEmail(), ($existing->getName() ?: 'no name given')],
+                    [$existing->getEmail(), ($existing->getName() ?: '')],
                     [$this->settings['senderEmail'], $this->settings['senderName']],
                     $subject,
                     'AlreadySubscribed',
@@ -279,7 +279,7 @@ class SubscribeController extends ActionController
             $subject .= LocalizationUtility::translate('yourSubscription', 'NewsletterSubscribe');
             try {
                 $this->sendTemplateEmail(
-                    [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')],
+                    [$subscription->getEmail(), ($subscription->getName() ?: '')],
                     [$this->settings['senderEmail'], $this->settings['senderName']],
                     $subject,
                     'Confirmation',
@@ -397,7 +397,7 @@ class SubscribeController extends ActionController
                 [
                     'subscription' => $subscription,
                 ],
-                [$subscription->getEmail(), ($subscription->getName() ?: 'no name given')]
+                [$subscription->getEmail(), ($subscription->getName() ?: '')]
             );
         } catch (InvalidTemplateResourceException $exception) {
             $this->addFlashMessage('Template for AdminInfo Missing', 'No E-Mail-Template found', AbstractMessage::ERROR);
