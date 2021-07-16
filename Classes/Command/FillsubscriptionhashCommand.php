@@ -13,28 +13,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class FillsubscriptionhashCommand extends Command
 {   
     /**
-     * @var ConfigurationManagerInterface
-     */
-    protected $configurationManager;
-
-    /**
-     * Injects the Configuration Manager and is initializing the framework settings
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager Instance of the Configuration Manager
-     */
-    public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
-        $this->configurationManager = $configurationManager;
-    }
-
-    /**
-     * Configure the command by defining the name, options and arguments
-     */
-    protected function configure()
-    {
-
-    }
-    
-    /**
      * Executes the command to fill subscription hash field
      *
      * @param InputInterface $input
@@ -43,8 +21,6 @@ class FillsubscriptionhashCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-
         $counter = 0;
         $table = 'tt_address';
         $io = new SymfonyStyle($input, $output);
