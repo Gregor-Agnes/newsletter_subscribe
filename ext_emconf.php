@@ -2,7 +2,7 @@
 
 $EM_CONF['newsletter_subscribe'] = [
 	'title' => 'Newsletter Subscribe',
-	'description' => 'subscribe and unsubscribe to tt_address, generate static Link to unsubscribe (to use in Newsletter)',
+	'description' => 'subscribe and unsubscribe to tt_address, generate static Link to unsubscribe (to use in Newsletter), remove unvalidated subscriptions with scheduler task',
 	'category' => 'plugin',
 	'author' => 'Gregor Agnes',
 	'author_email' => 'ga@zwo3.de',
