@@ -165,12 +165,21 @@ routeEnhancers:
           unsubscribe: subscriptionHash
           uid: uid
 ```
-## Unsubscribe link in direkt mail
+## Unsubscribe link in direct_mail
 1. First add the field subscription_hash to the fields of direct mail in the extension configuration of direct mail: 
 ![direct mail configuration](https://github.com/Gregor-Agnes/newsletter_subscribe/raw/master/Resources/Public/Gfx/ExtManDirectMail1.png)
 2. Add the link in your mail template:\
 `<a href="http://www.domain.tld/page/undosubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
 where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.<br>Note: The subscribe plugin must be inserted on the page "page" in that url.
+
+## Scheduler Tasks / Console Commands
+
+There are scheduler tasks / console commands available (TYPO3 v10 only) to fill empty database fields in `tt_address`:
+
+- `newslettersubscribe:fillsalutation`  
+  Updates the salutation field based on the sys_language_uid and gender fields of the tt_address records. The salutation can be configured via TypoScript.
+- `newslettersubscribe:fillsubscriptionhash`  
+  Updates the subscription_hash field. This is especially handy if there are subscriptions added manually in the TYPO3 backend or you have legacy data in tt_address. The subscription_hash is necessary for the unsubscribe link in direct_mail to work.
 
 ***
 
