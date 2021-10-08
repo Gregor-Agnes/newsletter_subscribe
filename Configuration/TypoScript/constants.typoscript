@@ -20,6 +20,11 @@ plugin {
 
             adminEmail = admin.name@domain.tld
             adminName = Your admin name
+
+            // nonce-source
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
+            // https://www.random.org/strings/
+            csp-nonce = mrthvrw13ngdfgb06xyn
         }
     }
 }

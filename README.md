@@ -122,6 +122,12 @@
     <td>EXT:core/Resources/Private/Layouts/</td>
   </tr>
   <tr>
+    <th align="left">csp-nonce</th>
+    <td align="left">random string for a nonce-source (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src). Content-Security-Policy: script-src 'nonce-mrthvrw13ngdfgb06xyn'</td>
+    <td>string</td>
+    <td>mrthvrw13ngdfgb06xyn</td>
+  </tr>
+  <tr>
     <th align="left">overrideFlexformSettingsIfEmpty</th>
     <td align="left">Fields, which should be overridden from typosrcipt if left blank in the flexform (like in tx_news, thx to Georg Ringer!).</td>
     <td>string</td>
@@ -172,6 +178,10 @@ routeEnhancers:
 `<a href="http://www.domain.tld/page/undosubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
 where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.<br>Note: The subscribe plugin must be inserted on the page "page" in that url.
 
+## Salutation in direct_mail
+1. Add 'salutation' field (see above 'subscription_hash')
+2. Add ###USER_salutation### on the page
+
 ## Scheduler Tasks / Console Commands
 
 There are scheduler tasks / console commands available (TYPO3 v10 only) to fill empty database fields in `tt_address`:
@@ -182,6 +192,15 @@ There are scheduler tasks / console commands available (TYPO3 v10 only) to fill 
   Updates the subscription_hash field. This is especially handy if there are subscriptions added manually in the TYPO3 backend or you have legacy data in tt_address. The subscription_hash is necessary for the unsubscribe link in direct_mail to work.
 
 ***
+
+## CSP
+additionalHeaders <https://docs.typo3.org/m/typo3/reference-typoscript/master/en-us/Setup/Config/Index.html#additionalheaders>
+
+```typoscript
+config.additionalHeaders {
+    10.header = Content-Security-Policy: script-src 'nonce-mrthvrw13ngdfgb06xyn';
+}
+```
 
 # To do
 - creating ajax submit
