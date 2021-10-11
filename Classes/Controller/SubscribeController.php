@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Event\Mvc\BeforeActionCallEvent;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
@@ -40,6 +41,7 @@ use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
+use Zwo3\NewsletterSubscribe\Event\SubscriptionConfirmedEvent;
 use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
 
 /**
@@ -379,6 +381,10 @@ class SubscribeController extends ActionController
         
         if ($success && $this->settings['sendAdminInfo']) {
             $this->sendAdminInfo($subscription, 1);
+        }
+        
+        if ($success) {
+            $this->eventDispatcher->dispatch(new SubscriptionConfirmedEvent(static::class, $this->actionMethodName, $subscription));
         }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));
