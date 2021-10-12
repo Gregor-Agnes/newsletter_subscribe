@@ -41,6 +41,8 @@ use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
 use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
+use Zwo3\NewsletterSubscribe\Event\SubscriptionCancelledEvent;
+use Zwo3\NewsletterSubscribe\Event\SubscriptionChangedEvent;
 use Zwo3\NewsletterSubscribe\Event\SubscriptionConfirmedEvent;
 use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
 
@@ -332,6 +334,10 @@ class SubscribeController extends ActionController
             $this->sendAdminInfo($subscription, 0);
         }
         
+        if ($success) {
+            $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'unsubscribe'));
+        }
+        
         $this->view->assignMultiple(compact('subscription', 'success'));
     }
 
@@ -384,7 +390,7 @@ class SubscribeController extends ActionController
         }
         
         if ($success) {
-            $this->eventDispatcher->dispatch(new SubscriptionConfirmedEvent(static::class, $this->actionMethodName, $subscription));
+            $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'subscribe'));
         }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));

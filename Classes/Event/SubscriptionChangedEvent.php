@@ -9,33 +9,40 @@ use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 /**
  *
  */
-class SubscriptionConfirmedEvent
+class SubscriptionChangedEvent
 {
     /**
      * @var string
      */
-    protected $controllerClassName;
+    public $controllerClassName;
     
     /**
      * @var string
      */
-    protected $actionMethodName;
+    public $actionMethodName;
     
     /**
      * @var Subscription
      */
-    protected $subscription;
+    public $subscription;
+    
+    /**
+     * @var string
+     */
+    public $type;
     
     /**
      * @param string $controllerClassName
      * @param string $actionMethodName
      * @param Subscription $subscription
+     * @param string $type
      */
-    public function __construct(string $controllerClassName, string $actionMethodName, $subscription)
+    public function __construct(string $controllerClassName, string $actionMethodName, Subscription $subscription, string $type)
     {
         $this->controllerClassName = $controllerClassName;
         $this->actionMethodName = $actionMethodName;
         $this->subscription = $subscription;
+        $this->type = $type;
     }
     
 }
