@@ -208,7 +208,7 @@
       <!-- AdminInfo -->
       <trans-unit id="newSubscription">
           <source>New Subcription</source>
-          <target><![CDATA[Neues Abbonement]]></target>
+          <target><![CDATA[Neues Abonnement]]></target>
       </trans-unit>
       <trans-unit id="unsubscription">
           <source>Unsubscription</source>
