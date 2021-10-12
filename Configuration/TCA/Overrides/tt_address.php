@@ -38,7 +38,7 @@ $tempColumns = [
         'config' => [
             'size' => 30,
             'type' => 'input',
-            'default' => '',
+            'default' => 0,
             'readOnly' => 1
         ],
     ],
