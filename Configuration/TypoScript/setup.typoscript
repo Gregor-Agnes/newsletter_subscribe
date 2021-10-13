@@ -82,8 +82,6 @@ plugin {
 			# whether the admin should get an info mail on every confirmation
 			sendAdminInfo = 0
 
-			csp-nonce = {$plugin.tx_newslettersubscribe.settings.csp-nonce}
-
 			overrideFlexformSettingsIfEmpty = senderEmail,senderName,adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
 		}

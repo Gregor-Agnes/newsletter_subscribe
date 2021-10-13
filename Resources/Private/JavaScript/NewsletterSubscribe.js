@@ -26,6 +26,9 @@ import '../Scss/Styles.scss'
   });
 })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
+const iAmNotASpamBot = document.getElementById('iAmNotASpamBot');
+const iAmNotASpamBotValue = iAmNotASpamBot.dataset.iamnotaspambotvalue;
+const iAmNotARobotLabel = iAmNotASpamBot.dataset.iamnotarobotlabel;
 let insertNoSpamBotField = () => {
   let noSpamField = document.createElement('div')
   noSpamField.innerHTML = `
