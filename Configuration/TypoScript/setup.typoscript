@@ -35,31 +35,31 @@ plugin {
 			//requireCHashArgumentForActionArguments = 0
 		}
 
-        settings {
-            addsalutation = {$plugin.tx_newslettersubscribe.settings.addsalutation}
-            salutation {
-                en {
-                    default = {$plugin.tx_newslettersubscribe.settings.salutation.en.default}
-                    m = {$plugin.tx_newslettersubscribe.settings.salutation.en.m}
-                    f = {$plugin.tx_newslettersubscribe.settings.salutation.en.f}
-                }
-                de {
-                    default = {$plugin.tx_newslettersubscribe.settings.salutation.de.default}
-                    m = {$plugin.tx_newslettersubscribe.settings.salutation.de.m}
-                    f = {$plugin.tx_newslettersubscribe.settings.salutation.de.f}
-                }
-                languages {
-                    de = 0
-                    en = 1
-                }
-            }
-            
-            senderEmail = {$plugin.tx_newslettersubscribe.settings.senderEmail}
-            senderName = {$plugin.tx_newslettersubscribe.settings.senderName}
-            
-            adminEmail = {$plugin.tx_newslettersubscribe.settings.adminEmail}
-            adminName = {$plugin.tx_newslettersubscribe.settings.adminName}
-            
+		settings {
+			addsalutation = {$plugin.tx_newslettersubscribe.settings.addsalutation}
+			salutation {
+				en {
+					default = {$plugin.tx_newslettersubscribe.settings.salutation.en.default}
+					m = {$plugin.tx_newslettersubscribe.settings.salutation.en.m}
+					f = {$plugin.tx_newslettersubscribe.settings.salutation.en.f}
+				}
+				de {
+					default = {$plugin.tx_newslettersubscribe.settings.salutation.de.default}
+					m = {$plugin.tx_newslettersubscribe.settings.salutation.de.m}
+					f = {$plugin.tx_newslettersubscribe.settings.salutation.de.f}
+				}
+				languages {
+					de = 0
+					en = 1
+				}
+			}
+
+			senderEmail = {$plugin.tx_newslettersubscribe.settings.senderEmail}
+			senderName = {$plugin.tx_newslettersubscribe.settings.senderName}
+
+			adminEmail = {$plugin.tx_newslettersubscribe.settings.adminEmail}
+			adminName = {$plugin.tx_newslettersubscribe.settings.adminName}
+
 			useSimpleSpamPrevention = 1
 			spamTimeout = 5
 
@@ -72,7 +72,7 @@ plugin {
 
 			# uid of page with data protection information (if any)
 			dataProtectionPage = 1
-			
+
 			# email and data_protection are always shown
 			#showFields = gender,firstName,lastName
 			# used in several places
@@ -84,6 +84,6 @@ plugin {
 
 			overrideFlexformSettingsIfEmpty = senderEmail,senderName,adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 
-        }
-    }
+		}
+	}
 }

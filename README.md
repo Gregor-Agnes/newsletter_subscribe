@@ -172,6 +172,10 @@ routeEnhancers:
 `<a href="http://www.domain.tld/page/undosubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
 where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.<br>Note: The subscribe plugin must be inserted on the page "page" in that url.
 
+## Salutation in direct_mail
+1. Add 'salutation' field (see above 'subscription_hash')
+2. Add ###USER_salutation### on the page
+
 ## Scheduler Tasks / Console Commands
 
 There are scheduler tasks / console commands available (TYPO3 v10 only) to fill empty database fields in `tt_address`:

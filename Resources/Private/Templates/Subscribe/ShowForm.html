@@ -5,10 +5,7 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-    <script>
-      const iAmNotASpamBotValue = <f:format.raw>'{iAmNotASpamBotValue}'</f:format.raw>
-      const iAmNotARobotLabel = '<f:translate key="iAmNotASpamBotLabel"></f:translate>'
-    </script>
+    <div id="iAmNotASpamBot" data-iamnotaspambotvalue="{f:format.raw(value: '{iAmNotASpamBotValue}')}" data-iamnotarobotlabel="{f:translate(key: 'iAmNotASpamBotLabel')}"></div>
     <f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
         <f:if condition="{settings.useHCaptcha}">
             <div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
