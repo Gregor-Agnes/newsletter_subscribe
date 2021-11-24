@@ -43,7 +43,7 @@
 			</trans-unit>
 			<trans-unit id="dataProtectionHint2" approved="yes">
 				<source><![CDATA[and agree with it.]]></source>
-				<target><![CDATA[ gelesen, verstanden und akzezptiert.]]></target>
+				<target><![CDATA[ gelesen, verstanden und akzeptiert.]]></target>
 			</trans-unit>
 			<trans-unit id="dataProtectionPage" approved="yes">
 				<source><![CDATA[Page with data protection information]]></source>
@@ -218,7 +218,7 @@
       <!-- NoSpamBot -->
       <trans-unit id="iAmNotASpamBotLabel">
           <source>I am not a spambot</source>
-          <target><![CDATA[Ich bin kein Spambot]]></target>
+          <target><![CDATA[Ich bin kein Spambot&nbsp;*]]></target>
       </trans-unit>
 			<!-- Scheduler -->
 			<trans-unit id="schedulerAge">
