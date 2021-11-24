@@ -31,18 +31,18 @@ const iAmNotASpamBotValue = iAmNotASpamBotContainer.dataset.iamnotaspambotvalue;
 const iAmNotARobotLabel = iAmNotASpamBotContainer.dataset.iamnotarobotlabel;
 let insertNoSpamBotField = () => {
   let noSpamField = document.createElement('div')
+  noSpamField.classList.add('field')
   noSpamField.innerHTML = `
 <input id="iAmNotASpamBotHere" type="checkbox" name="iAmNotASpamBotHere" value="${iAmNotASpamBotValue}">
-<label class="label" for="iAmNotASpamBotHere">
+<label class="label checkbox" for="iAmNotASpamBotHere">
     ${iAmNotARobotLabel}
 </label>
                 
 <input type="hidden" name="iAmNotASpamBot" value="">
-<input id="iAmNotASpamBot" type="checkbox" name="iAmNotASpamBot" value="${iAmNotASpamBotValue}">
 <label class="label" for="iAmNotASpamBot">
+<input id="iAmNotASpamBot" type="checkbox" name="iAmNotASpamBot" value="${iAmNotASpamBotValue}">
     ${iAmNotARobotLabel}
 </label>`
-
   document.getElementById('NewsletterSubscribeSubmit').before(noSpamField)
 }
 
