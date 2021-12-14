@@ -27,8 +27,9 @@ import '../Scss/Styles.scss'
 })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
 const iAmNotASpamBotContainer = document.getElementById('iAmNotASpamBotContainer');
-const iAmNotASpamBotValue = iAmNotASpamBotContainer.dataset.iamnotaspambotvalue;
-const iAmNotARobotLabel = iAmNotASpamBotContainer.dataset.iamnotarobotlabel;
+const iAmNotASpamBotValue = (iAmNotASpamBotContainer !== null && iAmNotASpamBotContainer.dataset.iamnotaspambotvalue) ? iAmNotASpamBotContainer.dataset.iamnotaspambotvalue : undefined;
+const iAmNotARobotLabel = (iAmNotASpamBotContainer !== null && iAmNotASpamBotContainer.dataset.iamnotarobotlabel) ? iAmNotASpamBotContainer.dataset.iamnotarobotlabel : undefined;
+
 let insertNoSpamBotField = () => {
   let noSpamField = document.createElement('div')
   noSpamField.classList.add('field')
