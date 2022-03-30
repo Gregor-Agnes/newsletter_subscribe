@@ -16,7 +16,7 @@
     "friendsoftypo3/tt-address": "^4.3.0 || ^5.1.0"
   },
   "replace": {
-    "zwo3/newsletter_subscribe": "self.version"
+    "typo3-ter/newsletter_subscribe": "self.version"
   },
   "autoload": {
     "psr-4": {
