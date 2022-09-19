@@ -1,36 +1,38 @@
 {
-  "name": "zwo3/newsletter_subscribe",
-  "type": "typo3-cms-extension",
-  "description": "Subscribe / Unsubscribe Extension (e.g. for Newsletter), depends on tt_address",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "tt_address",
-    "subscribe",
-    "newsletter"
-  ],
-  "homepage": "https://github.com/Gregor-Agnes/newsletter_subscribe",
-  "license": ["GPL-2.0-or-later"],
-  "require": {
-    "typo3/cms-core": "^10.4.2",
-    "friendsoftypo3/tt-address": "^4.3.0 || ^5.1.0"
-  },
-  "replace": {
-    "typo3-ter/newsletter_subscribe": "self.version"
-  },
-  "autoload": {
-    "psr-4": {
-      "Zwo3\\NewsletterSubscribe\\": "Classes/"
+    "name": "zwo3/newsletter_subscribe",
+    "type": "typo3-cms-extension",
+    "description": "Subscribe / Unsubscribe Extension (e.g. for Newsletter), depends on tt_address",
+    "keywords": [
+        "TYPO3",
+        "extension",
+        "tt_address",
+        "subscribe",
+        "newsletter"
+    ],
+    "homepage": "https://github.com/Gregor-Agnes/newsletter_subscribe",
+    "license": [
+        "GPL-2.0-or-later"
+    ],
+    "require": {
+        "typo3/cms-core": "^v11.5.16",
+        "friendsoftypo3/tt-address": "^6.1.0"
+    },
+    "replace": {
+        "typo3-ter/newsletter_subscribe": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zwo3\\NewsletterSubscribe\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zwo3\\NewsletterSubscribe\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "newsletter_subscribe"
+        }
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Zwo3\\NewsletterSubscribe\\Tests\\": "Tests/"
-    }
-  },
-  "extra": {
-    "typo3/cms": {
-      "extension-key": "newsletter_subscribe"
-    }
-  }
 }

@@ -1,5 +1,5 @@
 #
-# Table structure for table 'tx_store_domain_model_article'
+# Table structure for table 'tt_address'
 #
 #
 CREATE TABLE tt_address

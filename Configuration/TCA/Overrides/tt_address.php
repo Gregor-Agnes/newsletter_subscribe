@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-$GLOBALS['TCA']['tt_address']['ctrl']['delete'] = null;
+#$GLOBALS['TCA']['tt_address']['ctrl']['delete'] = null;
 
 $tempColumns = [
     'data_protection_accepted' => [
