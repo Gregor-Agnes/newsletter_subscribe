@@ -1,8 +1,6 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-#$GLOBALS['TCA']['tt_address']['ctrl']['delete'] = null;
-
 $tempColumns = [
     'data_protection_accepted' => [
         'label' => 'LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:tx_zwo3_newslettersubscribe_subscribe.data_protection_accepted',
