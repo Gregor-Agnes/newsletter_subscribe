@@ -39,6 +39,9 @@ jobs:
             -   name: Install composer dependencies
                 run: composer require typo3/minimal "^${{ matrix.typo3-versions }}" --prefer-dist --no-progress --no-suggest
 
+            -   name: Composer config
+                run: composer config --no-plugins allow-plugins.typo3/cms-composer-installers false
+
             -   name: Run tests
                 run: composer run-script test
 
