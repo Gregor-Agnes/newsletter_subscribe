@@ -64,7 +64,7 @@ call_user_func(
             $iconRegistry->registerIcon(
                 'zwo3_newslettersubscribe-plugin-'.$pluginName,
                 \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-                ['source' => 'EXT:newsletter_subscribe/Resources/Public/Gfx/Extension.svg']
+                ['source' => 'EXT:newsletter_subscribe/blob/master/Resources/Public/images/Extension.svg']
             );
         }
 
