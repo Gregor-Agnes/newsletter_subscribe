@@ -1,34 +1,110 @@
-name: TER release
+name: Testing and TER deployment
 
-on:
-  push:
-    tags:
-      - '*'
+on: [ push, pull_request ]
+
+# If you do not rely on running other jobs besides the actual TER deployment, use this:
+#on:
+#  push:
+#    tags:
+#      - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  ter-release:
-    name: TER release
-    runs-on: ubuntu-latest
-    env:
-      TYPO3_EXTENSION_KEY: 'newsletter_subscribe'
-      REPOSITORY_URL: 'https://github.com/Gregor-Agnes/newsletter_subscribe'
-      TYPO3_API_TOKEN: ${{ secrets.TYPO3_API_TOKEN }}
-      TYPO3_API_USERNAME: ${{ secrets.TYPO3_API_USERNAME }}
-      TYPO3_API_PASSWORD: ${{ secrets.TYPO3_API_PASSWORD }}
 
-    steps:
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    # Some basic test example
+    tests:
+        name: Run tests using PHP ${{ matrix.php-versions }} with TYPO3 ${{ matrix.typo3-versions }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-          extensions: intl, mbstring, xml, soap, zip, curl
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-versions: [ 7.4 ]
+                typo3-versions: [ 10.4 ]
 
-      - name: Install EXT:tailor
-        run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
+        steps:
+            -   uses: actions/checkout@v2
 
-      - name: Upload EXT:${{ env.EXTENSION_KEY }} as ${{ steps.get_version.outputs.VERSION }} to TER
-        run: php ~/.composer/vendor/bin/tailor ter:publish ${{ steps.get_version.outputs.VERSION }} --artefact=${{ env.REPOSITORY_URL }}/archive/${{ steps.get_version.outputs.VERSION }}.zip --comment="New release of version ${{ steps.get_version.outputs.VERSION }} - see details, changelog and documentation on ${{ env.REPOSITORY_URL }}"
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+                    extensions: intl, mbstring
+
+            -   name: Cache composer dependencies
+                uses: actions/cache@v1
+                with:
+                    path: ~/.composer/cache
+                    key: php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}-composer-${{ hashFiles('composer.json') }}
+                    restore-keys: |
+                        php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}-composer-
+                        php-${{ matrix.php-versions }}-typo3-
+            -   name: Install composer dependencies
+                run: composer require typo3/minimal "^${{ matrix.typo3-versions }}" --prefer-dist --no-progress --no-suggest
+
+            -   name: Run tests
+                run: composer run-script test
+
+    # Check if there is a valid tag
+    tag-valid:
+        name: Check for valid tag
+
+        # Run only if tests job is successful
+        needs: tests
+        # Run only if it's a tag in general (as regex is not possible here)
+        if: startsWith(github.ref, 'refs/tags/')
+
+        runs-on: ubuntu-latest
+
+        # Save status for use in other jobs
+        outputs:
+            status: ${{ steps.check-tag.outputs.match }}
+
+        steps:
+            # Check for a valid tag, valid as in "use your own regex"
+            # By default, this will check for a "1.2.345" naming scheme
+            -   name: Check if trigger is a valid tag
+                id: check-tag
+                run: |
+                    if [[ ${{ github.event.ref }} =~ ^refs/tags/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                    echo ::set-output name=match::true
+                    fi
+    # The actual TER upload job
+    ter-release:
+        name: TYPO3 TER release
+
+        # Depend on a valid tag
+        needs: tag-valid
+        if: needs.tag-valid.outputs.status == 'true'
+
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-versions: [ 7.4 ]
+
+        env:
+            # Add your extension key
+            TYPO3_USER: ${{ secrets.TYPO3_API_USERNAME }}
+            TYPO3_PASSWORD: ${{ secrets.TYPO3_API_PASSWORD }}
+            TYPO3_EXTENSION_KEY: 'newsletter_subscribe'
+            REPOSITORY_URL: 'https://github.com/Gregor-Agnes/newsletter_subscribe'
+            TYPO3_API_TOKEN: ${{ secrets.TYPO3_API_TOKEN }}
+
+        steps:
+            -   uses: actions/checkout@v2
+                with:
+                    path: ${{ env.TYPO3_EXTENSION_KEY }}
+
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+                    extensions: intl, mbstring, xml, soap, zip, curl
+
+            -   name: Install TYPO3 TER client
+                run: composer global require namelesscoder/typo3-repository-client "^2.0" --prefer-dist --no-progress --no-suggest
+
+            -   name: Remove .git folder
+                run: rm -rf ./$TYPO3_EXTENSION_KEY/.git
+
+            -   name: List extension folder
+                run: ls -liAsh ./$TYPO3_EXTENSION_KEY
+
+            -   name: Upload EXT:${{ env.TYPO3_EXTENSION_KEY }} as ${{ github.event.ref }} to TER
+                run: php ~/.composer/vendor/bin/upload "./$TYPO3_EXTENSION_KEY" "$TYPO3_USER" "$TYPO3_PASSWORD" "${{ github.event.head_commit.message }}"
