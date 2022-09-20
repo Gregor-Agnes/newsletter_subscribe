@@ -15,6 +15,10 @@ $EM_CONF['newsletter_subscribe'] = [
             'typo3' => '11.5.16-11.5.99',
             'tt_address' => '6.1.0-6.99.99'
         ],
+        'conflicts' => [
+        ],
+        'suggests' => [
+        ],
     ],
 ];
 
