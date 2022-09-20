@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF['newsletter_subscribe'] = [
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Newsletter Subscribe',
     'description' => 'subscribe and unsubscribe to tt_address, generate static Link to unsubscribe (to use in Newsletter), remove unvalidated subscriptions with scheduler task',
     'category' => 'plugin',
