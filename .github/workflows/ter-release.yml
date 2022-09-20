@@ -48,4 +48,4 @@ jobs:
               run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
 
             - name: Publish to TER
-              run: php ~/.composer/vendor/bin/tailor ter:publish --comment "New release of ${{ steps.get_version.outputs.VERSION }} ${{ steps.get-comment.outputs.comment }} - see details, changelog and documentation on ${{ env.REPOSITORY_URL }}" ${{ steps.get-version.outputs.version }}
+              run: php ~/.composer/vendor/bin/tailor ter:publish --comment "New release of ${{ steps.get_version.outputs.VERSION }} - see details, changelog and documentation on ${{ env.REPOSITORY_URL }}" ${{ steps.get-version.outputs.version }}

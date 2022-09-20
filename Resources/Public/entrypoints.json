@@ -1,0 +1,13 @@
+{
+  "entrypoints": {
+    "NewsletterSubscribe": {
+      "js": [
+        "/typo3conf/ext/newsletter_subscribe/Resources/Public/runtime.js",
+        "/typo3conf/ext/newsletter_subscribe/Resources/Public/NewsletterSubscribe.js"
+      ],
+      "css": [
+        "/typo3conf/ext/newsletter_subscribe/Resources/Public/NewsletterSubscribe.css"
+      ]
+    }
+  }
+}
