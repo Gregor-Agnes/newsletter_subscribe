@@ -87,24 +87,42 @@ class SubscribeController extends ActionController
         $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
     }
 
+    public function initializeShowFormAction(bool $spambotFailed = null)
+    {
+        if ($this->settings['useSimpleSpamPrevention']) {
+            if (
+                GeneralUtility::_POST('iAmNotASpamBot') !== null && GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
+            ) {
+                //leep($this->settings['spamTimeout']);
+                $this->request->setArgument('spambotFailed', true);
+                //$this->view->assign('spambotFailed', 1);
+            }
+        }
+    }
+
     /**
      * @param null|Subscription $subscription
+     * @param bool $spambotFailed
+     * @throws \Exception
      * @IgnoreValidation("subscription"))
      */
-    public function showFormAction(Subscription $subscription = null)
+    public function showFormAction(Subscription $subscription = null, bool $spambotFailed = null)
     {
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
 
         $fields = array_map('trim', explode(',', $this->settings['showFields']));
-    
+
         if ($this->settings['useSimpleSpamPrevention']) {
             $iAmNotASpamBotValue = $token = bin2hex(random_bytes(16));
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
             $GLOBALS["TSFE"]->fe_user->storeSessionData();
             $this->view->assign('iAmNotASpamBotValue', $iAmNotASpamBotValue);
+            if ($spambotFailed) {
+                $this->view->assign('spambotFailed', 1);
+            }
         }
-        
+
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'formToken' => $formToken,
@@ -120,7 +138,7 @@ class SubscribeController extends ActionController
     {
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']);
-        
+
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'message' => $message,
@@ -178,7 +196,7 @@ class SubscribeController extends ActionController
 
         $this->view->assignMultiple(compact('email'));
     }
-    
+
     public function initializeCreateConfirmationAction()
     {
         if (!$this->request->hasArgument('subscription')) {
@@ -199,10 +217,10 @@ class SubscribeController extends ActionController
                 GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
             ) {
                 sleep($this->settings['spamTimeout']);
-                $this->forward('showForm');
+                $this->forward('showForm', null, null, ['subscription' => $subscription, 'spambotFailed' => true]);
             }
         }
-    
+
         if ($this->settings['useHCaptcha']) {
             if (GeneralUtility::_POST('h-captcha-response')) {
                 $data = [
@@ -333,11 +351,11 @@ class SubscribeController extends ActionController
         if ($success && $this->settings['sendAdminInfo']) {
             $this->sendAdminInfo($subscription, 0);
         }
-        
+
         if ($success) {
             $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'unsubscribe'));
         }
-        
+
         $this->view->assignMultiple(compact('subscription', 'success'));
     }
 
@@ -384,22 +402,22 @@ class SubscribeController extends ActionController
             throw new ImmediateResponseException($response);
 
         }
-        
+
         if ($success && $this->settings['sendAdminInfo']) {
             $this->sendAdminInfo($subscription, 1);
         }
-        
+
         if ($success) {
             $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'subscribe'));
         }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));
     }
-    
+
     public function sendAdminInfo(Subscription $subscription, int $unsubscribeaction = 0)
     {
         $subject = $unsubscribeaction == 0 ? LocalizationUtility::translate('unsubscription', 'newsletterSubscribe') : LocalizationUtility::translate('newSubscription', 'newsletterSubscribe');
-        
+
         try {
             $this->sendTemplateEmail(
                 [$this->settings['adminEmail'], $this->settings['adminName']],
@@ -473,7 +491,7 @@ class SubscribeController extends ActionController
     protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName = 'Mail/Default', array $variables = array(), array $replyTo = null, array $attachments = [])
     {
         $templatePaths = new TemplatePaths();
-        
+
         if (mb_stripos($templateName, 'admin') !== false) {
             // Admin Mail, no translation possible and necessary
             $templatePaths->setTemplateRootPaths(
@@ -487,7 +505,7 @@ class SubscribeController extends ActionController
             );
             $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
         }
-    
+
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
         $email->format('html');
@@ -498,7 +516,7 @@ class SubscribeController extends ActionController
             ->html('')// only HTML mail
             ->setTemplate($templateName)
             ->assignMultiple($variables);
-    
+
         if ($replyTo) {
             $email->replyTo(new Address(...$replyTo));
         }

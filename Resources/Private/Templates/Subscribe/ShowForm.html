@@ -5,69 +5,69 @@
 <f:layout name="Standard"></f:layout>
 
 <f:section name="Default">
-    <div id="iAmNotASpamBotContainer" data-iamnotaspambotvalue="{f:format.raw(value: '{iAmNotASpamBotValue}')}" data-iamnotarobotlabel="{f:translate(key: 'iAmNotASpamBotLabel')}"></div>
-    <f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}">
+    <div class="hidden" id="iAmNotASpamBotContainer" data-iamnotaspambotvalue="{f:format.raw(value: '{iAmNotASpamBotValue}')}" data-iamnotarobotlabel="{f:translate(key: 'iAmNotASpamBotLabel')}" data-mandatoryfield="{f:translate(key: 'error.1221560718')}"></div>
+    <f:form object="{subscription}" extensionName="newslettersubscribe" name="subscription" action="createConfirmation" pageUid="{settings.subscribeFormPid}" class="grid grid-cols-1 gap-6 {f:if(condition: spambotFailed, then: ' spambotFailed')}">
         <f:if condition="{settings.useHCaptcha}">
             <div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
             <script src="https://hcaptcha.com/1/api.js" async defer></script>
         </f:if>
         <input type="hidden" name="formToken" value="{formToken}">
         <ns:condition.iterator.contains needle="gender" haystack="{fields}">
-            <label>
-                <f:translate key="gender"></f:translate>
-                <f:form.select property="gender" options="{f: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
+            <label class="block">
+	            <span class="text-gray-700"><f:translate key="gender"></f:translate></span>
+                <f:form.select class="no-autoinit mt-1 block w-full" property="gender" options="{f: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
             </label>
         </ns:condition.iterator.contains>
         <ns:condition.iterator.contains needle="firstName" haystack="{fields}">
-            <label>
-                <f:translate key="firstName"></f:translate>
-                <f:form.textfield property="firstName" />
+            <label class="block">
+	            <span class="text-gray-700"><f:translate key="firstName"></f:translate></span>
+                <f:form.textfield property="firstName" class="mt-1 block w-full" />
             </label>
         </ns:condition.iterator.contains>
         <ns:condition.iterator.contains needle="lastName" haystack="{fields}">
-            <label>
-                <f:translate key="lastName"></f:translate>
-                <f:form.textfield property="lastName" />
+            <label class="block">
+	            <span class="text-gray-700"><f:translate key="lastName"></f:translate></span>
+                <f:form.textfield class="mt-1 block w-full" property="lastName" />
             </label>
         </ns:condition.iterator.contains>
         <ns:condition.iterator.contains needle="company" haystack="{fields}">
-            <label>
-                <f:translate key="company"></f:translate>
-                <f:form.textfield property="company" />
+            <label class="block">
+	            <span class="text-gray-700"><f:translate key="company"></f:translate></span>
+                <f:form.textfield class="nmt-1 block w-full" property="company" />
             </label>
         </ns:condition.iterator.contains>
-        <label>
-            <f:translate key="email"></f:translate>
-            <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}"></f:form.textfield>
+        <label class="block">
+	        <span class="text-gray-700"><f:translate key="email"></f:translate>&nbsp;*</span>
+            <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}" class="mt-1 block w-full"></f:form.textfield>
         </label>
         <f:form.validationResults for="subscription.email">
             <f:if condition="{validationResults.flattenedErrors}">
                 <f:for each="{validationResults.errors}" as="error">
-                    <p class="help-text">
+                    <p class="-mt-4 text-sm">
                         <f:translate key="error.{error.code}" />
                     </p>
                 </f:for>
             </f:if>
         </f:form.validationResults>
-        <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted"></f:form.checkbox>
-        <label for="dataProtectionAccepted">
-            <i class="fal fa-square-full fa-lg"></i>
-            <i class="fal fa-check fa-2x"></i>
-            {f:translate(key: 'dataProtectionHint1')}
+        <label for="dataProtectionAccepted" class="inline-flex items-center">
+	        <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted" class="border-solid border-gray-600"></f:form.checkbox>
+	        <span class="ml-2">
+	          {f:translate(key: 'dataProtectionHint1')}
             <f:link.typolink parameter="{dataProtectionPage}" target="_blank">{f:translate(key: 'dataProtection')}</f:link.typolink>
             {f:translate(key: 'dataProtectionHint2')}
+	        </span>
         </label>
         <f:form.validationResults for="subscription.dataProtectionAccepted">
             <f:if condition="{validationResults.flattenedErrors}">
                 <f:for each="{validationResults.errors}" as="error">
-                    <p class="help-text">
+                    <p class="-mt-4 text-sm">
                         <f:translate key="error.{error.code}" />
                     </p>
                 </f:for>
             </f:if>
         </f:form.validationResults>
-        <p>
-            <button class="button hollow" id="NewsletterSubscribeSubmit" type="submit">{f:translate(key: 'submit')}</button>
+        <p class="m-0">
+            <button class="text-base bg-gray-600 cursor-pointer hover:bg-gray-700 text-white text-black hover:text-white py-2 px-4 rounded" id="NewsletterSubscribeSubmit" type="submit">{f:translate(key: 'submit')}</button>
         </p>
     </f:form>
 </f:section>

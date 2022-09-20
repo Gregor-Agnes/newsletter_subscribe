@@ -6,13 +6,28 @@
     "license": [
         "GPL-2.0-or-later"
     ],
+    "authors": [
+        {
+            "name": "Gregor Agnes",
+            "role": "Developer",
+            "email": "ga@zwo3.de"
+        }
+    ],
+    "keywords": [
+        "TYPO3",
+        "extension",
+        "tt_address",
+        "subscribe",
+        "newsletter"
+    ],
     "require": {
         "typo3/cms-core": "^v11.5.16",
-        "friendsoftypo3/tt-address": "^6.1.0",
+        "friendsoftypo3/tt-address": "^6.1.0"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "ssch/typo3-encore": "^v4.0.3"
-    },
-    "replace": {
-        "typo3-ter/newsletter_subscribe": "self.version"
     },
     "autoload": {
         "psr-4": {

@@ -1,82 +1,42 @@
 {
-  "name": "@zwo3/newsletter_subscribe",
-  "version": "1.0.0",
-  "description": "",
-  "private": true,
-  "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-arrow-functions": "^7.10.1",
-    "@babel/plugin-transform-async-to-generator": "^7.10.1",
-    "@babel/plugin-transform-modules-commonjs": "^7.10.1",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/register": "^7.9.0",
-    "autoprefixer": "^9.8.0",
-    "babel-loader": "^8.1.0",
-    "cache-loader": "^4.1.0",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^3.4.2",
-    "expose-loader": "^0.7.5",
-    "file-loader": "^6.0.0",
-    "glob": "^7.1.6",
-    "html-loader": "^1.1.0",
-    "html-webpack-plugin": "^4.0.4",
-    "imagemin-gifsicle": "^7.0.0",
-    "imagemin-jpegtran": "^6.0.0",
-    "imagemin-optipng": "^7.1.0",
-    "imagemin-svgo": "^7.1.0",
-    "imagemin-webpack": "^5.1.1",
-    "imagemin-webpack-plugin": "^2.4.2",
-    "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^7.0.0",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^8.0.2",
-    "style-loader": "^1.1.3",
-    "url-loader": "^4.1.0",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "webpack-merge": "^4.2.2"
-  },
-  "dependencies": {
-    "axios": "^0.21.2",
-    "core-js": "^3.6.5",
-    "es6-promise": "^4.2.8",
-    "isomorphic-fetch": "^3.0.0",
-    "lodash": "^4.17.21"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "debug": true,
-          "useBuiltIns": "usage",
-          "corejs": 3
-        }
-      ]
-    ],
-    "plugins": [
-      "@babel/plugin-transform-async-to-generator",
-      "@babel/plugin-transform-arrow-functions"
+    "name": "@zwo3/newsletter_subscribe",
+    "version": "2.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "start-newsletter_subscribe": "encore dev-server --config-name newsletter_subscribe",
+        "build-newsletter_subscribe": "encore production --config-name newsletter_subscribe"
+    },
+    "keywords": [],
+    "engines": {
+        "npm": ">=8.11.0",
+        "node": ">=18.0.0"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@symfony/webpack-encore": "^1.6.1",
+        "@tailwindcss/forms": "^0.5.3",
+        "autoprefixer": "^10.4.4",
+        "file-loader": "^6.2.0",
+        "filemanager-webpack-plugin": "^7.0.0",
+        "html-webpack-plugin": "^5.3.1",
+        "postcss": "^8.4.12",
+        "postcss-hexrgba": "^2.0.1",
+        "postcss-import": "^14.1.0",
+        "postcss-loader": "^6.2.1",
+        "tailwindcss": "^3.0.23",
+        "webpack-notifier": "^1.6.0"
+    },
+    "dependencies": {
+        "core-js": "^3.12.1",
+        "cross-env": "^7.0.3",
+        "smoothscroll-polyfill": "^0.4.4"
+    },
+    "browserslist": [
+        "last 2 version",
+        "not dead",
+        "> 2% in DE",
+        "not ie >= 0"
     ]
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "last 2 version",
-    "not dead",
-    "> 2% in DE",
-    "not ie < 11"
-  ]
 }
