@@ -10,41 +10,6 @@ on: [ push, pull_request ]
 
 jobs:
 
-    # Some basic test example
-    tests:
-        name: Run tests using PHP ${{ matrix.php-versions }} with TYPO3 ${{ matrix.typo3-versions }}
-
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                php-versions: [ 7.4 ]
-                typo3-versions: [ 11.5 ]
-
-        steps:
-            -   uses: actions/checkout@v2
-
-            -   uses: shivammathur/setup-php@v2
-                with:
-                    php-version: ${{ matrix.php-versions }}
-                    extensions: intl, mbstring
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v1
-                with:
-                    path: ~/.composer/cache
-                    key: php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}-composer-${{ hashFiles('composer.json') }}
-                    restore-keys: |
-                        php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}-composer-
-                        php-${{ matrix.php-versions }}-typo3-
-            -   name: Composer config
-                run: composer config --no-plugins allow-plugins.typo3/cms-composer-installers false
-
-            -   name: Install composer dependencies
-                run: composer require typo3/minimal "^${{ matrix.typo3-versions }}" --prefer-dist --no-progress --no-suggest
-
-            -   name: Run tests
-                run: composer run-script test
-
     # Check if there is a valid tag
     tag-valid:
         name: Check for valid tag
