@@ -10,18 +10,22 @@
 * Provides a plugin to double optin unsubscribe
 * Provides field in tt_address to generate unsubscribe link in direct_mail mailings
 
-## Caveats
+## ~~Caveats~~
 
-This extension changes the behaviour of `tt_address` and disables the soft delete feature which means that deleted records are removed from the database directly instead of being marked as deleted.
+~~This extension changes the behaviour of `tt_address` and disables the soft delete feature which means that deleted records are removed from the database directly instead of being marked as deleted.~~
 
-This might lead to problems if you already have an existing set of records in the table `tt_address`.
+~~This might lead to problems if you already have an existing set of records in the table `tt_address`.~~
 
-To mitigate this behaviour you can purge all deleted records from `tt_address`.  
-Or you can reenable the original behaviour by adding this code to `Configuration/TCA/Overrides/tt_address.php` in your sitepackage:
+~~To mitigate this behaviour you can purge all deleted records from `tt_address`.~~  
+~~Or you can reenable the original behaviour by adding this code to `Configuration/TCA/Overrides/tt_address.php` in your sitepackage:~~
 
-```
-$GLOBALS['TCA']['tt_address']['ctrl']['delete'] = 'deleted';
-```
+
+~~$GLOBALS['TCA']['tt_address']['ctrl']['delete'] = 'deleted';~~
+
+Removed hard deletion of tt_address records. Because of https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ExtensionArchitecture/FileStructure/ExtTablesSql.html#auto-generated-structure 
+the field "delete" wouldn't be generated otherwise. Use Scheduler Task to delete soft-deleted records instead.
+
+
 
 ## Install
 * Install via extension manager or
