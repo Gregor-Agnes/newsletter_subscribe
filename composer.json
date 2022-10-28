@@ -22,7 +22,7 @@
     ],
     "require": {
         "typo3/cms-core": "^v11.5.16",
-        "friendsoftypo3/tt-address": "^6.1.0"
+        "friendsoftypo3/tt-address": "^6.1.0 || ^7.0"
     }
     ,
     "require-dev": {
