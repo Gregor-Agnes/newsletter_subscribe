@@ -56,18 +56,6 @@ call_user_func(
                 }
             }'
         );
-
-        // icons
-        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-
-        foreach(['subscribe', 'unsubscribe'] as $pluginName) {
-            $iconRegistry->registerIcon(
-                'zwo3_newslettersubscribe-plugin-'.$pluginName,
-                \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-                ['source' => 'EXT:newsletter_subscribe/blob/master/Resources/Public/images/Extension.svg']
-            );
-        }
-
     }
 );
 
@@ -76,11 +64,9 @@ $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_new
 $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_unsubscribe[subscriptionHash]';
 $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_unsubscribe[uid]';
 
-
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Zwo3\NewsletterSubscribe\SchedulerTask\DeleteUnvalidatedSubscribersTask::class] = [
     'extension' => 'newsletter_subscribe',
     'title' => 'LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:schedulerDeleteUnvalidated.name',
     'description' => 'LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:schedulerDeleteUnvalidated.description',
     'additionalFields' => \Zwo3\NewsletterSubscribe\SchedulerTask\DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider::class
 ];
-
