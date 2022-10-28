@@ -14,6 +14,7 @@ namespace Zwo3\NewsletterSubscribe\Controller;
  */
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
@@ -106,7 +107,7 @@ class SubscribeController extends ActionController
      * @throws \Exception
      * @IgnoreValidation("subscription"))
      */
-    public function showFormAction(Subscription $subscription = null, bool $spambotFailed = null)
+    public function showFormAction(Subscription $subscription = null, bool $spambotFailed = null): ResponseInterface
     {
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
@@ -129,12 +130,13 @@ class SubscribeController extends ActionController
             'fields' => $fields,
             'subscription' => $subscription,
         ]);
+        return $this->htmlResponse();
     }
 
     /**
      * @param string $message
      */
-    public function showUnsubscribeFormAction(?string $message = null)
+    public function showUnsubscribeFormAction(?string $message = null): ResponseInterface
     {
         $formToken = FormProtectionFactory::get('frontend')
             ->generateToken('Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']);
@@ -144,6 +146,7 @@ class SubscribeController extends ActionController
             'message' => $message,
             'formToken' => $formToken
         ]);
+        return $this->htmlResponse();
     }
 
     /**
@@ -153,7 +156,7 @@ class SubscribeController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
-    public function createUnsubscribeMailAction(?string $email = null)
+    public function createUnsubscribeMailAction(?string $email = null): ResponseInterface
     {
         if (!FormProtectionFactory::get('frontend')
             ->validateToken(
@@ -195,6 +198,7 @@ class SubscribeController extends ActionController
         }
 
         $this->view->assignMultiple(compact('email'));
+        return $this->htmlResponse();
     }
 
     public function initializeCreateConfirmationAction()
@@ -209,7 +213,7 @@ class SubscribeController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws StopActionException
      */
-    public function createConfirmationAction(Subscription $subscription)
+    public function createConfirmationAction(Subscription $subscription): ResponseInterface
     {
         if ($this->settings['useSimpleSpamPrevention']) {
             if (
@@ -315,6 +319,7 @@ class SubscribeController extends ActionController
 
             $this->view->assignMultiple(['subscription' => $subscription]);
         }
+        return $this->htmlResponse();
     }
 
     /**
@@ -323,7 +328,7 @@ class SubscribeController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
-    public function unsubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
+    public function unsubscribeAction(?int $uid = null, ?string $subscriptionHash = null): ResponseInterface
     {
 
         /** @var Subscription $subscription */
@@ -357,6 +362,7 @@ class SubscribeController extends ActionController
         }
 
         $this->view->assignMultiple(compact('subscription', 'success'));
+        return $this->htmlResponse();
     }
 
     public function undosubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
@@ -370,7 +376,7 @@ class SubscribeController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
-    public function doConfirmAction(?int $uid = null, ?string $subscriptionHash = null)
+    public function doConfirmAction(?int $uid = null, ?string $subscriptionHash = null): ResponseInterface
     {
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findByUid($uid, false);
@@ -412,6 +418,7 @@ class SubscribeController extends ActionController
         }
 
         $this->view->assignMultiple(compact( 'subscription', 'success'));
+        return $this->htmlResponse();
     }
 
     public function sendAdminInfo(Subscription $subscription, int $unsubscribeaction = 0)
