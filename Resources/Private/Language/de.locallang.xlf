@@ -205,24 +205,24 @@
 				<source><![CDATA[Please insert the captcha]]></source>
 				<target><![CDATA[Bitte lösen Sie das Captcha]]></target>
 			</trans-unit>
-      <!-- AdminInfo -->
-      <trans-unit id="newSubscription">
-          <source>New Subcription</source>
-          <target><![CDATA[Neues Abonnement]]></target>
-      </trans-unit>
-      <trans-unit id="unsubscription">
-          <source>Unsubscription</source>
-          <target>Abonnement Kündigung</target>
-      </trans-unit>
+			<!-- AdminInfo -->
+			<trans-unit id="newSubscription">
+				<source>New Subcription</source>
+				<target><![CDATA[Neues Abonnement]]></target>
+			</trans-unit>
+			<trans-unit id="unsubscription">
+				<source>Unsubscription</source>
+				<target>Abonnement Kündigung</target>
+			</trans-unit>
 
-      <!-- NoSpamBot -->
-      <trans-unit id="iAmNotASpamBotLabel">
-          <source>I am not a spambot</source>
-          <target><![CDATA[Ich bin kein Spambot&nbsp;*]]></target>
-      </trans-unit>
+			<!-- NoSpamBot -->
+			<trans-unit id="iAmNotASpamBotLabel">
+				<source>I am not a spambot</source>
+				<target><![CDATA[Ich bin kein Spambot&nbsp;*]]></target>
+			</trans-unit>
 			<!-- Scheduler -->
 			<trans-unit id="schedulerAge">
-				<source>Delete all unvalidated Subscriptions oder than (days)</source>
+				<source>Delete all unvalidated Subscriptions older than (days)</source>
 				<target>Lösche alle nicht valididierten Anmeldungen älter als (in Tagen)</target>
 			</trans-unit>
 			<trans-unit id="schedulerPids">
