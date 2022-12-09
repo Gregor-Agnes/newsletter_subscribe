@@ -160,21 +160,21 @@
 				<source>If you do not receive an email from us: please check your spam folder too.</source>
 			</trans-unit>
       
-      <!-- AdminInfo -->
-      <trans-unit id="newSubscription">
-          <source>New Subcription</source>
-      </trans-unit>
-      <trans-unit id="unsubscription">
-          <source>Unsubscription</source>
-      </trans-unit>
+			<!-- AdminInfo -->
+			<trans-unit id="newSubscription">
+				<source>New Subcription</source>
+			</trans-unit>
+			<trans-unit id="unsubscription">
+				<source>Unsubscription</source>
+			</trans-unit>
       
-      <!-- NoSpamBot -->
-      <trans-unit id="iAmNotASpamBotLabel">
-          <source><![CDATA[I am not a spambot&nbsp;*]]></source>
-      </trans-unit>
+			<!-- NoSpamBot -->
+			<trans-unit id="iAmNotASpamBotLabel">
+				<source><![CDATA[I am not a spambot&nbsp;*]]></source>
+			</trans-unit>
 			<!-- Scheduler -->
 			<trans-unit id="schedulerAge">
-				<source>Delete all unvalidated Subscriptions oder than (days)</source>
+				<source>Delete all unvalidated Subscriptions older than (days)</source>
 			</trans-unit>
 			<trans-unit id="schedulerPids">
 				<source>Delete all unvalidated Subscriptions from pages (comma separated list)</source>

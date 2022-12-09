@@ -29,7 +29,6 @@ use TYPO3\CMS\Extbase\Event\Mvc\BeforeActionCallEvent;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -57,11 +56,6 @@ class SubscribeController extends ActionController
     use OverrideEmptyFlexformValuesTrait;
 
     /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
      * @var PersistenceManager
      */
     protected $persistenceManager;
@@ -83,9 +77,8 @@ class SubscribeController extends ActionController
 
     public function initializeAction()
     {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
-        $this->subscriptionRepository = $this->objectManager->get(SubscriptionRepository::class);
+        $this->subscriptionRepository = GeneralUtility::makeInstance(SubscriptionRepository::class);
     }
 
     public function initializeShowFormAction(bool $spambotFailed = null)
