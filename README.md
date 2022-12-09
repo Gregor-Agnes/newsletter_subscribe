@@ -1,14 +1,18 @@
-# subscribe
+# Newsletter Subscribe for TYPO3
 
-* Subcribe for Newsletters for TYPO3 >= 9.5
+* Subcribe and unsubscribe for newsletters for TYPO3 >= 9.5
 * Depends on tt_address
-* Scheduler Task to delete unconfirmed subscribers after a while (since v3.1.0)
+* Scheduler task to delete unconfirmed subscribers after a while (since v3.1.0)
 
 ## What does it do?
 
 * Provides a plugin to double optin subscribe
 * Provides a plugin to double optin unsubscribe
 * Provides field in tt_address to generate unsubscribe link in direct_mail mailings
+
+## Breaking in 5.0
+
+* If you use the default templates and styles you have to add the class `form-input` to input fields and `form-checkbox` to the checkboxes. Ther former approach overrode the appearance of every checkbox on pages, where the static template of this extension was included.
 
 ## ~~Caveats~~
 

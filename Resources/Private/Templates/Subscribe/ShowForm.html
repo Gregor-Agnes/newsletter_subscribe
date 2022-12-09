@@ -21,24 +21,24 @@
         <ns:condition.iterator.contains needle="firstName" haystack="{fields}">
             <label class="block">
 	            <span class="text-gray-700"><f:translate key="firstName"></f:translate></span>
-                <f:form.textfield property="firstName" class="mt-1 block w-full" />
+                <f:form.textfield property="firstName form-input" class="mt-1 block w-full" />
             </label>
         </ns:condition.iterator.contains>
         <ns:condition.iterator.contains needle="lastName" haystack="{fields}">
             <label class="block">
 	            <span class="text-gray-700"><f:translate key="lastName"></f:translate></span>
-                <f:form.textfield class="mt-1 block w-full" property="lastName" />
+                <f:form.textfield class="mt-1 block w-full form-input" property="lastName" />
             </label>
         </ns:condition.iterator.contains>
         <ns:condition.iterator.contains needle="company" haystack="{fields}">
             <label class="block">
 	            <span class="text-gray-700"><f:translate key="company"></f:translate></span>
-                <f:form.textfield class="nmt-1 block w-full" property="company" />
+                <f:form.textfield class="nmt-1 block w-full form-input" property="company" />
             </label>
         </ns:condition.iterator.contains>
         <label class="block">
 	        <span class="text-gray-700"><f:translate key="email"></f:translate>&nbsp;*</span>
-            <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}" class="mt-1 block w-full"></f:form.textfield>
+            <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}" class="mt-1 block w-full form-input"></f:form.textfield>
         </label>
         <f:form.validationResults for="subscription.email">
             <f:if condition="{validationResults.flattenedErrors}">
@@ -50,7 +50,7 @@
             </f:if>
         </f:form.validationResults>
         <label for="dataProtectionAccepted" class="inline-flex items-center">
-	        <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted" class="border-solid border-gray-600"></f:form.checkbox>
+	        <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted" class="border-solid border-gray-600 form-checkbox"></f:form.checkbox>
 	        <span class="ml-2">
 	          {f:translate(key: 'dataProtectionHint1')}
             <f:link.typolink parameter="{dataProtectionPage}" target="_blank">{f:translate(key: 'dataProtection')}</f:link.typolink>
@@ -67,7 +67,7 @@
             </f:if>
         </f:form.validationResults>
         <p class="m-0">
-            <button class="text-base bg-gray-600 cursor-pointer hover:bg-gray-700 text-white text-black hover:text-white py-2 px-4 rounded" id="NewsletterSubscribeSubmit" type="submit">{f:translate(key: 'submit')}</button>
+            <button class="text-base bg-gray-600 text-gray-50 cursor-pointer hover:bg-gray-700 text-white text-black hover:text-white py-2 px-4 rounded" id="NewsletterSubscribeSubmit" type="submit">{f:translate(key: 'submit')}</button>
         </p>
     </f:form>
 </f:section>
