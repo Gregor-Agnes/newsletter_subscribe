@@ -60,7 +60,7 @@ trait OverrideEmptyFlexformValuesTrait {
             $originalSettings = $typoScriptUtility->override($originalSettings, $tsSettings);
         }
 
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Controller/NewsController.php']['overrideSettings'])) {
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Controller/NewsController.php']['overrideSettings'] ?? null)) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Controller/NewsController.php']['overrideSettings'] as $_funcRef) {
                 $_params = [
                     'originalSettings' => $originalSettings,

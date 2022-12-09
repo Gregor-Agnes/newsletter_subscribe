@@ -90,7 +90,7 @@ class SubscribeController extends ActionController
 
     public function initializeShowFormAction(bool $spambotFailed = null)
     {
-        if ($this->settings['useSimpleSpamPrevention']) {
+        if ($this->settings['useSimpleSpamPrevention'] ?? null) {
             if (
                 GeneralUtility::_POST('iAmNotASpamBot') !== null && GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
             ) {
@@ -114,7 +114,7 @@ class SubscribeController extends ActionController
 
         $fields = array_map('trim', explode(',', $this->settings['showFields']));
 
-        if ($this->settings['useSimpleSpamPrevention']) {
+        if ($this->settings['useSimpleSpamPrevention'] ?? null) {
             $iAmNotASpamBotValue = $token = bin2hex(random_bytes(16));
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
             $GLOBALS["TSFE"]->fe_user->storeSessionData();
