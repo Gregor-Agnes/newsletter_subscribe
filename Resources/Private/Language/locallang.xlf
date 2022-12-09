@@ -121,7 +121,7 @@
 
 			<!-- Unsubscribe -->
 			<trans-unit id="youHaveUnsubscribed">
-				<source>You have successfully unsubscribed with the following data:</source>
+				<source>You have successfully unsubscribed with the following data</source>
 			</trans-unit>
 			<trans-unit id="sendMail">
 				<source>send mail</source>
@@ -132,7 +132,7 @@
 				<source>You want to cancel your subscription? Please insert the email address you subscribed to</source>
 			</trans-unit>
 			<trans-unit id="subscribeAgain">
-				<source>You can subscribe again at any time:</source>
+				<source>You can subscribe again at any time</source>
 			</trans-unit>
 
 			<!-- Confirm -->
