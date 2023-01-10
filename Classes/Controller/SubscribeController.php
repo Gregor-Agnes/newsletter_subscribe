@@ -503,8 +503,8 @@ class SubscribeController extends ActionController
             $templatePaths->setTemplateRootPaths(
                 [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $twoLetterIsoCode .'/')]
             );
-            $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
         }
+        $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
 
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
