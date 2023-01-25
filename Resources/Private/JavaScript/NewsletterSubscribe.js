@@ -16,7 +16,7 @@ let insertNoSpamBotField = () => {
 
 <input type="hidden" name="iAmNotASpamBot" value="">
 <label class="inline-flex items-center" for="iAmNotASpamBot">
-<input id="iAmNotASpamBot" type="checkbox" name="iAmNotASpamBot" value="${iAmNotASpamBotValue}"  class="border-solid border-gray-600">
+<input id="iAmNotASpamBot" type="checkbox" name="iAmNotASpamBot" value="${iAmNotASpamBotValue}"  class="border-solid border-gray-600 form-checkbox">
      <span class="ml-2">${iAmNotARobotLabel}</span>
 </label>`
   document.getElementById('NewsletterSubscribeSubmit').closest('p').before(noSpamField)

@@ -61,6 +61,18 @@
                     </config>
                 </TCEforms>
             </persistence.recursive>
+            <settings.mailTemplateRootPath>
+                <TCEforms>
+                    <exclude>1</exclude>
+                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:mailTemplateRootPath</label>
+                    <config>
+                        <type>input</type>
+                        <size>20</size>
+                        <max>120</max>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </settings.mailTemplateRootPath>
             <settings.senderEmail>
                 <TCEforms>
                     <exclude>1</exclude>

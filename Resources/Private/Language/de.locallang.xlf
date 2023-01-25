@@ -174,8 +174,8 @@
 				<target><![CDATA[Abschicken]]></target>
 			</trans-unit>
 			<trans-unit id="subscribeAgain" approved="yes">
-				<source><![CDATA[You can subscribe again at any time:]]></source>
-				<target><![CDATA[Sie können jederzeit erneut abonnieren:]]></target>
+				<source><![CDATA[You can subscribe again at any time]]></source>
+				<target><![CDATA[Sie können jederzeit erneut abonnieren]]></target>
 			</trans-unit>
 			<trans-unit id="thankYou" approved="yes">
 				<source><![CDATA[Thank you for your interest.]]></source>
@@ -190,8 +190,8 @@
 				<target><![CDATA[Sie möchten Ihr Abo kündigen? Bitte fügen Sie die E-Mail-Adresse ein, mit der Sie abonniert haben]]></target>
 			</trans-unit>
 			<trans-unit id="youHaveUnsubscribed" approved="yes">
-				<source><![CDATA[You have successfully unsubscribed with the following data:]]></source>
-				<target><![CDATA[Sie haben sich erfolgreich mit folgenden Daten abgemeldet:]]></target>
+				<source><![CDATA[You have successfully unsubscribed with the following data]]></source>
+				<target><![CDATA[Sie haben sich erfolgreich mit folgenden Daten abgemeldet]]></target>
 			</trans-unit>
 			<trans-unit id="youWillReceive" approved="yes">
 				<source><![CDATA[From now on, you will receive our newsletter.]]></source>
