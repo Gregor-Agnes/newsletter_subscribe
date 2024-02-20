@@ -21,7 +21,7 @@
         "newsletter"
     ],
     "require": {
-        "typo3/cms-core": "^v11.5.16",
+        "typo3/cms-core": "^v11.5.16 || ^12",
         "friendsoftypo3/tt-address": "^6.1.0 || ^7.0 || ^8.0"
     }
     ,
