@@ -1,4 +1,4 @@
-[applicationContext matches "/^Developssment/"]
+[applicationContext matches "/^Development/"]
 	plugin.tx_typo3encore {
 		settings {
 			packages {
@@ -14,7 +14,6 @@
 			}
 		}
 	}
-
 
 	page.includeCSS {
 		# Pattern typo3_encore:entryName
