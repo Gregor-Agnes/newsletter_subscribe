@@ -7,159 +7,133 @@
         <type>array</type>
         <el>
             <persistence.storagePid>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>Storage PID</label>
-                    <config>
-                        <type>group</type>
-                        <internal_type>db</internal_type>
-                        <allowed>pages</allowed>
-                        <size>3</size>
-                        <maxitems>99</maxitems>
-                        <minitems>1</minitems>
-                        <show_thumbs>1</show_thumbs>
-                        <wizards>
-                            <suggest>
-                                <type>suggest</type>
-                            </suggest>
-                        </wizards>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>Storage PID</label>
+                <config>
+                    <type>group</type>
+                    <allowed>pages</allowed>
+                    <size>3</size>
+                    <maxitems>99</maxitems>
+                    <minitems>1</minitems>
+                    <show_thumbs>1</show_thumbs>
+                    <wizards>
+                        <suggest>
+                            <type>suggest</type>
+                        </suggest>
+                    </wizards>
+                </config>
             </persistence.storagePid>
 
             <persistence.recursive>
-                <TCEforms>
-                    <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.recursive</label>
-                    <config>
-                        <type>select</type>
-                        <renderType>selectSingle</renderType>
-                        <items type="array">
-                            <numIndex index="2" type="array">
-                                <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.0</numIndex>
-                                <numIndex index="1">0</numIndex>
-                            </numIndex>
-                            <numIndex index="3" type="array">
-                                <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.1</numIndex>
-                                <numIndex index="1">1</numIndex>
-                            </numIndex>
-                            <numIndex index="4" type="array">
-                                <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.2</numIndex>
-                                <numIndex index="1">2</numIndex>
-                            </numIndex>
-                            <numIndex index="5" type="array">
-                                <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.3</numIndex>
-                                <numIndex index="1">3</numIndex>
-                            </numIndex>
-                            <numIndex index="6" type="array">
-                                <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.4</numIndex>
-                                <numIndex index="1">4</numIndex>
-                            </numIndex>
-                            <numIndex index="7" type="array">
-                                <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.5</numIndex>
-                                <numIndex index="1">250</numIndex>
-                            </numIndex>
-                        </items>
-                    </config>
-                </TCEforms>
+                <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.recursive</label>
+                <config>
+                    <type>select</type>
+                    <renderType>selectSingle</renderType>
+                    <items type="array">
+                        <numIndex index="2" type="array">
+                            <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.0</numIndex>
+                            <numIndex index="1">0</numIndex>
+                        </numIndex>
+                        <numIndex index="3" type="array">
+                            <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.1</numIndex>
+                            <numIndex index="1">1</numIndex>
+                        </numIndex>
+                        <numIndex index="4" type="array">
+                            <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.2</numIndex>
+                            <numIndex index="1">2</numIndex>
+                        </numIndex>
+                        <numIndex index="5" type="array">
+                            <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.3</numIndex>
+                            <numIndex index="1">3</numIndex>
+                        </numIndex>
+                        <numIndex index="6" type="array">
+                            <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.4</numIndex>
+                            <numIndex index="1">4</numIndex>
+                        </numIndex>
+                        <numIndex index="7" type="array">
+                            <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.5</numIndex>
+                            <numIndex index="1">250</numIndex>
+                        </numIndex>
+                    </items>
+                </config>
             </persistence.recursive>
             <settings.dataProtectionPage>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:dataProtectionPage</label>
-                    <config>
-                        <type>group</type>
-                        <internal_type>db</internal_type>
-                        <allowed>pages</allowed>
-                        <size>1</size>
-                        <maxitems>1</maxitems>
-                        <minitems>0</minitems>
-                        <show_thumbs>1</show_thumbs>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:dataProtectionPage</label>
+                <config>
+                    <type>group</type>
+                    <allowed>pages</allowed>
+                    <size>1</size>
+                    <maxitems>1</maxitems>
+                    <minitems>0</minitems>
+                    <show_thumbs>1</show_thumbs>
+                </config>
             </settings.dataProtectionPage>
             <settings.mailTemplateRootPath>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:mailTemplateRootPath</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>120</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:mailTemplateRootPath</label>
+                <config>
+                    <type>input</type>
+                    <size>20</size>
+                    <max>120</max>
+                    <eval>trim</eval>
+                </config>
             </settings.mailTemplateRootPath>
             <settings.senderEmail>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:settings.senderEmail</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>60</max>
-                        <eval>trim,email</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:settings.senderEmail</label>
+                <config>
+                    <type>email</type>
+                    <size>20</size>
+                </config>
             </settings.senderEmail>
             <settings.senderName>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:settings.senderName</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>60</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:settings.senderName</label>
+                <config>
+                    <type>input</type>
+                    <size>20</size>
+                    <max>60</max>
+                    <eval>trim</eval>
+                </config>
             </settings.senderName>
             <settings.adminEmail>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:adminEmail</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>60</max>
-                        <eval>trim,email</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:adminEmail</label>
+                <config>
+                    <type>email</type>
+                    <size>20</size>
+                </config>
             </settings.adminEmail>
             <settings.adminName>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:adminName</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>60</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:adminName</label>
+                <config>
+                    <type>input</type>
+                    <size>20</size>
+                    <max>60</max>
+                    <eval>trim</eval>
+                </config>
             </settings.adminName>
             <settings.newsletterName>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:newsletterName</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>60</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:newsletterName</label>
+                <config>
+                    <type>input</type>
+                    <size>20</size>
+                    <max>60</max>
+                    <eval>trim</eval>
+                </config>
             </settings.newsletterName>
             <settings.showFields>
-                <TCEforms>
-                    <exclude>1</exclude>
-                    <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:showFields</label>
-                    <config>
-                        <type>input</type>
-                        <size>20</size>
-                        <max>60</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
+                <exclude>1</exclude>
+                <label>LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:showFields</label>
+                <config>
+                    <type>input</type>
+                    <size>20</size>
+                    <max>60</max>
+                    <eval>trim</eval>
+                </config>
             </settings.showFields>
         </el>
     </ROOT>
