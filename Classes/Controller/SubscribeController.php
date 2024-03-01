@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\Controller;
 
@@ -16,16 +17,19 @@ namespace Zwo3\NewsletterSubscribe\Controller;
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Mime\Address;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\Mailer;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Event\Mvc\BeforeActionCallEvent;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
@@ -44,7 +48,7 @@ use Zwo3\NewsletterSubscribe\Domain\Repository\SubscriptionRepository;
 use Zwo3\NewsletterSubscribe\Event\SubscriptionCancelledEvent;
 use Zwo3\NewsletterSubscribe\Event\SubscriptionChangedEvent;
 use Zwo3\NewsletterSubscribe\Event\SubscriptionConfirmedEvent;
-use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
+use Zwo3\NewsletterSubscribe\Utility\TypoScript;
 
 /**
  * Class SubscribeController
@@ -53,47 +57,87 @@ use Zwo3\NewsletterSubscribe\Traits\OverrideEmptyFlexformValuesTrait;
  */
 class SubscribeController extends ActionController
 {
-    use OverrideEmptyFlexformValuesTrait;
-
     /**
      * @var PersistenceManager
      */
     protected $persistenceManager;
-
-    /**
+    
+    /*
      * @var SubscriptionRepository
      */
-    protected $subscriptionRepository;
-
-    /**
-     * @var OverrideEmptyFlexformValues
+    private ?SubscriptionRepository $subscriptionRepository = null;
+    
+    /*
+     * @var FormProtectionFactory
      */
-    protected $overrideFlexFormValues;
-
-    /**
-     * @var ConfigurationManagerInterface
-     */
-    protected $configurationManager;
-
-    public function initializeAction()
+    private ?FormProtectionFactory $formProtectionFactory = null;
+    
+    public function injectSubscriptionRepository(SubscriptionRepository $subscriptionRepository): void
     {
-        $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
-        $this->subscriptionRepository = GeneralUtility::makeInstance(SubscriptionRepository::class);
+        $this->subscriptionRepository = $subscriptionRepository;
     }
-
-    public function initializeShowFormAction(bool $spambotFailed = null)
+    
+    public function injectFormProtectionFactory(FormProtectionFactory $formProtectionFactory): void
     {
-        if ($this->settings['useSimpleSpamPrevention'] ?? null) {
-            if (
-                GeneralUtility::_POST('iAmNotASpamBot') !== null && GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
-            ) {
-                //leep($this->settings['spamTimeout']);
-                $this->request->setArgument('spambotFailed', true);
-                //$this->view->assign('spambotFailed', 1);
+        $this->formProtectionFactory = $formProtectionFactory;
+    }
+    
+    public function initializeAction(): void
+    {
+        $this->buildSettings();
+        $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
+    }
+    
+    /**
+     * from "news" Extension
+     */
+    public function buildSettings(): void
+    {
+        $tsSettings = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+            'NewsletterSubscribe',
+            'newslettersubscribe_subscribe'
+        );
+        
+        $originalSettings = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+        );
+        
+        // Use stdWrap for given defined settings
+        if (isset($originalSettings['useStdWrap']) && !empty($originalSettings['useStdWrap'])) {
+            $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
+            $typoScriptArray = $typoScriptService->convertPlainArrayToTypoScriptArray($originalSettings);
+            $stdWrapProperties = GeneralUtility::trimExplode(',', $originalSettings['useStdWrap'], true);
+            foreach ($stdWrapProperties as $key) {
+                if (is_array($typoScriptArray[$key . '.'])) {
+                    $originalSettings[$key] = $this->configurationManager->getContentObject()->stdWrap(
+                        $typoScriptArray[$key],
+                        $typoScriptArray[$key . '.']
+                    );
+                }
             }
         }
+        
+        // start override
+        if (isset($tsSettings['settings']['overrideFlexformSettingsIfEmpty'])) {
+            $typoScriptUtility = GeneralUtility::makeInstance(TypoScript::class);
+            $originalSettings = $typoScriptUtility->override($originalSettings, $tsSettings);
+        }
+        
+        $this->settings = $originalSettings;
     }
-
+    
+    protected function getExtensionConfiguration(): array
+    {
+        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('newsletter_subscribe');
+    }
+    
+    protected function useSimpleSpamPrevention(): bool
+    {
+        $backendConfiguration = $this->getExtensionConfiguration();
+        return (bool)($backendConfiguration['useSimpleSpamPrevention'] ?? false);
+    }
+    
     /**
      * @param null|Subscription $subscription
      * @param bool $spambotFailed
@@ -102,13 +146,16 @@ class SubscribeController extends ActionController
      */
     public function showFormAction(Subscription $subscription = null, bool $spambotFailed = null): ResponseInterface
     {
-        $formToken = FormProtectionFactory::get('frontend')
-            ->generateToken('Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']);
-
-        $fields = array_map('trim', explode(',', $this->settings['showFields']));
-
-        if ($this->settings['useSimpleSpamPrevention'] ?? null) {
-            $iAmNotASpamBotValue = $token = bin2hex(random_bytes(16));
+        $formProtection = $this->formProtectionFactory->createFromRequest($this->request);
+        $formToken = $formProtection->generateToken(
+            'Subscribe',
+            'showForm',
+            $this->request->getAttribute('currentContentObject')->data['uid']
+        );
+        $fields = GeneralUtility::trimExplode(',', (string)$this->settings['showFields'], true);
+        
+        if ($this->useSimpleSpamPrevention()) {
+            $iAmNotASpamBotValue = bin2hex(random_bytes(16));
             $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
             $GLOBALS["TSFE"]->fe_user->storeSessionData();
             $this->view->assign('iAmNotASpamBotValue', $iAmNotASpamBotValue);
@@ -116,7 +163,7 @@ class SubscribeController extends ActionController
                 $this->view->assign('spambotFailed', 1);
             }
         }
-
+        
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'formToken' => $formToken,
@@ -125,15 +172,19 @@ class SubscribeController extends ActionController
         ]);
         return $this->htmlResponse();
     }
-
+    
     /**
      * @param string $message
      */
     public function showUnsubscribeFormAction(?string $message = null): ResponseInterface
     {
-        $formToken = FormProtectionFactory::get('frontend')
-            ->generateToken('Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']);
-
+        $formProtection = $this->formProtectionFactory->createFromRequest($this->request);
+        $formToken = $formProtection->generateToken(
+            'Subscribe',
+            'showUnsubscribeForm',
+            $this->request->getAttribute('currentContentObject')->data['uid']
+        );
+        
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],
             'message' => $message,
@@ -141,7 +192,7 @@ class SubscribeController extends ActionController
         ]);
         return $this->htmlResponse();
     }
-
+    
     /**
      * @param string $email
      * @throws StopActionException
@@ -149,16 +200,18 @@ class SubscribeController extends ActionController
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
-    public function createUnsubscribeMailAction(?string $email = null): ResponseInterface
+    public function createUnsubscribeMailAction(?string $email = null): ?ResponseInterface
     {
-        if (!FormProtectionFactory::get('frontend')
-            ->validateToken(
-                (string)GeneralUtility::_POST('formToken'),
-                'Subscribe', 'showUnsubscribeForm', $this->configurationManager->getContentObject()->data['uid']
-            )) {
+        $formProtection = $this->formProtectionFactory->createFromRequest($this->request);
+        if (!$formProtection->validateToken(
+            (string)($this->request->getParsedBody()['formToken'] ?? ''),
+            'Subscribe',
+            'showUnsubscribeForm',
+            $this->request->getAttribute('currentContentObject')->data['uid']
+        )) {
             $this->redirect('showUnsubscribeForm');
         }
-
+        
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             if ($existing = $this->subscriptionRepository->findOneByEmail($email, false)) {
                 /** @var Subscription $existing */
@@ -183,24 +236,31 @@ class SubscribeController extends ActionController
                     );
                     $this->subscriptionRepository->update($existing);
                 } catch (InvalidTemplateResourceException $exception) {
-                    $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                    $this->addFlashMessage(
+                        'Create a template in the Mail Folder for the current language (e.g. de, fr, dk).',
+                        'No E-Mail-Template found',
+                        ContextualFeedbackSeverity::ERROR
+                    );
                 }
             }
         } else {
             $this->redirect('showUnsubscribeForm', null, null, ['message' => 'E-Mail-Adresse nicht valide']);
         }
-
+        
         $this->view->assignMultiple(compact('email'));
         return $this->htmlResponse();
     }
-
-    public function initializeCreateConfirmationAction()
+    
+    public function initializeCreateConfirmationAction(): ?ResponseInterface
     {
         if (!$this->request->hasArgument('subscription')) {
-            $this->forward('showForm', 'Subscribe', 'newsletter_subscribe');
+            return (new ForwardResponse('showForm'))
+                ->withControllerName('Subscribe')
+                ->withExtensionName('newsletter_subscribe');
         }
+        return null;
     }
-
+    
     /**
      * @param Subscription $subscription
      * @throws IllegalObjectTypeException
@@ -208,21 +268,21 @@ class SubscribeController extends ActionController
      */
     public function createConfirmationAction(Subscription $subscription): ResponseInterface
     {
-        if ($this->settings['useSimpleSpamPrevention']) {
+        if ($this->useSimpleSpamPrevention()) {
             if (
-                !empty(GeneralUtility::_POST('iAmNotASpamBotHere')) ||
-                GeneralUtility::_POST('iAmNotASpamBot') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
+                !empty($this->request->getParsedBody()['iAmNotASpamBotHere'] ?? '') ||
+                ($this->request->getParsedBody()['iAmNotASpamBot'] ?? '') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
             ) {
-                sleep($this->settings['spamTimeout']);
-                $this->forward('showForm', null, null, ['subscription' => $subscription, 'spambotFailed' => true]);
+                sleep((int)$this->settings['spamTimeout']);
+                return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription, 'spambotFailed' => true]);
             }
         }
-
-        if ($this->settings['useHCaptcha']) {
-            if (GeneralUtility::_POST('h-captcha-response')) {
+        
+        if ($this->settings['useHCaptcha'] ?? false) {
+            if (($this->request->getParsedBody()['h-captcha-response'] ?? false)) {
                 $data = [
                     'secret' => $this->settings['hCaptchaSecretKey'],
-                    'response' => GeneralUtility::_GP('h-captcha-response')
+                    'response' => $this->request->getParsedBody()['h-captcha-response'] ?? $this->request->getQueryParams()['h-captcha-response'] ?? null
                 ];
                 $verify = curl_init();
                 curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
@@ -234,25 +294,40 @@ class SubscribeController extends ActionController
                 $responseData = json_decode($response);
                 if($responseData->success) {
                     // your success code goes here
-                    //$this->addFlashMessage('Super, geschafft!', '', AbstractMessage::ERROR);
+                    /*
+                    $this->addFlashMessage(
+                        'Super, geschafft!',
+                        '',
+                        ContextualFeedbackSeverity::ERROR
+                    );
+                    */
                 }
                 else {
-                    $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe')
-                        , '', AbstractMessage::ERROR);
-                    $this->forward('showForm', null, null, ['subscription' => $subscription]);
+                    $this->addFlashMessage(
+                        LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'),
+                        '',
+                        ContextualFeedbackSeverity::ERROR
+                    );
+                    return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription]);
                 }
             } else {
-                $this->addFlashMessage(LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'), '', AbstractMessage::ERROR);
-                $this->forward('showForm', null, null, ['subscription' => $subscription]);
+                $this->addFlashMessage(
+                    LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'),
+                    '',
+                    ContextualFeedbackSeverity::ERROR
+                );
+                return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription]);
             }
         }
-
-        if (!FormProtectionFactory::get('frontend')
-            ->validateToken(
-                (string)GeneralUtility::_POST('formToken'),
-                'Subscribe', 'showForm', $this->configurationManager->getContentObject()->data['uid']
-            )) {
-            $this->forward('showForm', null, null, ['subscription' => $subscription]);
+        
+        $formProtection = $this->formProtectionFactory->createFromRequest($this->request);
+        if (!$formProtection->validateToken(
+            (string)($this->request->getParsedBody()['formToken'] ?? ''),
+            'Subscribe',
+            'showForm',
+            $this->request->getAttribute('currentContentObject')->data['uid']
+        )) {
+            return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription]);
         }
         // already subscribed
         if ($existing = $this->subscriptionRepository->findOneByEmail($subscription->getEmail(), false)) {
@@ -272,11 +347,15 @@ class SubscribeController extends ActionController
                     ]
                 );
             } catch (InvalidTemplateResourceException $exception) {
-                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                $this->addFlashMessage(
+                    'Create a template in the Mail Folder for the current language (e.g. de, fr, dk).',
+                    'No E-Mail-Template found',
+                    ContextualFeedbackSeverity::ERROR
+                );
             }
-
+            
             //$this->subscriptionRepository->update($existing);
-
+            
             $this->view->assignMultiple(['subscription' => $existing]);
         } else {
             $subscription->setHidden(1);
@@ -288,9 +367,9 @@ class SubscribeController extends ActionController
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
             $subscription->setName($subscription->getFirstName()." ".$subscription->getLastName());
-
+            
             $this->addSalutation($subscription);
-
+            
             $this->subscriptionRepository->add($subscription);
             $this->persistenceManager->persistAll();
             $subject = $this->settings['newsletterName'];
@@ -307,14 +386,18 @@ class SubscribeController extends ActionController
                     ]
                 );
             } catch (InvalidTemplateResourceException $exception) {
-                $this->addFlashMessage('Create a template in the Mail Folder for the current language (e.g. de, fr, dk).', 'No E-Mail-Template found', AbstractMessage::ERROR);
+                $this->addFlashMessage(
+                    'Create a template in the Mail Folder for the current language (e.g. de, fr, dk).',
+                    'No E-Mail-Template found',
+                    ContextualFeedbackSeverity::ERROR
+                );
             }
-
+            
             $this->view->assignMultiple(['subscription' => $subscription]);
         }
         return $this->htmlResponse();
     }
-
+    
     /**
      * @param int $uid
      * @param string $subscriptionHash
@@ -323,9 +406,8 @@ class SubscribeController extends ActionController
      */
     public function unsubscribeAction(?int $uid = null, ?string $subscriptionHash = null): ResponseInterface
     {
-
         /** @var Subscription $subscription */
-        $subscription = $this->subscriptionRepository->findByUid($uid, false);
+        $subscription = $this->subscriptionRepository->findSubscriptionByUid($uid, false);
         $success = false;
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash()) {
@@ -345,24 +427,19 @@ class SubscribeController extends ActionController
             );
             throw new ImmediateResponseException($response);
         }
-
+        
         if ($success && $this->settings['sendAdminInfo']) {
             $this->sendAdminInfo($subscription, 0);
         }
-
+        
         if ($success) {
             $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'unsubscribe'));
         }
-
+        
         $this->view->assignMultiple(compact('subscription', 'success'));
         return $this->htmlResponse();
     }
-
-    public function undosubscribeAction(?int $uid = null, ?string $subscriptionHash = null)
-    {
-        $this->redirect('unsubscribe', null, null, compact('uid', 'subscriptionHash'));
-    }
-
+    
     /**
      * @param int $uid
      * @param string $subscriptionHash
@@ -372,8 +449,8 @@ class SubscribeController extends ActionController
     public function doConfirmAction(?int $uid = null, ?string $subscriptionHash = null): ResponseInterface
     {
         /** @var Subscription $subscription */
-        $subscription = $this->subscriptionRepository->findByUid($uid, false);
-
+        $subscription = $this->subscriptionRepository->findSubscriptionByUid($uid, false);
+        
         $success = false;
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash() && $subscription->isHidden()) {
@@ -390,7 +467,7 @@ class SubscribeController extends ActionController
                     ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
                 );
                 throw new ImmediateResponseException($response);
-
+                
             }
         } else {
             $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
@@ -399,25 +476,25 @@ class SubscribeController extends ActionController
                 ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
             );
             throw new ImmediateResponseException($response);
-
+            
         }
-
+        
         if ($success && $this->settings['sendAdminInfo']) {
             $this->sendAdminInfo($subscription, 1);
         }
-
+        
         if ($success) {
             $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'subscribe'));
         }
-
+        
         $this->view->assignMultiple(compact( 'subscription', 'success'));
         return $this->htmlResponse();
     }
-
-    public function sendAdminInfo(Subscription $subscription, int $unsubscribeaction = 0)
+    
+    public function sendAdminInfo(Subscription $subscription, int $unsubscribeaction = 0): void
     {
         $subject = $unsubscribeaction == 0 ? LocalizationUtility::translate('unsubscription', 'newsletterSubscribe') : LocalizationUtility::translate('newSubscription', 'newsletterSubscribe');
-
+        
         try {
             $this->sendTemplateEmail(
                 [$this->settings['adminEmail'], $this->settings['adminName']],
@@ -430,11 +507,16 @@ class SubscribeController extends ActionController
                 [$subscription->getEmail(), ($subscription->getName() ?: '')]
             );
         } catch (InvalidTemplateResourceException $exception) {
-            $this->addFlashMessage('Template for AdminInfo Missing', 'No E-Mail-Template found', AbstractMessage::ERROR);
+            $this->addFlashMessage(
+                'Template for AdminInfo Missing',
+                'No E-Mail-Template found',
+                ContextualFeedbackSeverity::ERROR
+            );
         }
     }
-
-    protected function addSalutation(&$subscription) {
+    
+    protected function addSalutation(&$subscription): void
+    {
         if(isset($this->settings['addsalutation']) && $this->settings['addsalutation']) {
             $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
             if(isset($this->settings['salutation'][$twoLetterIsoCode])) {
@@ -446,39 +528,40 @@ class SubscribeController extends ActionController
                 else {
                     $salutation = $this->settings['salutation'][$twoLetterIsoCode]['default'];
                 }
-
+                
                 $subscription->setSalutation($salutation);
             }
         }
     }
-
+    
     /**
      *
      * @return string
      */
-    protected function getTwoLetterIsoCodeFromSiteConfig() {
-        $siteFinder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
-        $site = $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
+    protected function getTwoLetterIsoCodeFromSiteConfig(): string
+    {
+        $site = $this->request->getAttribute('site');
         $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
         $language = $site->getLanguageById($languageAspect->getId());
-        return $language->getTwoLetterIsoCode();
+        return $language->getLocale()->getLanguageCode();
     }
-
+    
     /**
      *
      * @return string
      */
-    protected function prepareTwoLetterIsoCode() {
+    protected function prepareTwoLetterIsoCode(): string
+    {
         if(!empty($GLOBALS['TSFE']->config['config']['language'])) {
             $twoLetterIsoCode = $GLOBALS['TSFE']->config['config']['language'];
         }
         else {
             $twoLetterIsoCode = $this->getTwoLetterIsoCodeFromSiteConfig();
         }
-
+        
         return $twoLetterIsoCode;
     }
-
+    
     /**
      * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
      * @param array $sender sender of the email in the format array('sender@domain.tld' => 'Sender Name')
@@ -488,10 +571,17 @@ class SubscribeController extends ActionController
      * @param array $replyTo replyTo Address
      * @return boolean TRUE on success, otherwise false
      */
-    protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName = 'Mail/Default', array $variables = array(), array $replyTo = null, array $attachments = [])
+    protected function sendTemplateEmail(
+        array $recipient,
+        array $sender,
+        string $subject,
+        string $templateName = 'Mail/Default',
+        array $variables = [],
+        array $replyTo = null,
+        array $attachments = []): bool
     {
         $templatePaths = new TemplatePaths();
-
+        
         if (mb_stripos($templateName, 'admin') !== false) {
             // Admin Mail, no translation possible and necessary
             $templatePaths->setTemplateRootPaths(
@@ -505,34 +595,37 @@ class SubscribeController extends ActionController
             );
         }
         $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
-
+        
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
-        $email->format('html');
+        $email->format(FluidEmail::FORMAT_HTML);
         $email
             ->to(new Address(...$recipient))
             ->from(new Address(...$sender))
             ->subject($subject)
-            ->html('')// only HTML mail
             ->setTemplate($templateName)
             ->assignMultiple($variables);
-
+        
         if ($replyTo) {
             $email->replyTo(new Address(...$replyTo));
         }
-
-        GeneralUtility::makeInstance(Mailer::class)->send($email);
-
+        $email->setRequest($this->request);
+        GeneralUtility::makeInstance(MailerInterface::class)->send($email);
+        
         return true;
     }
-
+    
     /**
      * @param Subscription $subscription
      * @param int $maxSleeptime max time to wait after last hit, if reached, sleep is resetted
      * @param int $multiplier multipliere * hitnumber = seconds to wait,
      * @return Subscription
      */
-    protected function setSleep(Subscription $subscription, $maxSleeptime = 300, $multiplier = 2): Subscription
+    protected function setSleep(
+        Subscription $subscription,
+        int $maxSleeptime = 300,
+        int $multiplier = 2
+    ): Subscription
     {
         $sleepTime = $subscription->getHitNumber() * $multiplier;
         if (time() > $subscription->getLastHit() + $maxSleeptime) {
@@ -543,18 +636,18 @@ class SubscribeController extends ActionController
             $subscription->setHitNumber($subscription->getHitNumber() + 1);
         }
         sleep($sleepTime);
-
+        
         $subscription->setLastHit(time());
-
+        
         return $subscription;
     }
-
+    
     /**
      * @return bool The flash message or FALSE if no flash message should be set
      */
-    protected function getErrorFlashMessage()
+    protected function getErrorFlashMessage(): bool
     {
         return false;
     }
-
+    
 }
