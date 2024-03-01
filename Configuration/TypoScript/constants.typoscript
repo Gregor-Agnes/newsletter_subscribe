@@ -1,25 +1,42 @@
 plugin {
-    tx_newslettersubscribe {
-        settings {
-            addsalutation = 1
-            salutation {
-                en {
-                    default = Dear Reader
-                    m = Dear Mr.
-                    f = Dear Mrs.
-                }
-                de {
-                    default = Liebe(r) Leser(in)
-                    m = Sehr geehrter Herr
-                    f = Sehr geehrte Frau
-                }
-            }
+	tx_newslettersubscribe {
+		settings {
+			addsalutation = 1
+			salutation {
+				en {
+					default = Dear Reader
+					m = Dear Mr.
+					f = Dear Mrs.
+				}
+				de {
+					default = Liebe(r) Leser(in)
+					m = Sehr geehrter Herr
+					f = Sehr geehrte Frau
+				}
+			}
 
-            senderEmail = noreply@domain.tld
-            senderName = Your sender name
+			senderEmail = noreply@domain.tld
+			senderName = Your sender name
 
-            adminEmail = admin.name@domain.tld
-            adminName = Your admin name
-        }
-    }
+			adminEmail = admin.name@domain.tld
+			adminName = Your admin name
+
+			useSimpleSpamPrevention = 1
+			spamTimeout = 5
+
+			useHCaptcha = 0
+			hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
+			hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
+
+			# uid of page with data protection information (if any)
+			dataProtectionPage = 1
+
+			# used in several places
+			newsletterName = Newsletter
+			# Page with SubscriptinForm (used in E-Mail-Templates)
+			subscribePageUid = 23
+			# whether the admin should get an info mail on every confirmation
+			sendAdminInfo = 0
+		}
+	}
 }

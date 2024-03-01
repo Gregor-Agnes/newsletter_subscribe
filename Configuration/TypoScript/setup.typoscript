@@ -1,4 +1,4 @@
-<INCLUDE_TYPOSCRIPT: source="DIR: ./Library" extensions="typoscript">
+@import 'EXT:newsletter_subscribe/Configuration/TypoScript/Library/'
 
 plugin {
 	tx_newslettersubscribe {
@@ -31,10 +31,6 @@ plugin {
 			}
 		}
 
-		features {
-			//requireCHashArgumentForActionArguments = 0
-		}
-
 		settings {
 			addsalutation = {$plugin.tx_newslettersubscribe.settings.addsalutation}
 			salutation {
@@ -60,30 +56,26 @@ plugin {
 			adminEmail = {$plugin.tx_newslettersubscribe.settings.adminEmail}
 			adminName = {$plugin.tx_newslettersubscribe.settings.adminName}
 
-			useSimpleSpamPrevention = 1
-			spamTimeout = 5
+			useSimpleSpamPrevention = {$plugin.tx_newslettersubscribe.settings.useSimpleSpamPrevention}
+			spamTimeout = {$plugin.tx_newslettersubscribe.settings.spamTimeout}
 
-			useHCaptcha = 0
-			hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
-			hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
+			useHCaptcha = {$plugin.tx_newslettersubscribe.settings.useHCaptcha}
+			hCaptchaSiteKey = {$plugin.tx_newslettersubscribe.settings.hCaptchaSiteKey}
+			hCaptchaSecretKey = {$plugin.tx_newslettersubscribe.settings.hCaptchaSecretKey}
 
 			mailTemplateRootPath = EXT:newsletter_subscribe/Resources/Private/Templates/Mail/
 			mailLayoutRootPath = EXT:core/Resources/Private/Layouts/
 
-			# uid of page with data protection information (if any)
-			dataProtectionPage = 1
+			dataProtectionPage = {$plugin.tx_newslettersubscribe.settings.dataProtectionPage}
 
 			# email and data_protection are always shown
 			#showFields = gender,firstName,lastName
-			# used in several places
-			newsletterName = Newsletter
-			# Page with SubscriptinForm (used in E-Mail-Templates
-			subscribePageUid = 23
-			# whether the admin should get an info mail on every confirmation
-			sendAdminInfo = 0
+
+			newsletterName = {$plugin.tx_newslettersubscribe.settings.newsletterName}
+			subscribePageUid = {$plugin.tx_newslettersubscribe.settings.subscribePageUid}
+			sendAdminInfo = {$plugin.tx_newslettersubscribe.settings.sendAdminInfo}
 
 			overrideFlexformSettingsIfEmpty = senderEmail,senderName,adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
-
 		}
 	}
 }

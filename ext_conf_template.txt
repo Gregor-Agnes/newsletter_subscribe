@@ -1,0 +1,2 @@
+# cat=basic/enable; type=boolean; label=whether there should be a simple spam preventition using javascript and session (with session cookie)
+useSimpleSpamPrevention = 1
