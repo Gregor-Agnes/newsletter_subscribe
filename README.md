@@ -26,7 +26,7 @@
 
 ~~$GLOBALS['TCA']['tt_address']['ctrl']['delete'] = 'deleted';~~
 
-Removed hard deletion of tt_address records. Because of https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ExtensionArchitecture/FileStructure/ExtTablesSql.html#auto-generated-structure 
+Removed hard deletion of tt_address records. Because of https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ExtensionArchitecture/FileStructure/ExtTablesSql.html#auto-generated-structure
 the field "delete" wouldn't be generated otherwise. Use Scheduler Task to delete soft-deleted records instead.
 
 
@@ -95,7 +95,7 @@ the field "delete" wouldn't be generated otherwise. Use Scheduler Task to delete
     <td>null</td>
   </tr>
   <tr>
-    <th align="left">useSimpleSpamPrevention</th>
+    <th align="left">useSimpleSpamPrevention<br>(Extension Configuration)</th>
     <td align="left">whether there should be a simple spam preventition using javascript and session (with <strong>session cookie</strong>)</td>
     <td>bool</td>
     <td>1</td>
@@ -180,18 +180,18 @@ routeEnhancers:
           confirm: subscriptionHash
           uid: uid
       -
-        routePath: '/undosubscribe/{unsubscribe}/{uid}'
-        _controller: 'Subscribe::undosubscribe'
+        routePath: '/unsubscribe/{unsubscribe}/{uid}'
+        _controller: 'Subscribe::unsubscribe'
         _arguments:
           unsubscribe: subscriptionHash
           uid: uid
 ```
 ## Unsubscribe link in direct_mail
-1. First add the field subscription_hash to the fields of direct mail in the extension configuration of direct mail: 
-![direct mail configuration](https://github.com/Gregor-Agnes/newsletter_subscribe/blob/master/Resources/Public/images/ExtManDirectMail1.png)
+1. First add the field subscription_hash to the fields of direct mail in the extension configuration of direct mail:
+   ![direct mail configuration](https://github.com/Gregor-Agnes/newsletter_subscribe/blob/master/Resources/Public/images/ExtManDirectMail1.png)
 2. Add the link in your mail template:\
-`<a href="http://www.domain.tld/page/undosubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
-where this `undosubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.<br>Note: The subscribe plugin must be inserted on the page "page" in that url.
+   `<a href="http://www.domain.tld/page/unsubscribe/###USER_subscription_hash###/###USER_uid###">unsubscribe</a>`
+   where this `unsubscribe/###USER_subscription_hash###/###USER_uid###"` is the important part.<br>Note: The subscribe plugin must be inserted on the page "page" in that url.
 
 ## Salutation in direct_mail
 1. Add 'salutation' field (see above 'subscription_hash')
