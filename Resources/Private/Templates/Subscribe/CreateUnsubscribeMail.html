@@ -1,16 +1,14 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
-
-<f:layout name="Standard"></f:layout>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Standard" />
 
 <f:section name="Default">
-	<p>{f:translate(key: 'messageUnsubscribe')}
-		<strong>{email}</strong>
-	</p>
-	<p>{f:translate(key: 'didntReceiveMail')}:</p>
-	<ul>
-		<li>{f:translate(key: 'didntReceiveMailReason1')}</li>
-		<li>{f:translate(key: 'didntReceiveMailReason2')}</li>
-	</ul>
+  <p><f:translate key="messageUnsubscribe" />
+    <strong>{email}</strong>
+  </p>
+  <p><f:translate key="didntReceiveMail" />:</p>
+  <ul>
+    <li><f:translate key="didntReceiveMailReason1" /></li>
+    <li><f:translate key="didntReceiveMailReason2" /></li>
+  </ul>
 </f:section>
 </html>

@@ -1,36 +1,30 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
-
-<f:layout name="Standard"></f:layout>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Standard" />
 
 <f:section name="Default">
-
-	<f:if condition="{success}">
-		<f:then>
-			<f:if condition="{subscription.email} || {subscription.name}">
-
-				<p>{f:translate(key: 'youHaveUnsubscribed')}:
-					<br>
-					<f:if condition="{subscription.firstName} || {subscription.lastName}">
-						<f:then>{subscription.firstName} {subscription.lastName}
-							<br>
-						</f:then>
-					</f:if>
-					<f:if condition="{subscription.email}">
-						{subscription.email}
-					</f:if>
-				</p>
-
-			</f:if>
-			<p>
-				{f:translate(key: 'subscribeAgain')}:
-				<f:link.page pageUid="{settings.subscribePageUid}" class="button">{f:translate(key: 'newsletterSubscription')}</f:link.page>
-			</p>
-		</f:then>
-		<f:else>
-			{f:translate(key: 'noAboFound')}
-		</f:else>
-	</f:if>
-
+  <f:if condition="{success}">
+    <f:then>
+      <f:if condition="{subscription.email} || {subscription.name}">
+        <p><f:translate key="youHaveUnsubscribed" />:
+          <br>
+          <f:if condition="{subscription.firstName} || {subscription.lastName}">
+            <f:then>{subscription.firstName} {subscription.lastName}
+              <br>
+            </f:then>
+          </f:if>
+          <f:if condition="{subscription.email}">
+            {subscription.email}
+          </f:if>
+        </p>
+      </f:if>
+      <p>
+        <f:translate key="subscribeAgain" />:
+        <f:link.page pageUid="{settings.subscribePageUid}" class="button"><f:translate key="newsletterSubscription" /></f:link.page>
+      </p>
+    </f:then>
+    <f:else>
+      <f:translate key="noAboFound" />
+    </f:else>
+  </f:if>
 </f:section>
 </html>

@@ -1,31 +1,29 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
-
-<f:layout name="Standard"></f:layout>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Standard" />
 
 <f:section name="Default">
-	<f:form object="{subscription}" action="createUnsubscribeMail">
-		<input type="hidden" name="formToken" value="{formToken}">
-		<p>{f:translate(key: 'wantToCancel')}</p>
-        <label class="block">
-            <f:form.textfield name="email" placeholder="{f:translate(key: 'emailPlaceholder')} *" class="mt-1 block w-full form-input"></f:form.textfield>
-        </label>
-		<f:form.validationResults for="subscription.email">
-			<f:if condition="{message}">
-				<p class="help-text">{message}</p>
-			</f:if>
-		</f:form.validationResults>
+  <f:form object="{subscription}" action="createUnsubscribeMail">
+    <input type="hidden" name="formToken" value="{formToken}">
+    <p><f:translate key="wantToCancel" /></p>
+    <label class="block">
+      <f:form.textfield name="email" placeholder="{f:translate(key: 'emailPlaceholder')} *" class="mt-1 block w-full form-input"></f:form.textfield>
+    </label>
+    <f:form.validationResults for="subscription.email">
+      <f:if condition="{message}">
+        <p class="help-text">{message}</p>
+      </f:if>
+    </f:form.validationResults>
 
-		<f:form.validationResults for="subscription.dataProtection">
-			<f:if condition="{validationResults.flattenedErrors}">
-				<f:for each="{validationResults.errors}" as="error">
-					<p class="help-text">
-						<f:translate key="error.{error.code}" />
-					</p>
-				</f:for>
-			</f:if>
-		</f:form.validationResults>
-		<button class="text-base bg-gray-600 text-gray-50 cursor-pointer hover:bg-gray-700 text-white text-black hover:text-white py-2 px-4 rounded" type="submit">{f:translate(key: 'sendMail')}</button>
-	</f:form>
+    <f:form.validationResults for="subscription.dataProtection">
+      <f:if condition="{validationResults.flattenedErrors}">
+        <f:for each="{validationResults.errors}" as="error">
+          <p class="help-text">
+            <f:translate key="error.{error.code}" />
+          </p>
+        </f:for>
+      </f:if>
+    </f:form.validationResults>
+    <button class="text-base bg-gray-600 text-gray-50 cursor-pointer hover:bg-gray-700 text-white text-black hover:text-white py-2 px-4 rounded" type="submit"><f:translate key="sendMail" /></button>
+  </f:form>
 </f:section>
 </html>

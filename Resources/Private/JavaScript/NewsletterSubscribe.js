@@ -19,7 +19,7 @@ let insertNoSpamBotField = () => {
 <input id="iAmNotASpamBot" type="checkbox" name="iAmNotASpamBot" value="${iAmNotASpamBotValue}"  class="border-solid border-gray-600 form-checkbox">
      <span class="ml-2">${iAmNotARobotLabel}</span>
 </label>`
-  document.getElementById('NewsletterSubscribeSubmit').closest('p').before(noSpamField)
+  document.getElementById('NewsletterSubscribeSubmit').closest('div').before(noSpamField)
 
 	if (document.getElementById('NewsletterSubscribeSubmit').closest('form').classList.contains('spambotFailed')) {
 		let hint = document.createElement('p')

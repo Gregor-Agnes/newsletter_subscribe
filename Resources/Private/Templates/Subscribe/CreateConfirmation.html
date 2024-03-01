@@ -1,17 +1,9 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
-
-<f:layout name="Standard"></f:layout>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Standard" />
 
 <f:section name="Default">
-
-	<p>{f:translate(key: 'thankYou')}<br>
-	   {f:translate(key: 'nextStep')}</p>
-	<p>{f:translate(key: 'confirmationSendTo')}{subscription.email}. {f:translate(key: 'findLink')}
-	</p>
-	<p>
-		{f:translate(key: 'checkSpam')}
-	</p>
-
+  <p><f:translate key="thankYou" /><br><f:translate key="nextStep" /></p>
+  <p><f:translate key="confirmationSendTo" />{subscription.email}. <f:translate key="findLink" /></p>
+  <p><f:translate key="checkSpam" /></p>
 </f:section>
 </html>

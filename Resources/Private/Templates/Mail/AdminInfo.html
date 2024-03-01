@@ -1,16 +1,15 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <p>Email: {subscription.email}</p>
 
 <p>
-    <f:variable name="genders" value="{f: 'Mrs', m: 'Mr', v: 'various'}" />
+  <f:variable name="genders" value="{f: 'Mrs', m: 'Mr', v: 'various'}" />
 
-    Saluation: <f:if condition="{subscription.gender}">
-        {genders.{subscription.gender}}
+  Saluation: <f:if condition="{subscription.gender}">
+  {genders.{subscription.gender}}
 </f:if><br>
-    Firstname: {subscription.firstName}<br>
-    Lastname: {subscription.lastName}<br>
-    Company / Institution: {subscription.company}<br>
+  Firstname: {subscription.firstName}<br>
+  Lastname: {subscription.lastName}<br>
+  Company / Institution: {subscription.company}<br>
 </p>
 </html>

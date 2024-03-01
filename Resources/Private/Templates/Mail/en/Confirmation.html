@@ -2,20 +2,19 @@
       data-namespace-typo3-fluid="true">
 
 <f:if condition="{subscription.firstName} || {subscription.lastName}">
-	<p><f:translate key="hallo" arguments="{1:subscription.firstName, 2: subscription.lastName}" />,</p>
+  <p><f:translate key="hallo" arguments="{1:subscription.firstName, 2: subscription.lastName}" />,</p>
 </f:if>
 
-<p>wir freuen uns, dass Sie den Newsletter abonnieren möchten.<br>
-   Die Anmeldung ist fast geschafft:</p>
+<p>wir freuen uns, dass Sie den Newsletter abonnieren möchten.<br>Die Anmeldung ist fast geschafft:</p>
+
 <p>Zur Bestätigung der Anmeldung klicken Sie bitte hier:<br><br>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="doConfirm" controller="Subscribe" pluginName="Subscribe" extensionName="newslettersubscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">Abonnement bestätigen</f:link.action>
+  <f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="doConfirm" controller="Subscribe" pluginName="Subscribe" extensionName="newslettersubscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">Abonnement bestätigen</f:link.action>
 </p>
 
 <p>
-	Sie können den Newsletter jederzeit abbestellen, indem Sie auf den<br><br>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="undosubscribe" controller="Subscribe" pluginName="Subscribe" extensionName="newslettersubscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action><br><br><br>klicken.
+  Sie können den Newsletter jederzeit abbestellen, indem Sie auf den<br><br>
+  <f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" pageUid="{settings.subscribeFormPid}" action="unsubscribe" controller="Subscribe" pluginName="Subscribe" extensionName="newslettersubscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action><br><br><br>klicken.
 </p>
- 
 
 <p>Herzliche Grüße,</p>
 

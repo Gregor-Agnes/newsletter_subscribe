@@ -1,8 +1,7 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:if condition="{subscription.firstName} || {subscription.lastName}">
-	<p>Hallo {subscription.firstName} {subscription.lastName},</p>
+  <p>Hallo {subscription.firstName} {subscription.lastName},</p>
 </f:if>
 
 <p>Sie haben den Newsletter schon abonniert und das Formular wurde erneut mit dieser E-Mail-Adresse versendet.</p>
@@ -10,12 +9,12 @@
 <p>Sie haben das Formular nicht abgeschickt? Dann können Sie diese E-Mail ignorieren, Ihr Abonnement wird normal weitergeführt.</p>
 
 <p>Sie haben das Formular erneut abgeschickt? Wenn Sie Ihr Abonnement
-	<strong>kündigen</strong>
+  <strong>kündigen</strong>
    wollen: Wählen Sie folgenden Link oder kopieren Sie ihn in die Adresszeile Ihres Browsers.
 </p>
 
 <p>
-	<f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="undosubscribe" controller="Subscribe" pluginName="Subscribe" extensionName="newslettersubscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
+  <f:link.action style="background-color: #003070; padding: 8px; color: white; text-decoration: none;" absolute="1" action="unsubscribe" controller="Subscribe" pluginName="Subscribe" extensionName="newslettersubscribe" arguments="{uid: subscription.uid, subscriptionHash: subscription.subscriptionHash}">„E-Mails abbestellen“-Link</f:link.action>
 </p>
 
 <p>Herzliche Grüße,</p>
