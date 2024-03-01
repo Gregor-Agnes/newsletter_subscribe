@@ -1,7 +1,7 @@
 {
-  "./Resources/Public/NewsletterSubscribe.css": "/typo3conf/ext/newsletter_subscribe/Resources/Public/NewsletterSubscribe.css",
-  "./Resources/Public/NewsletterSubscribe.js": "/typo3conf/ext/newsletter_subscribe/Resources/Public/NewsletterSubscribe.js",
-  "./Resources/Public/runtime.js": "/typo3conf/ext/newsletter_subscribe/Resources/Public/runtime.js",
-  "./Resources/Public/images/ExtManDirectMail1.png": "/typo3conf/ext/newsletter_subscribe/Resources/Public/images/ExtManDirectMail1.png",
-  "./Resources/Public/images/Extension.svg": "/typo3conf/ext/newsletter_subscribe/Resources/Public/images/Extension.svg"
+  "./Resources/Public/NewsletterSubscribe.css": "/_assets/newsletter_subscribe/NewsletterSubscribe.css",
+  "./Resources/Public/NewsletterSubscribe.js": "/_assets/newsletter_subscribe/NewsletterSubscribe.js",
+  "./Resources/Public/runtime.js": "/_assets/newsletter_subscribe/runtime.js",
+  "./Resources/Public/images/ExtManDirectMail1.png": "/_assets/newsletter_subscribe/images/ExtManDirectMail1.png",
+  "./Resources/Public/images/Extension.svg": "/_assets/newsletter_subscribe/images/Extension.svg"
 }

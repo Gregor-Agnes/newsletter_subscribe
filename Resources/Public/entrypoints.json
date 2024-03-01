@@ -2,11 +2,11 @@
   "entrypoints": {
     "NewsletterSubscribe": {
       "js": [
-        "/typo3conf/ext/newsletter_subscribe/Resources/Public/runtime.js",
-        "/typo3conf/ext/newsletter_subscribe/Resources/Public/NewsletterSubscribe.js"
+        "/_assets/newsletter_subscribe/runtime.js",
+        "/_assets/newsletter_subscribe/NewsletterSubscribe.js"
       ],
       "css": [
-        "/typo3conf/ext/newsletter_subscribe/Resources/Public/NewsletterSubscribe.css"
+        "/_assets/newsletter_subscribe/NewsletterSubscribe.css"
       ]
     }
   }
