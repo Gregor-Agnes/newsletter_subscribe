@@ -15,7 +15,6 @@ defined('TYPO3') || die();
     'EXT:newsletter_subscribe/ext_icon.svg'
 );
 
-
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['newslettersubscribe_subscribe'] = 'layout,recursive,select_key,pages';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['newslettersubscribe_subscribe'] = 'pi_flexform';
 

@@ -7,7 +7,7 @@ call_user_func(function()
      * Extension key
      */
     $extensionKey = 'newsletter_subscribe';
-
+    
     /**
      * Default TypoScript
      */

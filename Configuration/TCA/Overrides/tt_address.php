@@ -24,9 +24,8 @@ $tempColumns = [
         'label' => 'LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang_db.xlf:tx_zwo3_newslettersubscribe_subscribe.last_hit',
         'exclude' => 1,
         'config' => [
-            'type' => 'input',
-            'renderType' => 'inputDateTime',
-            'eval' => 'datetime',
+            'type' => 'datetime',
+            'format' => 'datetime',
             'readOnly' => 1
         ]
     ],
