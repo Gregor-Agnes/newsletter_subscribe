@@ -22,9 +22,8 @@ Encore
 		pattern: /\.(png|jpg|jpeg|svg)$/
 	})
 	// directory where compiled assets will be stored
-	.setOutputPath('./Resources/Public')
-	// public path used by the web server to access the output path
-	.setPublicPath('/typo3conf/ext/newsletter_subscribe/Resources/Public')
+  .setOutputPath("Resources/Public")
+  .setPublicPath("/_assets/newsletter_subscribe")
 	// only needed for CDN's or sub-directory deploy
 	.setManifestKeyPrefix('./Resources/Public')
 
