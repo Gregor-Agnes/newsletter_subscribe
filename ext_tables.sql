@@ -1,7 +1,6 @@
 #
 # Table structure for table 'tt_address'
 #
-#
 CREATE TABLE tt_address
 (
     data_protection_accepted    tinyint(1) unsigned DEFAULT '0'  NOT NULL,
@@ -13,5 +12,3 @@ CREATE TABLE tt_address
     module_sys_dmail_html       tinyint(3) unsigned DEFAULT '0'  NOT NULL,
     salutation                  varchar(255)        DEFAULT Null NULL
 );
-
-
