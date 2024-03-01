@@ -1,5 +1,7 @@
 <?php
-defined('TYPO3') || die('Access denied.');
+declare(strict_types=1);
+
+defined('TYPO3') || die();
 
 call_user_func(
     function()
@@ -8,11 +10,11 @@ call_user_func(
             'NewsletterSubscribe',
             'Subscribe',
             [
-                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
+                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, unsubscribe, doConfirm, createUnsubscribeMail',
             ],
             // non-cacheable actions
             [
-                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, undosubscribe, unsubscribe, doConfirm, createUnsubscribeMail',
+                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, unsubscribe, doConfirm, createUnsubscribeMail',
             ]
         );
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -26,7 +28,7 @@ call_user_func(
                 \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, createUnsubscribeMail',
             ]
         );
-
+        
         // wizards
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
             'mod {
@@ -59,10 +61,10 @@ call_user_func(
     }
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_subscribe[subscriptionHash]';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_subscribe[uid]';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_unsubscribe[subscriptionHash]';
-$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_newslettersubscribe_unsubscribe[uid]';
+foreach(['tx_newslettersubscribe_subscribe[subscriptionHash]', 'tx_newslettersubscribe_subscribe[uid]',
+            'tx_newslettersubscribe_unsubscribe[subscriptionHash]', 'tx_newslettersubscribe_unsubscribe[uid]'] as $parameter) {
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = $parameter;
+}
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Zwo3\NewsletterSubscribe\SchedulerTask\DeleteUnvalidatedSubscribersTask::class] = [
     'extension' => 'newsletter_subscribe',
