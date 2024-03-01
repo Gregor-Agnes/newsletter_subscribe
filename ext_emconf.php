@@ -9,11 +9,11 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'Gregor Agnes & Markus Cousin GbR',
     'state' => 'stable',
     'clearCacheOnLoad' => 0,
-    'version' => '6.0.0',
+    'version' => '6.0.1',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.5.16-11.5.99',
-            'tt_address' => '6.1.0-7.0.99'
+            'typo3' => '12.4.00-12.4.99',
+            'tt_address' => '8.0.0'
         ],
         'conflicts' => [
         ],
