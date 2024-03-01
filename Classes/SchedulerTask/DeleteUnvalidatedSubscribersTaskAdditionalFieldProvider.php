@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\SchedulerTask;
 
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
@@ -34,7 +36,7 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         $currentSchedulerModuleAction = $schedulerModule->getCurrentAction();
         
         $additionalFields = [];
-// Initialize extra field value
+        // Initialize extra field value
         if (empty($taskInfo['days'])) {
             if ($currentSchedulerModuleAction->equals(Action::ADD)) {
                 // In case of new task and if field is empty, set default days address
@@ -49,7 +51,7 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         }
         // Write the code for the field
         $fieldID = 'task_days';
-        $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[newsletter_subscribe][days]" id="' . $fieldID . '" value="' . htmlspecialchars($taskInfo['days']) . '" size="30">';
+        $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[newsletter_subscribe][days]" id="' . $fieldID . '" value="' . htmlspecialchars((string)$taskInfo['days']) . '" size="30">';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
             'label' => $this->getLanguageService()->sL('LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:schedulerAge'),
@@ -72,7 +74,7 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         }
         // Write the code for the field
         $fieldID = 'task_pids';
-        $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[newsletter_subscribe][pids]" id="' . $fieldID . '" value="' . htmlspecialchars($taskInfo['pids']) . '" size="30">';
+        $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[newsletter_subscribe][pids]" id="' . $fieldID . '" value="' . htmlspecialchars((string)$taskInfo['pids']) . '" size="30">';
         $additionalFields[$fieldID] = [
             'code' => $fieldCode,
             'label' => $this->getLanguageService()->sL('LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:schedulerPids'),
@@ -81,7 +83,7 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         ];
         return $additionalFields;
     }
-
+    
     /**
      * This method checks any additional data that is relevant to the specific task
      * If the task class is not relevant, the method is expected to return TRUE
@@ -94,25 +96,29 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         array &$submittedData,
         SchedulerModuleController $schedulerModule
     ): bool {
-        $submittedData['days'] = intval(trim($submittedData['newsletter_subscribe']['days']));
+        $submittedData['days'] = (int)(trim($submittedData['newsletter_subscribe']['days']));
         if (empty($submittedData['days']) || $submittedData['days'] < 7 || !is_int($submittedData['days'])) {
-            $this->addMessage($this->getLanguageService()->sL('LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:error.schedulerAge'),
-                \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR);
+            $this->addMessage(
+                $this->getLanguageService()->sL('LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:error.schedulerAge'),
+                ContextualFeedbackSeverity::ERROR
+            );
             $dayResult = false;
         } else {
             $dayResult = true;
         }
         if (!preg_match('/^[0-9]+(,[0-9]*)*$/', $submittedData['newsletter_subscribe']['pids'])) {
-            $this->addMessage($this->getLanguageService()->sL('LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:error.schedulerPids'),
-                \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR);
+            $this->addMessage(
+                $this->getLanguageService()->sL('LLL:EXT:newsletter_subscribe/Resources/Private/Language/locallang.xlf:error.schedulerPids'),
+                ContextualFeedbackSeverity::ERROR
+            );
             $pidResult = false;
         } else {
             $pidResult = true;
         }
-    
+        
         return ($dayResult && $pidResult);
     }
-
+    
     /**
      * This method is used to save any additional input into the current task object
      * if the task class matches
@@ -120,7 +126,7 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
      * @param array $submittedData Array containing the data submitted by the user
      * @param AbstractTask $task Reference to the current task object
      */
-    public function saveAdditionalFields(array $submittedData, AbstractTask $task)
+    public function saveAdditionalFields(array $submittedData, AbstractTask $task): void
     {
         $task->days = (int)$submittedData['newsletter_subscribe']['days'];
         $task->pids = $submittedData['newsletter_subscribe']['pids'];

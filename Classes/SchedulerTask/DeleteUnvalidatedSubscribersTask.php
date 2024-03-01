@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\SchedulerTask;
 
@@ -9,13 +10,13 @@ use Zwo3\NewsletterSubscribe\Utility\DeleteUnvalidatedSubscribers;
 class DeleteUnvalidatedSubscribersTask extends AbstractTask
 {
     /** @var int  */
-    public $days;
+    public int $days;
     
-    public function execute()
+    public function execute(): bool
     {
         $businessLogic = GeneralUtility::makeInstance(DeleteUnvalidatedSubscribers::class);
         $businessLogic->run($this->days, $this->pids);
-
+        
         return true;
     }
 }
