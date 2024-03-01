@@ -1,5 +1,4 @@
 <?php
-
 namespace Zwo3\NewsletterSubscribe\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation\Validate;
@@ -10,90 +9,90 @@ use TYPO3\CMS\Extbase\Annotation\Validate;
  * @package Zwo3\NewsletterSubscribe\Domain\Model
  */
 class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
-
+    
     /**
      * @var string
      */
     protected $name;
-
+    
     /**
      * @var string
      */
     protected $firstName;
-
+    
     /**
      * @var string
      */
     protected $lastName;
-
+    
     /**
      * @var string
      * @TYPO3\CMS\Extbase\Annotation\Validate("RegularExpression", options={"regularExpression": "/^[mfv ]$/m"})
      */
     protected $gender;
-
+    
     /**
      * @var string
      */
     protected $title;
-
+    
     /**
      * @var string
      */
     protected $company;
-
+    
     /**
      * @var string
      * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
     protected $email;
-
+    
     /**
      * @var bool
      * @TYPO3\CMS\Extbase\Annotation\Validate("Boolean", options={"is": true})
      */
     protected $dataProtectionAccepted;
-
-
+    
+    
     /**
      * @var bool
      * @TYPO3\CMS\Extbase\Annotation\Validate("Boolean")
      */
     protected $moduleSysDmailHtml;
-
+    
     /**
      * @var string
      */
     protected $subscriptionHash;
-
+    
     /**
      * @var bool
      */
     protected $moduleSysDmailNewsletter;
-
+    
     /**
      * @var bool
      */
     protected $hidden;   /**
-     * @return mixed
-     */
-
+ * @return mixed
+ */
+    
     /**
      * @var int
      */
     protected $crdate;
-
+    
     /**
      * @var int
      */
     protected $lastHit;
-
+    
     /**
      * @var int
      */
     protected $hitNumber;
-
+    
     /**
      * @var string
      */
@@ -106,7 +105,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->crdate;
     }
-
+    
     /**
      * @param int $crdate
      */
@@ -114,7 +113,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->crdate = $crdate;
     }
-
+    
     /**
      * @return bool
      */
@@ -122,7 +121,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->moduleSysDmailHtml;
     }
-
+    
     /**
      * @param bool $moduleSysDmailHtml
      */
@@ -130,13 +129,13 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->moduleSysDmailHtml = $moduleSysDmailHtml;
     }
-
-
+    
+    
     public function getFirstName()
     {
         return $this->firstName;
     }
-
+    
     /**
      * @param mixed $firstName
      */
@@ -144,7 +143,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->firstName = $firstName;
     }
-
+    
     /**
      * @return mixed
      */
@@ -152,7 +151,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->lastName;
     }
-
+    
     /**
      * @param mixed $lastName
      */
@@ -160,7 +159,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->lastName = $lastName;
     }
-
+    
     /**
      * @return mixed
      */
@@ -168,7 +167,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->title;
     }
-
+    
     /**
      * @param mixed $title
      */
@@ -176,7 +175,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->title = $title;
     }
-
+    
     /**
      * @return mixed
      */
@@ -184,7 +183,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->company;
     }
-
+    
     /**
      * @param mixed $company
      */
@@ -192,7 +191,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->company = $company;
     }
-
+    
     /**
      * @return bool
      */
@@ -200,7 +199,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->hidden;
     }
-
+    
     /**
      * @param bool $hidden
      */
@@ -208,7 +207,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->hidden = $hidden;
     }
-
+    
     /**
      * @return string
      */
@@ -216,7 +215,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->email;
     }
-
+    
     /**
      * @param string $email
      */
@@ -224,7 +223,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->email = $email;
     }
-
+    
     /**
      * @return bool
      */
@@ -232,7 +231,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->dataProtectionAccepted;
     }
-
+    
     /**
      * @param bool $dataProtectionAccepted
      */
@@ -240,7 +239,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->dataProtectionAccepted = $dataProtectionAccepted;
     }
-
+    
     /**
      * @return string
      */
@@ -248,7 +247,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->name;
     }
-
+    
     /**
      * @param string $name
      */
@@ -256,7 +255,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->name = $name;
     }
-
+    
     /**
      * @return string
      */
@@ -264,7 +263,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->subscriptionHash;
     }
-
+    
     /**
      * @param string $subscriptionHash
      */
@@ -272,7 +271,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->subscriptionHash = $subscriptionHash;
     }
-
+    
     /**
      * @return bool
      */
@@ -280,7 +279,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->moduleSysDmailNewsletter;
     }
-
+    
     /**
      * @param bool $moduleSysDmailNewsletter
      */
@@ -288,7 +287,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->moduleSysDmailNewsletter = $moduleSysDmailNewsletter;
     }
-
+    
     /**
      * @return int
      */
@@ -296,7 +295,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->lastHit;
     }
-
+    
     /**
      * @param int $lastHit
      */
@@ -304,7 +303,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->lastHit = $lastHit;
     }
-
+    
     /**
      * @return int
      */
@@ -312,7 +311,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->hitNumber;
     }
-
+    
     /**
      * @param int $hitNumber
      */
@@ -320,7 +319,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->hitNumber = $hitNumber;
     }
-
+    
     /**
      * @return string
      */
@@ -328,7 +327,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         return $this->gender;
     }
-
+    
     /**
      * @param string $gender
      */
@@ -336,7 +335,7 @@ class Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
     {
         $this->gender = $gender;
     }
-
+    
     
     /**
      * @return mixed

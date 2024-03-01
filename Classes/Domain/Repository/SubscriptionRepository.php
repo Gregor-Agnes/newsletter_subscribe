@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\Domain\Repository;
 
@@ -12,27 +13,27 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @package Zwo3\NewsletterSubscribe\Domain\Repository
  */
 class SubscriptionRepository extends Repository {
-
-    public function findByUid($uid, $respectEnableFields = true)
+    
+    public function findSubscriptionByUid(int $uid, bool $respectEnableFields = true)
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setIgnoreEnableFields(!$respectEnableFields);
-
+        
         return $query->matching(
             $query->logicalAnd(
                 $query->equals('uid', $uid),
                 $query->equals('deleted', 0)
             ))->execute()->getFirst();
     }
-
-    public function findOneByEmail($email, $respectEnableFields = true)
+    
+    public function findOneByEmail(string $email, bool $respectEnableFields = true)
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setIgnoreEnableFields(!$respectEnableFields);
-
+        
         return $query->matching(
             $query->logicalAnd(
                 $query->equals('email', $email),
@@ -40,8 +41,7 @@ class SubscriptionRepository extends Repository {
             ))->execute()->getFirst();
     }
     
-    
-    public function findOldUnvalidated($days, $pids)
+    public function findOldUnvalidated(int $days, string $pids)
     {
         $query = $this->createQuery();
         $query->matching(
@@ -57,5 +57,4 @@ class SubscriptionRepository extends Repository {
         
         return $query->execute();
     }
-    
 }
