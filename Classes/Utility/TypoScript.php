@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\Utility;
 
@@ -15,23 +16,22 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TypoScript
 {
-
     /**
      * @param array $base
      * @param array $overload
      * @return array
      */
-    public function override(array $base, array $overload)
+    public function override(array $base, array $overload): array
     {
         $validFields = GeneralUtility::trimExplode(',', $overload['settings']['overrideFlexformSettingsIfEmpty'], true);
         foreach ($validFields as $fieldName) {
-
+            
             // Multilevel field
             if (strpos($fieldName, '.') !== false) {
                 $keyAsArray = explode('.', $fieldName);
-
+                
                 $foundInCurrentTs = $this->getValue($base, $keyAsArray);
-
+                
                 if (is_string($foundInCurrentTs) && strlen($foundInCurrentTs) === 0) {
                     $foundInOriginal = $this->getValue($overload['settings'], $keyAsArray);
                     if ($foundInOriginal) {
@@ -49,7 +49,7 @@ class TypoScript
         }
         return $base;
     }
-
+    
     /**
      * Get value from array by path
      *
@@ -57,26 +57,26 @@ class TypoScript
      * @param array $path
      * @return array|null
      */
-    protected function getValue(array $data, array $path)
+    protected function getValue(array $data, array $path): array|null
     {
         $found = true;
-
+        
         for ($x = 0; ($x < count($path) && $found); $x++) {
             $key = $path[$x];
-
+            
             if (isset($data[$key])) {
                 $data = $data[$key];
             } else {
                 $found = false;
             }
         }
-
+        
         if ($found) {
             return $data;
         }
         return null;
     }
-
+    
     /**
      * Set value in array by path
      *
@@ -85,14 +85,14 @@ class TypoScript
      * @param $value
      * @return array
      */
-    protected function setValue(array $array, $path, $value)
+    protected function setValue(array $array, $path, $value): array
     {
         $this->setValueByReference($array, $path, $value);
-
+        
         $final = array_merge_recursive([], $array);
         return $final;
     }
-
+    
     /**
      * Set value by reference
      *
@@ -100,7 +100,7 @@ class TypoScript
      * @param array $path
      * @param $value
      */
-    private function setValueByReference(array &$array, array $path, $value)
+    private function setValueByReference(array &$array, array $path, $value): void
     {
         while (count($path) > 1) {
             $key = array_shift($path);
@@ -109,7 +109,7 @@ class TypoScript
             }
             $array = &$array[$key];
         }
-
+        
         $key = reset($path);
         $array[$key] = $value;
     }
