@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\Utility;
 
@@ -16,7 +17,7 @@ class DeleteUnvalidatedSubscribers
      * @var AddressRepository
      */
     public $subscriptionRepository;
-
+    
     /**
      * @var PersistenceManager
      */
@@ -27,7 +28,7 @@ class DeleteUnvalidatedSubscribers
         if ((int)$days < 7) {
             $days = 7;
         }
-
+        
         $this->subscriptionRepository = GeneralUtility::makeInstance(SubscriptionRepository::class);
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $query = $this->subscriptionRepository->createQuery();
@@ -37,12 +38,12 @@ class DeleteUnvalidatedSubscribers
         $this->subscriptionRepository->setDefaultQuerySettings($querySettings);
         
         $addresses = $this->subscriptionRepository->findOldUnvalidated($days, $pids);
-
+        
         foreach ($addresses as $address) {
             $this->subscriptionRepository->remove($address);
         }
-
+        
         $this->persistenceManager->persistAll();
-     
+        
     }
 }
