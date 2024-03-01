@@ -1,14 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\Event;
 
-
-
 use Zwo3\NewsletterSubscribe\Domain\Model\Subscription;
 
-/**
- *
- */
 class SubscriptionChangedEvent
 {
     /**
