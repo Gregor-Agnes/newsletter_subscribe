@@ -237,7 +237,8 @@ class SubscribeController extends ActionController
                         $subject,
                         'CreateUnsubscribe',
                         [
-                            'subscription' => $existing
+                            'subscription' => $existing,
+                            'settings' => $this->settings,
                         ]
                     );
                     $this->subscriptionRepository->update($existing);
@@ -393,6 +394,7 @@ class SubscribeController extends ActionController
                     'Confirmation',
                     [
                         'subscription' => $subscription,
+                        'settings' => $this->settings,
                     ]
                 );
             } catch (InvalidTemplateResourceException $exception) {
