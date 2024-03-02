@@ -145,6 +145,12 @@
 			<trans-unit id="haveFun">
 				<source>Have fun while reading.</source>
 			</trans-unit>
+			<trans-unit id="subscriptionNotFound">
+				<source>This subscription could not be found.</source>
+			</trans-unit>
+			<trans-unit id="alreadyConfirmed">
+				<source>Maybe you have confirmed already?</source>
+			</trans-unit>
 
 			<!-- Request for confirmation -->
 			<trans-unit id="nextStep">

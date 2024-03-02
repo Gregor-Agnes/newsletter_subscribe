@@ -57,6 +57,7 @@ use Zwo3\NewsletterSubscribe\Utility\TypoScript;
  */
 class SubscribeController extends ActionController
 {
+    
     /**
      * @var PersistenceManager
      */
@@ -110,10 +111,11 @@ class SubscribeController extends ActionController
             $stdWrapProperties = GeneralUtility::trimExplode(',', $originalSettings['useStdWrap'], true);
             foreach ($stdWrapProperties as $key) {
                 if (is_array($typoScriptArray[$key . '.'])) {
-                    $originalSettings[$key] = $this->configurationManager->getContentObject()->stdWrap(
-                        $typoScriptArray[$key],
-                        $typoScriptArray[$key . '.']
-                    );
+                    $originalSettings[$key] = $this->configurationManager->getContentObject()
+                        ->stdWrap(
+                            $typoScriptArray[$key],
+                            $typoScriptArray[$key . '.']
+                        );
                 }
             }
         }
@@ -129,12 +131,14 @@ class SubscribeController extends ActionController
     
     protected function getExtensionConfiguration(): array
     {
-        return GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('newsletter_subscribe');
+        return GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('newsletter_subscribe');
     }
     
     protected function useSimpleSpamPrevention(): bool
     {
         $backendConfiguration = $this->getExtensionConfiguration();
+        
         return (bool)($backendConfiguration['useSimpleSpamPrevention'] ?? false);
     }
     
@@ -170,6 +174,7 @@ class SubscribeController extends ActionController
             'fields' => $fields,
             'subscription' => $subscription,
         ]);
+        
         return $this->htmlResponse();
     }
     
@@ -190,6 +195,7 @@ class SubscribeController extends ActionController
             'message' => $message,
             'formToken' => $formToken
         ]);
+        
         return $this->htmlResponse();
     }
     
@@ -248,6 +254,7 @@ class SubscribeController extends ActionController
         }
         
         $this->view->assignMultiple(compact('email'));
+        
         return $this->htmlResponse();
     }
     
@@ -258,6 +265,7 @@ class SubscribeController extends ActionController
                 ->withControllerName('Subscribe')
                 ->withExtensionName('newsletter_subscribe');
         }
+        
         return null;
     }
     
@@ -274,6 +282,7 @@ class SubscribeController extends ActionController
                 ($this->request->getParsedBody()['iAmNotASpamBot'] ?? '') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
             ) {
                 sleep((int)$this->settings['spamTimeout']);
+                
                 return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription, 'spambotFailed' => true]);
             }
         }
@@ -292,7 +301,7 @@ class SubscribeController extends ActionController
                 $response = curl_exec($verify);
                 // var_dump($response);
                 $responseData = json_decode($response);
-                if($responseData->success) {
+                if ($responseData->success) {
                     // your success code goes here
                     /*
                     $this->addFlashMessage(
@@ -301,13 +310,13 @@ class SubscribeController extends ActionController
                         ContextualFeedbackSeverity::ERROR
                     );
                     */
-                }
-                else {
+                } else {
                     $this->addFlashMessage(
                         LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'),
                         '',
                         ContextualFeedbackSeverity::ERROR
                     );
+                    
                     return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription]);
                 }
             } else {
@@ -316,6 +325,7 @@ class SubscribeController extends ActionController
                     '',
                     ContextualFeedbackSeverity::ERROR
                 );
+                
                 return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription]);
             }
         }
@@ -366,7 +376,7 @@ class SubscribeController extends ActionController
             $subscription->setPid($this->subscriptionRepository->createQuery()
                 ->getQuerySettings()
                 ->getStoragePageIds()[0]);
-            $subscription->setName($subscription->getFirstName()." ".$subscription->getLastName());
+            $subscription->setName($subscription->getFirstName() . " " . $subscription->getLastName());
             
             $this->addSalutation($subscription);
             
@@ -395,6 +405,7 @@ class SubscribeController extends ActionController
             
             $this->view->assignMultiple(['subscription' => $subscription]);
         }
+        
         return $this->htmlResponse();
     }
     
@@ -409,6 +420,7 @@ class SubscribeController extends ActionController
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findSubscriptionByUid($uid, false);
         $success = false;
+        $alreadySubscribed = false;
         if ($subscription) {
             if ($subscriptionHash == $subscription->getSubscriptionHash()) {
                 $this->subscriptionRepository->remove($subscription);
@@ -458,25 +470,29 @@ class SubscribeController extends ActionController
                 $this->subscriptionRepository->update($subscription);
                 $success = true;
             } else {
-                // increasing sleeptimer
-                $subscription = $this->setSleep($subscription, 300, 2);
-                $this->subscriptionRepository->update($subscription);
-                $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+                if ($this->settings['sendPageNotFoundOnInvalidConfirmation']) {
+// increasing sleeptimer
+                    $subscription = $this->setSleep($subscription, 300, 2);
+                    $this->subscriptionRepository->update($subscription);
+                    $response = GeneralUtility::makeInstance(ErrorController::class)
+                        ->pageNotFoundAction(
+                            \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
+                            'Page not found',
+                            ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+                        );
+                    throw new ImmediateResponseException($response);
+                } else {
+                    $alreadySubscribed = true;
+                }
+            }
+        } else {
+            $response = GeneralUtility::makeInstance(ErrorController::class)
+                ->pageNotFoundAction(
                     \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                     'Page not found',
                     ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
                 );
-                throw new ImmediateResponseException($response);
-                
-            }
-        } else {
-            $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-                \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
-                'Page not found',
-                ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
-            );
             throw new ImmediateResponseException($response);
-            
         }
         
         if ($success && $this->settings['sendAdminInfo']) {
@@ -486,8 +502,8 @@ class SubscribeController extends ActionController
         if ($success) {
             $this->eventDispatcher->dispatch(new SubscriptionChangedEvent(static::class, $this->actionMethodName, $subscription, 'subscribe'));
         }
+        $this->view->assignMultiple(compact('subscription', 'success', 'alreadySubscribed'));
         
-        $this->view->assignMultiple(compact( 'subscription', 'success'));
         return $this->htmlResponse();
     }
     
@@ -517,15 +533,14 @@ class SubscribeController extends ActionController
     
     protected function addSalutation(&$subscription): void
     {
-        if(isset($this->settings['addsalutation']) && $this->settings['addsalutation']) {
+        if (isset($this->settings['addsalutation']) && $this->settings['addsalutation']) {
             $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
-            if(isset($this->settings['salutation'][$twoLetterIsoCode])) {
-                if(isset($this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()]) && $subscription->getLastName()) {
+            if (isset($this->settings['salutation'][$twoLetterIsoCode])) {
+                if (isset($this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()]) && $subscription->getLastName()) {
                     $salutation = $this->settings['salutation'][$twoLetterIsoCode][$subscription->getGender()];
-                    $salutation .= $subscription->getTitle() ? ' '.$subscription->getTitle() : '';
-                    $salutation .= ' '.$subscription->getLastName();
-                }
-                else {
+                    $salutation .= $subscription->getTitle() ? ' ' . $subscription->getTitle() : '';
+                    $salutation .= ' ' . $subscription->getLastName();
+                } else {
                     $salutation = $this->settings['salutation'][$twoLetterIsoCode]['default'];
                 }
                 
@@ -535,27 +550,27 @@ class SubscribeController extends ActionController
     }
     
     /**
-     *
      * @return string
      */
     protected function getTwoLetterIsoCodeFromSiteConfig(): string
     {
         $site = $this->request->getAttribute('site');
-        $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
+        $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)
+            ->getAspect('language');
         $language = $site->getLanguageById($languageAspect->getId());
-        return $language->getLocale()->getLanguageCode();
+        
+        return $language->getLocale()
+            ->getLanguageCode();
     }
     
     /**
-     *
      * @return string
      */
     protected function prepareTwoLetterIsoCode(): string
     {
-        if(!empty($GLOBALS['TSFE']->config['config']['language'])) {
+        if (!empty($GLOBALS['TSFE']->config['config']['language'])) {
             $twoLetterIsoCode = $GLOBALS['TSFE']->config['config']['language'];
-        }
-        else {
+        } else {
             $twoLetterIsoCode = $this->getTwoLetterIsoCodeFromSiteConfig();
         }
         
@@ -578,8 +593,8 @@ class SubscribeController extends ActionController
         string $templateName = 'Mail/Default',
         array $variables = [],
         array $replyTo = null,
-        array $attachments = []): bool
-    {
+        array $attachments = []
+    ): bool {
         $templatePaths = new TemplatePaths();
         
         if (mb_stripos($templateName, 'admin') !== false) {
@@ -591,10 +606,10 @@ class SubscribeController extends ActionController
             // User Mails
             $twoLetterIsoCode = $this->prepareTwoLetterIsoCode();
             $templatePaths->setTemplateRootPaths(
-                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $twoLetterIsoCode .'/')]
+                [GeneralUtility::getFileAbsFileName($this->settings['mailTemplateRootPath'] . $twoLetterIsoCode . '/')]
             );
         }
-        $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] .'/']);
+        $templatePaths->setLayoutRootPaths([$this->settings['mailLayoutRootPath'] . '/']);
         
         /** @var FluidEmail $email */
         $email = GeneralUtility::makeInstance(FluidEmail::class, $templatePaths);
@@ -610,7 +625,8 @@ class SubscribeController extends ActionController
             $email->replyTo(new Address(...$replyTo));
         }
         $email->setRequest($this->request);
-        GeneralUtility::makeInstance(MailerInterface::class)->send($email);
+        GeneralUtility::makeInstance(MailerInterface::class)
+            ->send($email);
         
         return true;
     }
@@ -625,8 +641,7 @@ class SubscribeController extends ActionController
         Subscription $subscription,
         int $maxSleeptime = 300,
         int $multiplier = 2
-    ): Subscription
-    {
+    ): Subscription {
         $sleepTime = $subscription->getHitNumber() * $multiplier;
         if (time() > $subscription->getLastHit() + $maxSleeptime) {
             // reset sleep after 5 minutes

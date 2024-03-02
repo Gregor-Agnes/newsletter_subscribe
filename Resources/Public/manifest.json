@@ -1,7 +1,8 @@
 {
-  "./Resources/Public/NewsletterSubscribe.css": "/_assets/newsletter_subscribe/NewsletterSubscribe.css",
-  "./Resources/Public/NewsletterSubscribe.js": "/_assets/newsletter_subscribe/NewsletterSubscribe.js",
-  "./Resources/Public/runtime.js": "/_assets/newsletter_subscribe/runtime.js",
-  "./Resources/Public/images/ExtManDirectMail1.png": "/_assets/newsletter_subscribe/images/ExtManDirectMail1.png",
-  "./Resources/Public/images/Extension.svg": "/_assets/newsletter_subscribe/images/Extension.svg"
+  "./Resources/Public/NewsletterSubscribe.css": "https://localhost:8080/_assets/newsletter_subscribe/NewsletterSubscribe.css",
+  "./Resources/Public/NewsletterSubscribe.js": "https://localhost:8080/_assets/newsletter_subscribe/NewsletterSubscribe.js",
+  "./Resources/Public/runtime.js": "https://localhost:8080/_assets/newsletter_subscribe/runtime.js",
+  "./Resources/Public/vendors-node_modules_webpack-dev-server_client_index_js_protocol_wss_3A_username_password_hos-2eacbd.js": "https://localhost:8080/_assets/newsletter_subscribe/vendors-node_modules_webpack-dev-server_client_index_js_protocol_wss_3A_username_password_hos-2eacbd.js",
+  "./Resources/Public/images/ExtManDirectMail1.png": "https://localhost:8080/_assets/newsletter_subscribe/images/ExtManDirectMail1.png",
+  "./Resources/Public/images/Extension.svg": "https://localhost:8080/_assets/newsletter_subscribe/images/Extension.svg"
 }

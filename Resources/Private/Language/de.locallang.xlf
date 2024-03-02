@@ -109,6 +109,16 @@
 				<source><![CDATA[Have fun while reading.]]></source>
 				<target><![CDATA[Viel Spaß beim Lesen.]]></target>
 			</trans-unit>
+			<trans-unit id="subscriptionNotFound">
+        <source>This subscription could not be found.</source>
+       <target><![CDATA[Das Abonnement konnte nicht gefunden werden.]]></target>
+      </trans-unit>
+      <trans-unit id="alreadyConfirmed">
+        <source>Maybe you have confirmed already?</source>
+       <target><![CDATA[Haben Sie vielleicht schon bestätigt?]]></target>
+			</trans-unit>
+
+
 			<trans-unit id="lastName" approved="yes">
 				<source><![CDATA[Last name]]></source>
 				<target><![CDATA[Nachname]]></target>
@@ -205,6 +215,8 @@
 				<source><![CDATA[Please insert the captcha]]></source>
 				<target><![CDATA[Bitte lösen Sie das Captcha]]></target>
 			</trans-unit>
+
+
 			<!-- AdminInfo -->
 			<trans-unit id="newSubscription">
 				<source>New Subcription</source>

@@ -2,18 +2,26 @@
 <f:layout name="Standard" />
 
 <f:section name="Default">
-  <p><f:translate key="confirmed" />:</p>
-  <p>
-    <f:if condition="{subscription.firstName} || {subscription.lastName}">
-      <f:then>{subscription.firstName} {subscription.lastName}
-        <br>
-      </f:then>
-    </f:if>
-    <f:if condition="{subscription.email}">
-      {subscription.email}
-    </f:if>
-  </p>
-  <p><f:translate key="youWillReceive" /></p>
-  <p><f:translate key="haveFun" /></p>
+
+  <f:if condition="{success}">
+    <p><f:translate key="confirmed" />:</p>
+    <p>
+      <f:if condition="{subscription.firstName} || {subscription.lastName}">
+        <f:then>{subscription.firstName} {subscription.lastName}
+          <br>
+        </f:then>
+      </f:if>
+      <f:if condition="{subscription.email}">
+        {subscription.email}
+      </f:if>
+    </p>
+    <p><f:translate key="youWillReceive" /></p>
+    <p><f:translate key="haveFun" /></p>
+  </f:if>
+  <f:if condition="{alreadySubscribed}">
+    <p><f:translate key="subscriptionNotFound" /></p>
+    <p><f:translate key="alreadyConfirmed" /></p>
+  </f:if>
+
 </f:section>
 </html>

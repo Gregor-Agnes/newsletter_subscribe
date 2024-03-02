@@ -131,6 +131,12 @@ the field "delete" wouldn't be generated otherwise. Use Scheduler Task to delete
     <td>0</td>
   </tr>
   <tr>
+    <th align="left">sendPageNotFoundOnInvalidConfirmation</th>
+    <td align="left">whether a 404 is thrown, when an invilid confirmation link is clicked. Otherwise a hint is shown (already confirmed?). This option is new in 6.1</td>
+    <td>bool</td>
+    <td>1</td>
+  </tr>
+  <tr>
     <th align="left">mailTemplateRootPath</th>
     <td align="left">path to the mail templates, root for different languages (e.g. en, de, dk)</td>
     <td>string</td>

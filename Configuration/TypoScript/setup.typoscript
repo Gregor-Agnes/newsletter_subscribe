@@ -75,6 +75,8 @@ plugin {
 			subscribePageUid = {$plugin.tx_newslettersubscribe.settings.subscribePageUid}
 			sendAdminInfo = {$plugin.tx_newslettersubscribe.settings.sendAdminInfo}
 
+			sendPageNotFoundOnInvalidConfirmation = {$plugin.tx_newslettersubscribe.settings.sendPageNotFoundOnInvalidConfirmation}
+
 			overrideFlexformSettingsIfEmpty = senderEmail,senderName,adminEmail,adminName,subscribePageUid,mailTemplateRootPath,dataProtectionPage,adminName,showFields,newsletterName
 		}
 	}
