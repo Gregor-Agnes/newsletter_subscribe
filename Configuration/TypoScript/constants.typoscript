@@ -1,42 +1,60 @@
 plugin {
 	tx_newslettersubscribe {
 		settings {
+			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether salutation should be added
 			addsalutation = 1
 			salutation {
 				en {
+					# cat=plugin.tx_newsletter_subscribe; type=string; label=English salutation neutral
 					default = Dear Reader
-					m = Dear Mr.
+					# cat=plugin.tx_newsletter_subscribe; type=string; label=English salutation female
 					f = Dear Mrs.
+					# cat=plugin.tx_newsletter_subscribe; type=string; label=English salutation male
+					m = Dear Mr.
 				}
 				de {
+					# cat=plugin.tx_newsletter_subscribe; type=string; label=German salutation neutral
 					default = Liebe(r) Leser(in)
-					m = Sehr geehrter Herr
+					# cat=plugin.tx_newsletter_subscribe; type=string; label=German salutation female
 					f = Sehr geehrte Frau
+					# cat=plugin.tx_newsletter_subscribe; type=string; label=German salutation male
+					m = Sehr geehrter Herr
 				}
 			}
 
 			senderEmail = noreply@domain.tld
+			# cat=plugin.tx_newsletter_subscribe; type=string; label=Name which the mails an sended from
 			senderName = Your sender name
 
+			# cat=plugin.tx_newsletter_subscribe; type=string; label=E-mail to which admin infos should be send
 			adminEmail = admin.name@domain.tld
+			# cat=plugin.tx_newsletter_subscribe; type=string; label=Name to which admin infos should be send
 			adminName = Your admin name
 
+			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether simple spam prevention should be used
 			useSimpleSpamPrevention = 1
+			# cat=plugin.tx_newsletter_subscribe; type=int+; label=Seconds to wait to show the form again, if simple spam-prevention is used
 			spamTimeout = 5
 
+			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether hCaptcha should be used
 			useHCaptcha = 0
+			# cat=plugin.tx_newsletter_subscribe; type=string; label=hCaptcha site key
 			hCaptchaSiteKey = 10000000-ffff-ffff-ffff-000000000001
+			# cat=plugin.tx_newsletter_subscribe; type=string; label=hCaptcha secrete key
 			hCaptchaSecretKey = 0x0000000000000000000000000000000000000000
 
 			# uid of page with data protection information (if any)
 			dataProtectionPage = 1
 
-			# used in several places
+			# cat=plugin.tx_newsletter_subscribe; type=string; label=Title, used in several places
 			newsletterName = Newsletter
-			# Page with SubscriptinForm (used in E-Mail-Templates)
-			subscribePageUid = 23
-			# whether the admin should get an info mail on every confirmation
+			# cat=plugin.tx_newsletter_subscribe; type=int+; label=Uid of Page with SubscriptinForm (used in E-Mail-Templates)
+			subscribePageUid =
+			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether the admin should get an info mail on every confirmation
 			sendAdminInfo = 0
+
+			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether a 404 is thrown, when invalid confirmation link is clicked (e.g. double click in mail) otherwise a hint is shown
+			sendPageNotFoundOnInvailidConfirmaion = 1
 		}
 	}
 }
