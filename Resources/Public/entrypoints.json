@@ -2,12 +2,11 @@
   "entrypoints": {
     "NewsletterSubscribe": {
       "js": [
-        "https://localhost:8080/_assets/newsletter_subscribe/runtime.js",
-        "https://localhost:8080/_assets/newsletter_subscribe/vendors-node_modules_webpack-dev-server_client_index_js_protocol_wss_3A_username_password_hos-2eacbd.js",
-        "https://localhost:8080/_assets/newsletter_subscribe/NewsletterSubscribe.js"
+        "/_assets/newsletter_subscribe/runtime.js",
+        "/_assets/newsletter_subscribe/NewsletterSubscribe.js"
       ],
       "css": [
-        "https://localhost:8080/_assets/newsletter_subscribe/NewsletterSubscribe.css"
+        "/_assets/newsletter_subscribe/NewsletterSubscribe.css"
       ]
     }
   }
