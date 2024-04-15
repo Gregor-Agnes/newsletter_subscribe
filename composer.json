@@ -26,7 +26,7 @@
     "newsletter"
   ],
   "require": {
-    "typo3/cms-core": "^v12.4",
+    "typo3/cms-core": "^11.5 || ^v12.4",
     "friendsoftypo3/tt-address": "^8.0"
   },
   "require-dev": {
