@@ -43,11 +43,12 @@ class FillsubscriptionhashCommand extends Command
                 )
             )
             ->orderBy('uid', 'asc');
+        
         $rowIterator = $queryBuilder->executeQuery();
         
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         
-        while ($row = $rowIterator->fetch()) {
+        while ($row = $rowIterator->fetchAssociative()) {
             $subscriptionHash = hash('sha256', $row['email'] . $row['crdate'] ?: $row['tstamp'] . random_bytes(32));
             $queryBuilder
                 ->update($table)
@@ -55,7 +56,7 @@ class FillsubscriptionhashCommand extends Command
                     $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($row['uid'], Connection::PARAM_INT))
                 )
                 ->set('subscription_hash', $subscriptionHash)
-                ->executeQuery();
+                ->executeStatement();
             $counter++;
         }
         
