@@ -10,7 +10,7 @@ let insertNoSpamBotField = () => {
   noSpamField.classList.add('block')
   noSpamField.innerHTML = `
 <input id="iAmNotASpamBotHere" class="hidden" type="checkbox" name="iAmNotASpamBotHere" value="${iAmNotASpamBotValue}">
-<label class="label checkbox hidden" for="iAmNotASpamBotHere">
+<label class="label checkbox hidden" style="display: none;" for="iAmNotASpamBotHere">
     ${iAmNotARobotLabel}
 </label>
 
