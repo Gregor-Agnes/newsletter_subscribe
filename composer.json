@@ -31,7 +31,7 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "ssch/typo3-encore": "^v4.0.3"
+    "ssch/typo3-encore": "*"
   },
   "autoload": {
     "psr-4": {
