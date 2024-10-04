@@ -46,11 +46,9 @@ class SubscriptionRepository extends Repository {
         $query = $this->createQuery();
         $query->matching(
             $query->logicalAnd(
-                [
-                    $query->lessThan('crdate', time() - 86400 * $days),
-                    $query->equals('hidden', true),
-                    $query->in('pid', explode(',', $pids)),
-                ]
+                $query->lessThan('crdate', time() - 86400 * $days),
+                $query->equals('hidden', true),
+                $query->in('pid', explode(',', $pids)),
             )
         );
         $query->setLimit(10);
