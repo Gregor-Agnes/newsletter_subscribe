@@ -469,6 +469,7 @@ class SubscribeController extends ActionController
     {
         /** @var Subscription $subscription */
         $subscription = $this->subscriptionRepository->findSubscriptionByUid($uid, false);
+        $alreadySubscribed = false;
         
         $success = false;
         if ($subscription) {
