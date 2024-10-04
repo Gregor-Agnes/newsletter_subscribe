@@ -21,6 +21,7 @@ use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Mail\MailerInterface;
@@ -584,12 +585,15 @@ class SubscribeController extends ActionController
      */
     protected function prepareTwoLetterIsoCode(): string
     {
-        if (!empty($GLOBALS['TSFE']->config['config']['language'])) {
+        $typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
+        $versionString = $typo3Version->getVersion();
+        $version = explode('.', $versionString);
+        
+        if ($version[0] < 9) {
             $twoLetterIsoCode = $GLOBALS['TSFE']->config['config']['language'];
         } else {
             $twoLetterIsoCode = $this->getTwoLetterIsoCodeFromSiteConfig();
         }
-        
         return $twoLetterIsoCode;
     }
     
