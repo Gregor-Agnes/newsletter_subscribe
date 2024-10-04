@@ -439,7 +439,9 @@ class SubscribeController extends ActionController
                 //TODO redirect with 404
             }
         } else {
-            $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+            /** @var ErrorController $errorController */
+            $errorController = GeneralUtility::makeInstance(ErrorController::class);
+            $response = $errorController->pageNotFoundAction(
                 \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                 'Page not found',
                 ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
@@ -482,7 +484,9 @@ class SubscribeController extends ActionController
 // increasing sleeptimer
                     $subscription = $this->setSleep($subscription, 300, 2);
                     $this->subscriptionRepository->update($subscription);
-                    $response = GeneralUtility::makeInstance(ErrorController::class)
+                    /** @var ErrorController $errorController */
+                    $errorController = GeneralUtility::makeInstance(ErrorController::class);
+                    $response = $errorController
                         ->pageNotFoundAction(
                             \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                             'Page not found',
@@ -494,8 +498,9 @@ class SubscribeController extends ActionController
                 }
             }
         } else {
-            $response = GeneralUtility::makeInstance(ErrorController::class)
-                ->pageNotFoundAction(
+            /** @var ErrorController $errorController */
+            $errorController = GeneralUtility::makeInstance(ErrorController::class);
+            $response = $errorController->pageNotFoundAction(
                     \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals(),
                     'Page not found',
                     ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
