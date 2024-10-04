@@ -45,9 +45,19 @@
 	page.includeJSFooter {
 		# Pattern typo3_encore:entryName
 		NewsletterSubscribeRuntime = EXT:newsletter_subscribe/Resources/Public/runtime.js
+		NewsletterSubscribeRuntime.type = text/javascript
 		NewsletterSubscribe = EXT:newsletter_subscribe/Resources/Public/NewsletterSubscribe.js
+		NewsletterSubscribe.type = text/javascript
 		# If you want to ensure that this file is loaded first uncomment the next line
 		# app.forceOnTop = 1
 	}
 
 [global]
+
+page.includeJSFooter {
+	# Pattern typo3_encore:entryName
+	NewsletterSubscribeRuntime.type = text/javascript
+	NewsletterSubscribe.type = text/javascript
+	# If you want to ensure that this file is loaded first uncomment the next line
+	# app.forceOnTop = 1
+}
