@@ -2,11 +2,11 @@
   "entrypoints": {
     "NewsletterSubscribe": {
       "js": [
-        "/_assets/newsletter_subscribe/runtime.js",
-        "/_assets/newsletter_subscribe/NewsletterSubscribe.js"
+        "/_assets/837857e6dbf3ef80d8c8323f367dabde/runtime.js",
+        "/_assets/837857e6dbf3ef80d8c8323f367dabde/NewsletterSubscribe.js"
       ],
       "css": [
-        "/_assets/newsletter_subscribe/NewsletterSubscribe.css"
+        "/_assets/837857e6dbf3ef80d8c8323f367dabde/NewsletterSubscribe.css"
       ]
     }
   }

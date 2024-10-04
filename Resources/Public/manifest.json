@@ -1,7 +1,7 @@
 {
-  "./Resources/Public/NewsletterSubscribe.css": "/_assets/newsletter_subscribe/NewsletterSubscribe.css",
-  "./Resources/Public/NewsletterSubscribe.js": "/_assets/newsletter_subscribe/NewsletterSubscribe.js",
-  "./Resources/Public/runtime.js": "/_assets/newsletter_subscribe/runtime.js",
-  "./Resources/Public/images/ExtManDirectMail1.png": "/_assets/newsletter_subscribe/images/ExtManDirectMail1.png",
-  "./Resources/Public/images/Extension.svg": "/_assets/newsletter_subscribe/images/Extension.svg"
+  "./Resources/Public/NewsletterSubscribe.css": "/_assets/837857e6dbf3ef80d8c8323f367dabde/NewsletterSubscribe.css",
+  "./Resources/Public/NewsletterSubscribe.js": "/_assets/837857e6dbf3ef80d8c8323f367dabde/NewsletterSubscribe.js",
+  "./Resources/Public/runtime.js": "/_assets/837857e6dbf3ef80d8c8323f367dabde/runtime.js",
+  "./Resources/Public/images/ExtManDirectMail1.png": "/_assets/837857e6dbf3ef80d8c8323f367dabde/images/ExtManDirectMail1.png",
+  "./Resources/Public/images/Extension.svg": "/_assets/837857e6dbf3ef80d8c8323f367dabde/images/Extension.svg"
 }
