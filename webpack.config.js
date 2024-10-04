@@ -23,7 +23,7 @@ Encore
 	})
 	// directory where compiled assets will be stored
   .setOutputPath("Resources/Public")
-  .setPublicPath("/_assets/newsletter_subscribe")
+  .setPublicPath("/_assets/837857e6dbf3ef80d8c8323f367dabde")
 	// only needed for CDN's or sub-directory deploy
 	.setManifestKeyPrefix('./Resources/Public')
 
