@@ -16,6 +16,7 @@ namespace Zwo3\NewsletterSubscribe\Controller;
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Psr\Http\Message\ResponseInterface;
+use Random\RandomException;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
@@ -271,12 +272,16 @@ class SubscribeController extends ActionController
     }
     
     /**
-     * @param Subscription $subscription
+     * @param Subscription|null $subscription
+     * @return ResponseInterface
      * @throws IllegalObjectTypeException
-     * @throws StopActionException
+     * @throws RandomException
      */
-    public function createConfirmationAction(Subscription $subscription): ResponseInterface
+    public function createConfirmationAction(Subscription $subscription = null): ResponseInterface
     {
+        if (!$subscription) {
+            return $this->redirect('showForm');
+        }
         if ($this->useSimpleSpamPrevention()) {
             if (
                 !empty($this->request->getParsedBody()['iAmNotASpamBotHere'] ?? '') ||
