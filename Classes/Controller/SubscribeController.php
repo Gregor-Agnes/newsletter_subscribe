@@ -26,6 +26,7 @@ use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -375,8 +376,10 @@ class SubscribeController extends ActionController
             $this->view->assignMultiple(['subscription' => $existing]);
         } else {
             $subscription->setHidden(1);
-            $subscription->setModuleSysDmailNewsletter(true);
-            $subscription->setModuleSysDmailHtml(true);
+            if (ExtensionManagementUtility::isLoaded('direct_mail')) {
+                $subscription->setModuleSysDmailNewsletter(true);
+                $subscription->setModuleSysDmailHtml(true);
+            }
             $subscription->setCrdate(time());
             $subscription->setSubscriptionHash(hash('sha256', $subscription->getEmail() . $subscription->getCrdate() . random_bytes(32)));
             $subscription->setPid($this->subscriptionRepository->createQuery()
