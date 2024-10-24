@@ -146,6 +146,41 @@ class SubscribeController extends ActionController
     }
     
     /**
+     * @return bool TRUE if captcha was solved, otherwise false
+     */
+    protected function hCaptchaValidation(): bool {
+        if (($this->request->getParsedBody()['h-captcha-response'] ?? false)) {
+            $data = [
+                'secret' => $this->settings['hCaptchaSecretKey'],
+                'response' => $this->request->getParsedBody()['h-captcha-response'] ?? $this->request->getQueryParams()['h-captcha-response'] ?? null
+            ];
+            $verify = curl_init();
+            curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+            curl_setopt($verify, CURLOPT_POST, true);
+            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($verify);
+            // var_dump($response);
+            $responseData = json_decode($response);
+            if ($responseData->success) {
+                // your success code goes here
+                /*
+                $this->addFlashMessage(
+                    'Super, geschafft!',
+                    '',
+                    ContextualFeedbackSeverity::ERROR
+                );
+                */
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    /**
      * @param null|Subscription $subscription
      * @param bool $spambotFailed
      * @throws \Exception
@@ -201,7 +236,7 @@ class SubscribeController extends ActionController
         
         return $this->htmlResponse();
     }
-    
+
     /**
      * @param string $email
      * @throws StopActionException
@@ -219,6 +254,18 @@ class SubscribeController extends ActionController
             $this->request->getAttribute('currentContentObject')->data['uid']
         )) {
             $this->redirect('showUnsubscribeForm');
+        }
+
+        if ($this->settings['useHCaptcha'] ?? false) {
+            if (!$this->hCaptchaValidation()) {
+                $this->addFlashMessage(
+                    LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'),
+                    '',
+                    ContextualFeedbackSeverity::ERROR
+                );
+
+                return new ForwardResponse('showUnsubscribeForm');
+            }
         }
         
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -294,40 +341,9 @@ class SubscribeController extends ActionController
                 return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription, 'spambotFailed' => true]);
             }
         }
-        
+
         if ($this->settings['useHCaptcha'] ?? false) {
-            if (($this->request->getParsedBody()['h-captcha-response'] ?? false)) {
-                $data = [
-                    'secret' => $this->settings['hCaptchaSecretKey'],
-                    'response' => $this->request->getParsedBody()['h-captcha-response'] ?? $this->request->getQueryParams()['h-captcha-response'] ?? null
-                ];
-                $verify = curl_init();
-                curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
-                curl_setopt($verify, CURLOPT_POST, true);
-                curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-                curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-                $response = curl_exec($verify);
-                // var_dump($response);
-                $responseData = json_decode($response);
-                if ($responseData->success) {
-                    // your success code goes here
-                    /*
-                    $this->addFlashMessage(
-                        'Super, geschafft!',
-                        '',
-                        ContextualFeedbackSeverity::ERROR
-                    );
-                    */
-                } else {
-                    $this->addFlashMessage(
-                        LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'),
-                        '',
-                        ContextualFeedbackSeverity::ERROR
-                    );
-                    
-                    return (new ForwardResponse('showForm'))->withArguments(['subscription' => $subscription]);
-                }
-            } else {
+            if (!$this->hCaptchaValidation()) {
                 $this->addFlashMessage(
                     LocalizationUtility::translate('captchaWrong', 'NewsletterSubscribe'),
                     '',
