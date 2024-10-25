@@ -43,6 +43,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Fluid\View\TemplatePaths;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 use TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException;
@@ -76,6 +77,9 @@ class SubscribeController extends ActionController
      */
     private ?FormProtectionFactory $formProtectionFactory = null;
     
+    /** @var FrontendUserAuthentication */
+    protected $frontendUser;
+    
     public function injectSubscriptionRepository(SubscriptionRepository $subscriptionRepository): void
     {
         $this->subscriptionRepository = $subscriptionRepository;
@@ -90,6 +94,7 @@ class SubscribeController extends ActionController
     {
         $this->buildSettings();
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
+        $this->frontendUser = $this->request->getAttribute('frontend.user');
     }
     
     /**
@@ -163,8 +168,7 @@ class SubscribeController extends ActionController
         
         if ($this->useSimpleSpamPrevention()) {
             $iAmNotASpamBotValue = bin2hex(random_bytes(16));
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'i_am_not_a_robot', $iAmNotASpamBotValue);
-            $GLOBALS["TSFE"]->fe_user->storeSessionData();
+            $this->frontendUser->setAndSaveSessionData('i_am_not_a_robot', $iAmNotASpamBotValue);
             $this->view->assign('iAmNotASpamBotValue', $iAmNotASpamBotValue);
             if ($spambotFailed) {
                 $this->view->assign('spambotFailed', 1);
@@ -287,7 +291,7 @@ class SubscribeController extends ActionController
         if ($this->useSimpleSpamPrevention()) {
             if (
                 !empty($this->request->getParsedBody()['iAmNotASpamBotHere'] ?? '') ||
-                ($this->request->getParsedBody()['iAmNotASpamBot'] ?? '') != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot')
+                ($this->request->getParsedBody()['iAmNotASpamBot'] ?? '') !== $this->frontendUser->getSessionData('i_am_not_a_robot')
             ) {
                 sleep((int)$this->settings['spamTimeout']);
                 
