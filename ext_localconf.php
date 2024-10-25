@@ -1,37 +1,37 @@
 <?php
 declare(strict_types=1);
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 defined('TYPO3') || die();
 
-call_user_func(
-    function()
-    {
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'NewsletterSubscribe',
-            'Subscribe',
-            [
-                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, unsubscribe, undosubscribe, doConfirm, createUnsubscribeMail',
-            ],
-            // non-cacheable actions
-            [
-                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, unsubscribe, undosubscribe, doConfirm, createUnsubscribeMail',
-            ]
-        );
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'NewsletterSubscribe',
-            'Unsubscribe',
-            [
-                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, undosubscribe, createUnsubscribeMail',
-            ],
-            // non-cacheable actions
-            [
-                \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, undosubscribe, createUnsubscribeMail',
-            ]
-        );
-        
-        // wizards
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-            'mod {
+ExtensionUtility::configurePlugin(
+    'NewsletterSubscribe',
+    'Subscribe',
+    [
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, unsubscribe, undosubscribe, doConfirm, createUnsubscribeMail',
+    ],
+    // non-cacheable actions
+    [
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showForm, createConfirmation, unsubscribe, undosubscribe, doConfirm, createUnsubscribeMail',
+    ]
+);
+ExtensionUtility::configurePlugin(
+    'NewsletterSubscribe',
+    'Unsubscribe',
+    [
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, undosubscribe, createUnsubscribeMail',
+    ],
+    // non-cacheable actions
+    [
+        \Zwo3\NewsletterSubscribe\Controller\SubscribeController::class => 'showUnsubscribeForm, unsubscribe, undosubscribe, createUnsubscribeMail',
+    ]
+);
+
+// wizards
+ExtensionManagementUtility::addPageTSConfig(
+    'mod {
                 wizards.newContentElement.wizardItems.plugins {
                     elements {
                         subscribe {
@@ -57,12 +57,14 @@ call_user_func(
                     show = *
                 }
             }'
-        );
-    }
 );
 
-foreach(['tx_newslettersubscribe_subscribe[subscriptionHash]', 'tx_newslettersubscribe_subscribe[uid]',
-            'tx_newslettersubscribe_unsubscribe[subscriptionHash]', 'tx_newslettersubscribe_unsubscribe[uid]'] as $parameter) {
+foreach ([
+             'tx_newslettersubscribe_subscribe[subscriptionHash]',
+             'tx_newslettersubscribe_subscribe[uid]',
+             'tx_newslettersubscribe_unsubscribe[subscriptionHash]',
+             'tx_newslettersubscribe_unsubscribe[uid]'
+         ] as $parameter) {
     $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = $parameter;
 }
 
