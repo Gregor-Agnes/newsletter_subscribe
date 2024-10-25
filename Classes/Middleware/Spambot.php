@@ -7,6 +7,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 class Spambot implements MiddlewareInterface
 {
@@ -18,6 +19,9 @@ class Spambot implements MiddlewareInterface
         {
             $iAmNotASpamBot = $request->getParsedBody()['iAmNotASpamBot'] ?? null;
             if ($iAmNotASpamBot !== null && $iAmNotASpamBot != $GLOBALS['TSFE']->fe_user->getKey('ses', 'i_am_not_a_robot'))
+                /** @var FrontendUserAuthentication $frontendUser */
+                $frontendUser = $this->request->getAttribute('frontend.user');
+            if ($iAmNotASpamBot !== null && $iAmNotASpamBot !== $frontendUser->getSessionData('i_am_not_a_robot'));
             {
                 $request = $request->withAttribute('spambotFailed', true);
             }
