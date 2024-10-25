@@ -13,7 +13,7 @@ class Spambot implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $backendConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('newsletter_subscribe');
+        $backendConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)?->get('newsletter_subscribe');
         $useSimpleSpamPrevention = (bool)($backendConfiguration['useSimpleSpamPrevention'] ?? false);
         if ($useSimpleSpamPrevention)
         {
