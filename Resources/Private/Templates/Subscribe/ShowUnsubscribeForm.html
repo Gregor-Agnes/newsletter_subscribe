@@ -3,6 +3,10 @@
 
 <f:section name="Default">
   <f:form object="{subscription}" action="createUnsubscribeMail">
+    <f:if condition="{settings.useHCaptcha}">
+      <div class="h-captcha" data-sitekey="{settings.hCaptchaSiteKey}" data-size="compact"></div>
+      <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    </f:if>
     <input type="hidden" name="formToken" value="{formToken}">
     <p><f:translate key="wantToCancel" /></p>
     <label class="block">
