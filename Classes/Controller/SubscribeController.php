@@ -147,7 +147,7 @@ class SubscribeController extends ActionController
     {
         $backendConfiguration = $this->getExtensionConfiguration();
         
-        return (bool)($backendConfiguration['useSimpleSpamPrevention'] ?? false);
+        return (bool)($this->settings['useSimpleSpamPrevention'] ?? false);
     }
     
     /**
