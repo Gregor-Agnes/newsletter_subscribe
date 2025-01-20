@@ -38,10 +38,10 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         $additionalFields = [];
         // Initialize extra field value
         if (empty($taskInfo['days'])) {
-            if ($currentSchedulerModuleAction->equals(Action::ADD)) {
+            if ($currentSchedulerModuleAction->name === 'ADD' && empty($taskInfo['days'])) {
                 // In case of new task and if field is empty, set default days address
                 $taskInfo['days'] = 60;
-            } elseif ($currentSchedulerModuleAction->equals(Action::EDIT)) {
+            } elseif ($currentSchedulerModuleAction->name === 'EDIT' && !empty($taskInfo['days'])) {
                 // In case of edit, and editing a test task, set to internal value if not data was submitted already
                 $taskInfo['days'] = $task->days;
             } else {
@@ -61,10 +61,10 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         
         // only PIDs
         if (empty($taskInfo['pids'])) {
-            if ($currentSchedulerModuleAction->equals(Action::ADD)) {
+            if ($currentSchedulerModuleAction->name === 'ADD') {
                 // In case of new task and if field is empty, set default pids address
                 $taskInfo['pids'] = 0;
-            } elseif ($currentSchedulerModuleAction->equals(Action::EDIT)) {
+            } elseif ($currentSchedulerModuleAction->name === 'EDIT') {
                 // In case of edit, and editing a test task, set to internal value if not data was submitted already
                 $taskInfo['pids'] = $task->pids;
             } else {

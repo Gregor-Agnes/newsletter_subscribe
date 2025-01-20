@@ -92,7 +92,8 @@ class FillsalutationCommand extends Command
         
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         
-        while ($row = $rowIterator->fetch()) {
+        $rows = $rowIterator->fetchAllAssociative();
+        foreach ($rows as $row) {
             if(isset($salutations[$row['sys_language_uid']])) {
                 $salutation = $salutations[$row['sys_language_uid']]['default'];
                 if(isset($salutations[$row['sys_language_uid']][$row['gender']]) && !empty($row['last_name'])) {
