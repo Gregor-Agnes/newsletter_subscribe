@@ -37,7 +37,7 @@ class DeleteUnvalidatedSubscribers
         $querySettings->setIgnoreEnableFields(true);
         $this->subscriptionRepository->setDefaultQuerySettings($querySettings);
         
-        $addresses = $this->subscriptionRepository->findOldUnvalidated($days, $pids);
+        $addresses = $this->subscriptionRepository->findOldUnvalidated((int) $days, (string) $pids);
         
         foreach ($addresses as $address) {
             $this->subscriptionRepository->remove($address);

@@ -38,10 +38,10 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         $additionalFields = [];
         // Initialize extra field value
         if (empty($taskInfo['days'])) {
-            if ($currentSchedulerModuleAction->name === 'ADD' && empty($taskInfo['days'])) {
+            if ($currentSchedulerModuleAction->name === 'ADD') {
                 // In case of new task and if field is empty, set default days address
                 $taskInfo['days'] = 60;
-            } elseif ($currentSchedulerModuleAction->name === 'EDIT' && !empty($taskInfo['days'])) {
+            } elseif ($currentSchedulerModuleAction->name === 'EDIT') {
                 // In case of edit, and editing a test task, set to internal value if not data was submitted already
                 $taskInfo['days'] = $task->days;
             } else {
@@ -128,8 +128,8 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
      */
     public function saveAdditionalFields(array $submittedData, AbstractTask $task): void
     {
-        $task->days = (int)$submittedData['newsletter_subscribe']['days'];
-        $task->pids = $submittedData['newsletter_subscribe']['pids'];
+        $task->days = (int) $submittedData['newsletter_subscribe']['days'];
+        $task->pids = (int) $submittedData['newsletter_subscribe']['pids'];
     }
     
     /**
