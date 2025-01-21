@@ -12,8 +12,8 @@ class DeleteUnvalidatedSubscribersTask extends AbstractTask
     /** @var int  */
     public int $days;
     
-    /** @var int  */
-    public int $pids;
+    /** @var int|string  */
+    public int|string $pids;
     
     public function execute(): bool
     {

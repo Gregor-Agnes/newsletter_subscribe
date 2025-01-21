@@ -129,7 +129,7 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
     public function saveAdditionalFields(array $submittedData, AbstractTask $task): void
     {
         $task->days = (int) $submittedData['newsletter_subscribe']['days'];
-        $task->pids = (int) $submittedData['newsletter_subscribe']['pids'];
+        $task->pids = (string) $submittedData['newsletter_subscribe']['pids'];
     }
     
     /**
