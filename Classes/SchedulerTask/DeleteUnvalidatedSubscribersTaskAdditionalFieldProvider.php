@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Zwo3\NewsletterSubscribe\SchedulerTask;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
@@ -37,18 +39,34 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         
         $additionalFields = [];
         // Initialize extra field value
-        if (empty($taskInfo['days'])) {
-            if ($currentSchedulerModuleAction->name === 'ADD') {
-                // In case of new task and if field is empty, set default days address
-                $taskInfo['days'] = 60;
-            } elseif ($currentSchedulerModuleAction->name === 'EDIT') {
-                // In case of edit, and editing a test task, set to internal value if not data was submitted already
-                $taskInfo['days'] = $task->days;
-            } else {
-                // Otherwise set an empty value, as it will not be used anyway
-                $taskInfo['days'] = '';
+        if(version_compare(VersionNumberUtility::getCurrentTypo3Version(), '13.0.0', '>=')) {
+            if (empty($taskInfo['days'])) {
+                if ($currentSchedulerModuleAction->name === 'ADD') {
+                    // In case of new task and if field is empty, set default days address
+                    $taskInfo['days'] = 60;
+                } elseif ($currentSchedulerModuleAction->name === 'EDIT') {
+                    // In case of edit, and editing a test task, set to internal value if not data was submitted already
+                    $taskInfo['days'] = $task->days;
+                } else {
+                    // Otherwise set an empty value, as it will not be used anyway
+                    $taskInfo['days'] = '';
+                }
+            }
+        } else {
+            if (empty($taskInfo['days'])) {
+                if ($currentSchedulerModuleAction->equals(Action::ADD)) {
+                    // In case of new task and if field is empty, set default days address
+                    $taskInfo['days'] = 60;
+                } elseif ($currentSchedulerModuleAction->equals(Action::EDIT)) {
+                    // In case of edit, and editing a test task, set to internal value if not data was submitted already
+                    $taskInfo['days'] = $task->days;
+                } else {
+                    // Otherwise set an empty value, as it will not be used anyway
+                    $taskInfo['days'] = '';
+                }
             }
         }
+       
         // Write the code for the field
         $fieldID = 'task_days';
         $fieldCode = '<input type="text" class="form-control" name="tx_scheduler[newsletter_subscribe][days]" id="' . $fieldID . '" value="' . htmlspecialchars((string)$taskInfo['days']) . '" size="30">';
@@ -60,16 +78,32 @@ class DeleteUnvalidatedSubscribersTaskAdditionalFieldProvider extends AbstractAd
         ];
         
         // only PIDs
-        if (empty($taskInfo['pids'])) {
-            if ($currentSchedulerModuleAction->name === 'ADD') {
-                // In case of new task and if field is empty, set default pids address
-                $taskInfo['pids'] = 0;
-            } elseif ($currentSchedulerModuleAction->name === 'EDIT') {
-                // In case of edit, and editing a test task, set to internal value if not data was submitted already
-                $taskInfo['pids'] = $task->pids;
-            } else {
-                // Otherwise set an empty value, as it will not be used anyway
-                $taskInfo['pids'] = null;
+        if(version_compare(VersionNumberUtility::getCurrentTypo3Version(), '13.0.0', '>=')) {
+            
+            if (empty($taskInfo['pids'])) {
+                if ($currentSchedulerModuleAction->name === 'ADD') {
+                    // In case of new task and if field is empty, set default pids address
+                    $taskInfo['pids'] = 0;
+                } elseif ($currentSchedulerModuleAction->name === 'EDIT') {
+                    // In case of edit, and editing a test task, set to internal value if not data was submitted already
+                    $taskInfo['pids'] = $task->pids;
+                } else {
+                    // Otherwise set an empty value, as it will not be used anyway
+                    $taskInfo['pids'] = null;
+                }
+            }
+        } else {
+            if (empty($taskInfo['pids'])) {
+                if ($currentSchedulerModuleAction->equals(Action::ADD)) {
+                    // In case of new task and if field is empty, set default pids address
+                    $taskInfo['pids'] = 0;
+                } elseif ($currentSchedulerModuleAction->equals(Action::EDIT)) {
+                    // In case of edit, and editing a test task, set to internal value if not data was submitted already
+                    $taskInfo['pids'] = $task->pids;
+                } else {
+                    // Otherwise set an empty value, as it will not be used anyway
+                    $taskInfo['pids'] = null;
+                }
             }
         }
         // Write the code for the field
