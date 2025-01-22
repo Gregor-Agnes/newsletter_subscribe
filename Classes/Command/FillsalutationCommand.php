@@ -11,11 +11,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Zwo3\NewsletterSubscribe\Utility\BackendSimulation;
 
 class FillsalutationCommand extends Command
 {
     /**
-     * @var ConfigurationManagerInterface
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
      */
     protected $configurationManager;
     
@@ -39,9 +40,11 @@ class FillsalutationCommand extends Command
     protected function prepareSalutations(): array
     {
         $salutations = [];
-        
-        $tsSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        if(isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['languages.'])) {
+
+        $tsSettings = BackendSimulation::runWithSimulateBackend(function () {
+            return $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        });
+        if (isset($tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['languages.'])) {
             $languageConfig = $tsSettings['plugin.']['tx_newslettersubscribe.']['settings.']['salutation.']['languages.'];
             if(is_array($languageConfig) && count($languageConfig)) {
                 foreach($languageConfig as $l => $lId) {
