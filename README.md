@@ -160,17 +160,6 @@ the field "delete" wouldn't be generated otherwise. Use Scheduler Task to delete
 
 ```yaml
 routeEnhancers:
-  UnSubscribe:
-    type: Extbase
-    extension: NewsletterSubscribe
-    plugin: Unsubscribe
-    routes:
-      -
-        routePath: '/unsubscribe/{unsubscribe}/{uid}'
-        _controller: 'Subscribe::unsubscribe'
-        _arguments:
-          unsubscribe: subscriptionHash
-          uid: uid
   Subscribe:
     type: Extbase
     extension: NewsletterSubscribe
