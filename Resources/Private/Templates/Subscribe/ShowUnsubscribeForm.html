@@ -9,8 +9,8 @@
     </f:if>
     <input type="hidden" name="formToken" value="{formToken}">
     <p><f:translate key="wantToCancel" /></p>
-    <label class="block">
-      <f:form.textfield name="email" placeholder="{f:translate(key: 'emailPlaceholder')} *" class="mt-1 block w-full form-input"></f:form.textfield>
+    <label class="block" for="email-{uid}">
+      <f:form.textfield id="email-{uid}" name="email" placeholder="{f:translate(key: 'emailPlaceholder')} *" class="mt-1 block w-full form-input"></f:form.textfield>
     </label>
     <f:form.validationResults for="subscription.email">
       <f:if condition="{message}">

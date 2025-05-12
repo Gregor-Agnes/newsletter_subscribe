@@ -98,6 +98,24 @@ class SubscribeController extends ActionController
     }
     
     /**
+     * Initialize the view with common variables
+     *
+     * @param \TYPO3Fluid\Fluid\View\ViewInterface $view
+     * @return void
+     */
+    public function initializeView(\TYPO3Fluid\Fluid\View\ViewInterface $view): void
+    {
+        $contentObject = $this->configurationManager->getContentObject();
+        if ($contentObject && isset($contentObject->data['uid'])) {
+            $view->assign('uid', $contentObject->data['uid']);
+        } else {
+            $view->assign('uid', 'fallback-' . uniqid('', true));
+        }
+    }
+
+    
+    
+    /**
      * from "news" Extension
      */
     public function buildSettings(): void
@@ -209,6 +227,7 @@ class SubscribeController extends ActionController
                 $this->view->assign('spambotFailed', 1);
             }
         }
+        
         
         $this->view->assignMultiple([
             'dataProtectionPage' => $this->settings['dataProtectionPage'],

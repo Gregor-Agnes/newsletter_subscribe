@@ -13,32 +13,32 @@
     </f:if>
     <input type="hidden" name="formToken" value="{formToken}">
     <ns:condition.iterator.contains needle="gender" haystack="{fields}">
-      <label class="block">
+      <label class="block" for="gender-{uid}">
         <span class="text-gray-700"><f:translate key="gender" /></span>
-        <f:form.select class="no-autoinit mt-1 block w-full" property="gender" options="{f: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
+        <f:form.select class="no-autoinit mt-1 block w-full" property="gender" id="gender-{uid}" options="{f: '{f:translate(key: \'mrs\')}', m: '{f:translate(key: \'mr\')}', v: '{f:translate(key: \'various\')}'}" prependOptionLabel="{f:translate(key: 'select')}" />
       </label>
     </ns:condition.iterator.contains>
     <ns:condition.iterator.contains needle="firstName" haystack="{fields}">
-      <label class="block">
+      <label class="block" for="firstName-{uid}">
         <span class="text-gray-700"><f:translate key="firstName" /></span>
-        <f:form.textfield class="mt-1 block w-full form-input" property="firstName" />
+        <f:form.textfield class="mt-1 block w-full form-input" property="firstName" id="firstName-{uid}"/>
       </label>
     </ns:condition.iterator.contains>
     <ns:condition.iterator.contains needle="lastName" haystack="{fields}">
-      <label class="block">
+      <label class="block" for="lastName-{uid}">
         <span class="text-gray-700"><f:translate key="lastName" /></span>
-        <f:form.textfield class="mt-1 block w-full form-input" property="lastName" />
+        <f:form.textfield class="mt-1 block w-full form-input" property="lastName" id="lastName-{uid}"/>
       </label>
     </ns:condition.iterator.contains>
     <ns:condition.iterator.contains needle="company" haystack="{fields}">
-      <label class="block">
+      <label class="block" for="company-{uid}">
         <span class="text-gray-700"><f:translate key="company" /></span>
-        <f:form.textfield class="nmt-1 block w-full form-input" property="company" />
+        <f:form.textfield class="nmt-1 block w-full form-input" property="company" id="company-{uid}"/>
       </label>
     </ns:condition.iterator.contains>
-    <label class="block">
+    <label class="block" for="email-{uid}">
       <span class="text-gray-700"><f:translate key="email" />&nbsp;*</span>
-      <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}" class="mt-1 block w-full form-input"></f:form.textfield>
+      <f:form.textfield property="email" placeholder="{f:translate(key: 'emailPlaceholder')}" class="mt-1 block w-full form-input" id="email-{uid}"></f:form.textfield>
     </label>
     <f:form.validationResults for="subscription.email">
       <f:if condition="{validationResults.flattenedErrors}">
@@ -49,8 +49,8 @@
         </f:for>
       </f:if>
     </f:form.validationResults>
-    <label for="dataProtectionAccepted" class="inline-flex items-center">
-      <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted" class="border-solid border-gray-600 form-checkbox"></f:form.checkbox>
+    <label for="dataProtectionAccepted-{uid}" class="inline-flex items-center">
+      <f:form.checkbox property="dataProtectionAccepted" value="1" checked="{subscription.dataProtectionAccepted} == 1" id="dataProtectionAccepted-{uid}" class="border-solid border-gray-600 form-checkbox"></f:form.checkbox>
       <span class="ml-2">
                 <f:translate key="dataProtectionHint1" />
                 <f:link.typolink parameter="{dataProtectionPage}" target="_blank"><f:translate key="dataProtection" /></f:link.typolink>
