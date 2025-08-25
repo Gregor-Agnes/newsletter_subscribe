@@ -518,7 +518,12 @@ class SubscribeController extends ActionController
         
         $success = false;
         if ($subscription) {
-            if ($subscriptionHash == $subscription->getSubscriptionHash() && $subscription->isHidden()) {
+            if ($subscriptionHash == $subscription->getSubscriptionHash() && $this->settings['multipleConfirmation']) {
+                $subscription->setHidden(0);
+                $this->subscriptionRepository->update($subscription);
+                $success = true;
+            }
+            elseif ($subscriptionHash == $subscription->getSubscriptionHash() && $subscription->isHidden()) {
                 $subscription->setHidden(0);
                 $this->subscriptionRepository->update($subscription);
                 $success = true;

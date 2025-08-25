@@ -137,6 +137,12 @@ the field "delete" wouldn't be generated otherwise. Use Scheduler Task to delete
     <td>1</td>
   </tr>
   <tr>
+    <th align="left">multipleConfirmation</th>
+    <td align="left">allow processing confirmation links without checking if the subscription is already confirmed. This option is new in 7.1.0</td>
+    <td>bool</td>
+    <td>1</td>
+  </tr>
+  <tr>
     <th align="left">mailTemplateRootPath</th>
     <td align="left">path to the mail templates, root for different languages (e.g. en, de, dk)</td>
     <td>string</td>

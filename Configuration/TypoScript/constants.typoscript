@@ -53,6 +53,9 @@ plugin {
 			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether the admin should get an info mail on every confirmation
 			sendAdminInfo = 0
 
+			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether a confirmation link does not check, if subscription is already confirmed
+			multipleConfirmation = 0
+
 			# cat=plugin.tx_newsletter_subscribe; type=boolean; label=Whether a 404 is thrown, when invalid confirmation link is clicked (e.g. double click in mail) otherwise a hint is shown
 			sendPageNotFoundOnInvalidConfirmation = 1
 		}
