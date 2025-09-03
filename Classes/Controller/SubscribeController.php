@@ -105,7 +105,10 @@ class SubscribeController extends ActionController
      */
     public function initializeView(\TYPO3Fluid\Fluid\View\ViewInterface $view): void
     {
-        $contentObject = $this->configurationManager->getContentObject();
+        /**
+         * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject
+         */
+        $contentObject = $this->request->getAttribute('currentContentObject');
         if ($contentObject && isset($contentObject->data['uid'])) {
             $view->assign('uid', $contentObject->data['uid']);
         } else {
@@ -135,9 +138,14 @@ class SubscribeController extends ActionController
             $typoScriptService = GeneralUtility::makeInstance(TypoScriptService::class);
             $typoScriptArray = $typoScriptService->convertPlainArrayToTypoScriptArray($originalSettings);
             $stdWrapProperties = GeneralUtility::trimExplode(',', $originalSettings['useStdWrap'], true);
+
+            /**
+             * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject
+             */
+            $contentObject = $this->request->getAttribute('currentContentObject');
             foreach ($stdWrapProperties as $key) {
                 if (is_array($typoScriptArray[$key . '.'])) {
-                    $originalSettings[$key] = $this->configurationManager->getContentObject()
+                    $originalSettings[$key] = $contentObject
                         ->stdWrap(
                             $typoScriptArray[$key],
                             $typoScriptArray[$key . '.']
